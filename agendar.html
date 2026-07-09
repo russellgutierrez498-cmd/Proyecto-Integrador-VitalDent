@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Cita - Consultorio Dental Guzmán</title>
+   <link rel="stylesheet" href="CSS/stylediv.CSS">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="#1A5C9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s-4-2-4-8c0-3.3 2.7-6 6-6s6 2.7 6 6c0 6-4 8-4 8"></path>
+                <path d="M12 16v-4"></path>
+            </svg>
+            <div class="logo-text">
+                <h1>Consultorio</h1>
+                <h2>Dental Guzmán</h2>
+                <p>Odontología Integral y Analítica</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-agendar">
+        <section class="tarjeta-agendar">
+            
+            <div class="agendar-imagen">
+                <img src="https://via.placeholder.com/400x600.png?text=Dentista" alt="Dentista" class="img-fluida">
+            </div>
+
+            <div class="agendar-formulario-contenedor">
+                <h2 class="titulo-agendar">Agenda tu cita</h2>
+                
+                <div class="fecha-hora-grid">
+                    <div class="calendario-mockup">
+                        <div class="mes-header">◄ Octubre 2026 ►</div>
+                        <div class="dias-grid">
+                            <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+                            <span class="dia-pasado">28</span><span class="dia-pasado">29</span><span class="dia-pasado">30</span><span>1</span><span>2</span><span>3</span><span>4</span>
+                            <span>5</span><span>6</span><span>7</span><span>8</span><span class="dia-activo">9</span><span>10</span><span>11</span>
+                            <span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span>
+                        </div>
+                    </div>
+                    <div class="horas-mockup">
+                        <div class="hora-header">Hora</div>
+                        <div class="lista-horas">
+                            <button class="btn-hora">7:00</button>
+                            <button class="btn-hora">8:00</button>
+                            <button class="btn-hora activo">9:00</button>
+                            <button class="btn-hora">10:00</button>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="formNuevaCita" class="formulario-datos">
+                    <div class="inputs-grid">
+                        <input type="text" placeholder="Nombre" required class="input-medico">
+                        <input type="text" placeholder="Apellidos" required class="input-medico">
+                        <input type="tel" placeholder="Celular" required class="input-medico">
+                        <input type="email" placeholder="Correo electrónico" required class="input-medico">
+                    </div>
+                    
+                    <div class="resumen-cita">
+                        <div class="campo-tratamiento">
+                            <label>Tratamiento:</label>
+                            <select class="input-medico select-tratamiento">
+                                <option>Limpieza Dental</option>
+                                <option>Extracción</option>
+                                <option>Valoración Inicial</option>
+                            </select>
+                        </div>
+                        <div class="precio-total">
+                            <span>Precio Total:</span>
+                            <strong>$400</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="boton-contenedor">
+                        <button type="submit" class="btn-confirmar">CONFIRMAR</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <div id="modalExito" class="modal-overlay">
+        <div class="modal-caja">
+            <button id="btnCerrarModal" class="btn-cerrar-modal">&times;</button>
+            <h3 class="modal-titulo">Su cita se agendó<br>Exitosamente</h3>
+            
+            <div class="icono-check">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            
+            <p class="modal-texto">Se enviará a su celular vía whatsapp</p>
+            
+            <div class="icono-whatsapp">
+                <svg viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalError" class="modal-overlay">
+        <div class="modal-caja modal-caja-error">
+            <button id="btnCerrarError" class="btn-cerrar-modal">&times;</button>
+            <h3 class="modal-titulo">OCURRIÓ UN ERROR!!!</h3>
+            
+            <div class="icono-error">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+            
+            <p class="modal-texto">Por favor verifique la<br>información y vuelva a<br>intentarlo.</p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('formNuevaCita');
+    const modalExito = document.getElementById('modalExito');
+    const modalError = document.getElementById('modalError');
+    const btnCerrarExito = document.getElementById('btnCerrarModal');
+    const btnCerrarError = document.getElementById('btnCerrarError');
+    
+    // Capturamos específicamente el input del celular
+    const inputCelular = document.querySelector('input[type="tel"]');
+
+    // Cuando el usuario le da a "Confirmar"
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Evita que la página se recargue
+
+        const celularValor = inputCelular.value;
+        
+        // Expresión que verifica que TODOS los caracteres sean solo números
+        const soloNumeros = /^[0-9]+$/.test(celularValor);
+
+        if (!soloNumeros) {
+            // Si el texto contiene letras o símbolos, mostramos el modal ROJO de error
+            modalError.classList.add('mostrar-modal');
+        } else {
+            // Si son puros números, mostramos el modal VERDE de éxito
+            modalExito.classList.add('mostrar-modal');
+        }
+    });
+
+    // Cerrar modal de éxito y regresar al inicio
+    btnCerrarExito.addEventListener('click', function() {
+        modalExito.classList.remove('mostrar-modal');
+        window.location.href = 'index.html'; // Redirección
+    });
+
+    // Cerrar modal de error y quedarse en la página
+    btnCerrarError.addEventListener('click', function() {
+        modalError.classList.remove('mostrar-modal');
+        inputCelular.focus(); // Ponemos el cursor en el celular para corregir
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visor Radiológico 3D - Consultorio Dental Guzmán</title>
+    <link rel="stylesheet" href="CSS/stylediv.CSS">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="body-visor">
+
+    <header class="visor-header">
+        <div class="visor-info-paciente">
+            <a href="expediente.html" class="btn-regresar-visor">← Volver al Expediente</a>
+            <div class="divisor-vertical"></div>
+            <h2>Paciente: <span>Carlos Mendoza Valdez</span></h2>
+            <span class="badge-estudio">Escaneo CBCT (Maxilofacial)</span>
+        </div>
+        <div class="visor-herramientas-top">
+            <button class="btn-tool">📥 Exportar</button>
+            <button class="btn-tool">🖨️ Imprimir</button>
+        </div>
+    </header>
+
+    <div class="visor-layout">
+        
+        <aside class="visor-tools">
+            <h3 class="tools-titulo">Controles 3D</h3>
+            
+            <div class="tool-group">
+                <label>Rotación (Eje Y)</label>
+                <input type="range" min="0" max="360" value="180" class="slider-medico">
+            </div>
+            
+            <div class="tool-group">
+                <label>Zoom</label>
+                <input type="range" min="1" max="100" value="50" class="slider-medico">
+            </div>
+
+            <div class="tool-group">
+                <label>Contraste / Densidad</label>
+                <input type="range" min="0" max="100" value="75" class="slider-medico">
+            </div>
+
+            <div class="tool-grid-botones">
+                <button class="btn-tool-cuadro activo">🦷<br>Modelo</button>
+                <button class="btn-tool-cuadro">💀<br>Óseo</button>
+                <button class="btn-tool-cuadro">📏<br>Medir</button>
+                <button class="btn-tool-cuadro">✂️<br>Corte</button>
+            </div>
+        </aside>
+
+        <section class="visor-pantalla-central">
+            
+            <div class="simulador-3d">
+                <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=800&auto=format&fit=crop" alt="Radiografía 3D Mockup" class="img-3d-mockup">
+                
+                <div class="overlay-datos top-left">FOV: 8x8 cm<br>Voxel: 0.15 mm</div>
+                <div class="overlay-datos bottom-right">KVp: 90<br>mA: 10.0</div>
+                
+                <div class="ejes-3d">
+                    <div class="eje x">X</div><div class="eje y">Y</div><div class="eje z">Z</div>
+                </div>
+            </div>
+
+            <div class="panel-dientes-inferior">
+                <h4 class="panel-dientes-titulo">SELECCIÓN RÁPIDA DE PIEZAS AFECTADAS</h4>
+                
+                <div class="dientes-checkbox-container">
+                    <label class="diente-check"><input type="checkbox"><span>18</span></label>
+                    <label class="diente-check"><input type="checkbox"><span>17</span></label>
+                    <label class="diente-check"><input type="checkbox"><span>16</span></label>
+                    <label class="diente-check"><input type="checkbox"><span>15</span></label>
+                    <label class="diente-check"><input type="checkbox"><span>14</span></label>
+                    <label class="diente-check"><input type="checkbox"><span>13</span></label>
+                    <label class="diente-check"><input type="checkbox"><span>12</span></label>
+                    <label class="diente-check"><input type="checkbox"><span>11</span></label>
+                    
+                    <div class="divisor-cuadrante"></div>
+                    
+                    <label class="diente-check"><input type="checkbox"><span>21</span></label>
+                    <label class="diente-check"><input type="checkbox"><span>22</span></label>
+                    <label class="diente-check"><input type="checkbox"><span>23</span></label>
+                    <label class="diente-check"><input type="checkbox"><span>24</span></label>
+                    <label class="diente-check"><input type="checkbox"><span>25</span></label>
+                    <label class="diente-check"><input type="checkbox"><span>26</span></label>
+                    <label class="diente-check"><input type="checkbox"><span>27</span></label>
+                    <label class="diente-check"><input type="checkbox"><span>28</span></label>
+                </div>
+            </div>
+
+        </section>
+        
+    </div>
+
+</body>
+</html>

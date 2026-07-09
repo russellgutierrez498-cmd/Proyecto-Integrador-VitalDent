@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Consultorio Dental Guzmán</title>
+    <link rel="stylesheet" href="CSS/stylediv.CSS">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="body-login">
+
+    <div class="login-contenedor">
+        <div class="login-logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1A5C9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s-4-2-4-8c0-3.3 2.7-6 6-6s6 2.7 6 6c0 6-4 8-4 8"></path>
+                <path d="M12 16v-4"></path>
+            </svg>
+            <h2>Consultorio Dental Guzmán</h2>
+        </div>
+        
+        <h3 class="login-titulo">Acceso al Sistema</h3>
+        <p class="login-subtitulo">Ingresa tus credenciales para continuar</p>
+        
+        <form id="formLogin" class="form-login">
+            <div class="grupo-input">
+                <label for="usuario">Usuario o Correo</label>
+                <input type="text" id="usuario" placeholder="ej. recepcion@dentalguzman.com" required class="input-medico">
+            </div>
+            <div class="grupo-input">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" placeholder="••••••••" required class="input-medico">
+            </div>
+            
+            <button type="submit" class="btn-agendar btn-login">ENTRAR</button>
+        </form>
+        
+        <a href="index.html" class="link-regresar">← Regresar a la página principal</a>
+    </div>
+
+    <script>
+        const formLogin = document.getElementById('formLogin');
+        
+        formLogin.addEventListener('submit', function(e) {
+            e.preventDefault(); // Evita que la página intente procesar datos reales
+            
+            // Simulamos que la contraseña fue correcta y pasamos al dashboard
+            window.location.href = 'dashboard.html'; 
+        });
+    </script>
+
+</body>
+</html>

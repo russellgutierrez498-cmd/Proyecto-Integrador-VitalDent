@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Administración - Consultorio Dental Guzmán</title>
+        <link rel="stylesheet" href="CSS/stylediv.CSS">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="body-dashboard">
+
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="brand-info">
+                <h3>Panel Control</h3>
+                <p>Recepcionista</p>
+            </div>
+            <button id="btnToggle" class="btn-toggle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard.html" class="menu-item activo">
+                <span class="icon">📊</span><span class="menu-text">Dashboard</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon">📅</span><span class="menu-text">Agenda de Citas</span>
+            </a>
+            <a href="expediente.html" class="menu-item">
+                <span class="icon">👥</span><span class="menu-text">Expedientes Clínicos</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon">🦷</span><span class="menu-text">Odontograma</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon">📄</span><span class="menu-text">Recetas Médicas</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon">💳</span><span class="menu-text">Cobros y Caja</span>
+            </a>
+            <a href="index.html" class="menu-item salir">
+                <span class="icon">🚪</span><span class="menu-text">Cerrar Sesión</span>
+            </a>
+        </nav>
+    </aside>
+
+    <div class="dashboard-layout">
+        
+        <header class="navbar-dashboard">
+            <div class="logo-dashboard">
+                <h1>Consultorio <span>Dental Guzmán</span></h1>
+            </div>
+            <div class="user-profile">
+                <span>Hola, Recepción</span>
+                <div class="avatar">R</div>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <h2 class="content-title">Vista de Agenda Diaria</h2>
+
+            <div class="tabla-contenedor">
+                <table class="tabla-medica">
+                    <thead>
+                        <tr>
+                            <th>Hora</th>
+                            <th>Paciente</th>
+                            <th>Motivo de la Cita</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>09:00 AM</strong></td>
+                            <td>Carlos Mendoza</td>
+                            <td>Valoración Inicial</td>
+                            <td><span class="badge badge-confirmada">🟢 Confirmada</span></td>
+                            <td><button class="btn-tabla">Iniciar</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>10:00 AM</strong></td>
+                            <td>Ana Ruiz</td>
+                            <td>Limpieza Dental</td>
+                            <td><span class="badge badge-espera">🟡 En Sala</span></td>
+                            <td><button class="btn-tabla">Iniciar</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>11:30 AM</strong></td>
+                            <td>Luis Torres</td>
+                            <td>Extracción Molar</td>
+                            <td><span class="badge badge-no-llega">⚪ Pendiente</span></td>
+                            <td><button class="btn-tabla btn-tabla-secundario">Llamar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const btnToggle = document.getElementById('btnToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        // Escuchamos el clic en las tres rayitas
+        btnToggle.addEventListener('click', () => {
+            // "toggle" agrega la clase si no está, y la quita si ya está
+            sidebar.classList.toggle('colapsado');
+        });
+    </script>
+</body>
+</html>
