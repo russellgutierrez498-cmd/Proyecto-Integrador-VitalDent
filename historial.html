@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Tratamientos - Consultorio Dental Guzmán</title>
+    <link rel="stylesheet" href="CSS/stylediv.CSS">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="body-dashboard">
+
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="brand-info">
+                <h3>Panel Control</h3>
+                <p>Doctor / Especialista</p>
+            </div>
+            <button id="btnToggle" class="btn-toggle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard.html" class="menu-item">
+                <span class="icon">📊</span><span class="menu-text">Dashboard</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon">📅</span><span class="menu-text">Agenda de Citas</span>
+            </a>
+            <a href="expediente.html" class="menu-item activo">
+                <span class="icon">👥</span><span class="menu-text">Expedientes Clínicos</span>
+            </a>
+            <a href="odontograma.html" class="menu-item">
+                <span class="icon">🦷</span><span class="menu-text">Odontograma</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon">📄</span><span class="menu-text">Recetas Médicas</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon">💳</span><span class="menu-text">Cobros y Caja</span>
+            </a>
+            <a href="index.html" class="menu-item salir">
+                <span class="icon">🚪</span><span class="menu-text">Cerrar Sesión</span>
+            </a>
+        </nav>
+    </aside>
+
+    <div class="dashboard-layout">
+        <header class="navbar-dashboard">
+            <div class="logo-dashboard">
+                <h1>Consultorio <span>Dental Guzmán</span></h1>
+            </div>
+            <div class="user-profile">
+                <span>Dr. Guzmán</span>
+                <div class="avatar">D</div>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            
+            <div class="alerta-exito" id="alertaExito">
+                 Tratamiento agregado al historial correctamente.
+            </div>
+
+            <div class="paciente-header" style="padding: 15px 30px; margin-bottom: 20px;">
+                <div class="paciente-info-principal">
+                    <div>
+                        <h2 class="paciente-nombre" style="font-size: 1.2rem; margin:0;">Historial Clínico: Carlos Mendoza Valdez</h2>
+                    </div>
+                </div>
+                <div class="paciente-acciones">
+                    <a href="odontograma.html" class="btn-tabla btn-tabla-secundario" style="text-decoration:none;">← Volver al Odontograma</a>
+                </div>
+            </div>
+
+            <div class="tarjeta-expediente">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 class="titulo-tarjeta" style="margin: 0; border: none;">Registro de Tratamientos Realizados</h3>
+                    <button class="btn-tabla" style="background-color: #3B82F6;">🖨️ Imprimir Historial</button>
+                </div>
+                
+                <div class="tabla-responsive">
+                    <table class="tabla-medica">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Pieza(s)</th>
+                                <th>Procedimiento / Diagnóstico</th>
+                                <th>Costo</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="fila-nueva">
+                                <td>08/Jul/2026</td>
+                                <td><strong>#14, #16, #25</strong></td>
+                                <td>Resina Simple (x3)</td>
+                                <td>$ 1,500.00</td>
+                                <td><span class="badge-estado pendiente">Pendiente de Cobro</span></td>
+                                <td>
+                                    <button class="btn-accion-icon" title="Hacer Receta">📄</button>
+                                    <button class="btn-accion-icon" title="Mandar a Caja">💳</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>15/Jun/2026</td>
+                                <td><strong>#41</strong></td>
+                                <td>Limpieza / Profilaxis General</td>
+                                <td>$ 500.00</td>
+                                <td><span class="badge-estado pagado">Pagado y Finalizado</span></td>
+                                <td>
+                                    <button class="btn-accion-icon" title="Ver Detalles">👁️</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>10/Ene/2026</td>
+                                <td><strong>#18</strong></td>
+                                <td>Extracción Molar (Cirugía)</td>
+                                <td>$ 2,200.00</td>
+                                <td><span class="badge-estado pagado">Pagado y Finalizado</span></td>
+                                <td>
+                                    <button class="btn-accion-icon" title="Ver Detalles">👁️</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const btnToggle = document.getElementById('btnToggle');
+        const sidebar = document.getElementById('sidebar');
+        btnToggle.addEventListener('click', () => sidebar.classList.toggle('colapsado'));
+
+        setTimeout(() => {
+            const alerta = document.getElementById('alertaExito');
+            if(alerta) {
+                alerta.style.opacity = '0';
+                setTimeout(() => alerta.style.display = 'none', 500);
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
