@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receta Médica - Consultorio Dental Guzmán</title>
+    <link rel="stylesheet" href="CSS/stylediv.CSS">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="body-dashboard">
+
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="brand-info">
+                <h3>Panel Control</h3>
+                <p>Doctor / Especialista</p>
+            </div>
+            <button id="btnToggle" class="btn-toggle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard.html" class="menu-item">
+                <span class="icon">📊</span><span class="menu-text">Dashboard</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon">📅</span><span class="menu-text">Agenda de Citas</span>
+            </a>
+            <a href="expediente.html" class="menu-item">
+                <span class="icon">👥</span><span class="menu-text">Expedientes Clínicos</span>
+            </a>
+            <a href="odontograma.html" class="menu-item">
+                <span class="icon">🦷</span><span class="menu-text">Odontograma</span>
+            </a>
+            <a href="receta.html" class="menu-item activo">
+                <span class="icon">📄</span><span class="menu-text">Recetas Médicas</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon">💳</span><span class="menu-text">Cobros y Caja</span>
+            </a>
+            <a href="index.html" class="menu-item salir">
+                <span class="icon">🚪</span><span class="menu-text">Cerrar Sesión</span>
+            </a>
+        </nav>
+    </aside>
+
+    <div class="dashboard-layout">
+        <header class="navbar-dashboard">
+            <div class="logo-dashboard">
+                <h1>Consultorio <span>Dental Guzmán</span></h1>
+            </div>
+            <div class="user-profile">
+                <span>Dr. Guzmán</span>
+                <div class="avatar">D</div>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            
+            <div class="paciente-header" style="padding: 15px 30px; margin-bottom: 20px;">
+                <div class="paciente-info-principal">
+                    <div>
+                        <h2 class="paciente-nombre" style="font-size: 1.2rem; margin:0;">Nueva Receta Médica</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-expediente">
+                
+                <div class="grupo-input" style="margin-bottom: 25px; max-width: 50%;">
+                    <label>Paciente:</label>
+                    <select class="input-medico" style="background-color: #F8FAFC;">
+                        <option>Carlos Mendoza Valdez - ID: #004582</option>
+                        <option>Ana Ruiz - ID: #004583</option>
+                    </select>
+                    <p style="color: #EF4444; font-size: 0.85rem; margin-top: 8px; font-weight: 700;">
+                         Alergias reportadas: Penicilina
+                    </p>
+                </div>
+
+                <div class="expediente-grid">
+                    <div class="expediente-col-izq">
+                        <div class="grupo-input" style="margin-bottom: 15px;">
+                            <label>Diagnóstico:</label>
+                            <textarea class="textarea-notas" style="height: 100px;" placeholder="Ej. Caries profunda en pieza #16, dolor agudo..."></textarea>
+                        </div>
+                        <div class="grupo-input">
+                            <label>Tratamiento realizado:</label>
+                            <textarea class="textarea-notas" style="height: 100px;" placeholder="Ej. Resina simple, profilaxis..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="expediente-col-der" style="border: 1px solid #E2E8F0; padding: 20px; border-radius: 12px; background-color: #F8FAFC;">
+                        <h3 class="titulo-tarjeta" style="margin-top: 0;">Prescripción</h3>
+                        
+                        <div id="listaMedicamentos">
+                            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #E2E8F0; margin-bottom: 15px;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                                    <div class="grupo-input">
+                                        <label>Medicamento:</label>
+                                        <input type="text" class="input-medico" placeholder="Ej. Ibuprofeno 600mg">
+                                    </div>
+                                    <div class="grupo-input">
+                                        <label>Dosis / Frecuencia:</label>
+                                        <input type="text" class="input-medico" placeholder="Ej. 1 tableta cada 8 hrs">
+                                    </div>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                    <div class="grupo-input">
+                                        <label>Duración:</label>
+                                        <input type="text" class="input-medico" placeholder="Ej. 5 días">
+                                    </div>
+                                    <div class="grupo-input">
+                                        <label>Vía de Administración:</label>
+                                        <select class="input-medico">
+                                            <option>Oral</option>
+                                            <option>Sublingual</option>
+                                            <option>Intramuscular</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn-tabla btn-tabla-secundario" style="width: 100%; border: 1px dashed var(--color-primario-azul); background: transparent; color: var(--color-primario-azul);" onclick="agregarMedicamento()">
+                            + Agregar Medicamento
+                        </button>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; border-top: 1px solid #E2E8F0; padding-top: 20px;">
+                    <button class="btn-tabla" style="background-color: var(--color-texto-secundario);">
+                         Guardar y Enviar
+                    </button>
+                    <button class="btn-tabla" style="background-color: var(--color-primario-azul);" onclick="imprimirReceta()">
+                         Imprimir Receta
+                    </button>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const btnToggle = document.getElementById('btnToggle');
+        const sidebar = document.getElementById('sidebar');
+        btnToggle.addEventListener('click', () => sidebar.classList.toggle('colapsado'));
+
+        function agregarMedicamento() {
+            const lista = document.getElementById('listaMedicamentos');
+            const nuevoBloque = document.createElement('div');
+            nuevoBloque.style.cssText = "background: white; padding: 15px; border-radius: 8px; border: 1px solid #E2E8F0; margin-bottom: 15px;";
+            nuevoBloque.innerHTML = `
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span style="font-weight: 700; color: var(--color-texto-secundario); font-size: 0.85rem;">MEDICAMENTO ADICIONAL</span>
+                    <button onclick="this.parentElement.parentElement.remove()" style="color: #EF4444; background: none; border: none; cursor: pointer; font-weight: bold;">X Quitar</button>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div class="grupo-input"><input type="text" class="input-medico" placeholder="Medicamento"></div>
+                    <div class="grupo-input"><input type="text" class="input-medico" placeholder="Dosis / Frecuencia"></div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="grupo-input"><input type="text" class="input-medico" placeholder="Duración"></div>
+                    <div class="grupo-input">
+                        <select class="input-medico">
+                            <option>Oral</option><option>Sublingual</option><option>Intramuscular</option>
+                        </select>
+                    </div>
+                </div>
+            `;
+            lista.appendChild(nuevoBloque);
+        }
+
+        function imprimirReceta() {
+            alert("Preparando PDF para impresión con hoja membretada...");
+            window.print();
+        }
+    </script>
+</body>
+</html>

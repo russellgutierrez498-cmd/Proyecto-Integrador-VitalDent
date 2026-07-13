@@ -1,12 +1,11 @@
-/* Variables y Configuración Base */
 :root {
     --fuente-principal: 'Nunito', sans-serif;
-    --color-fondo-app: #F8FAFC; /* Un blanco/gris muy tenue y limpio */
-    --color-primario-azul: #1A5C9A; /* Azul institucional del logo */
-    --color-azul-claro: #E0F2FE; /* Azul muy suave para fondos */
-    --color-acento-verde: #14B8A6; /* Verde coral/menta (Teal) elegante */
-    --color-verde-hover: #0D9488; /* Verde un poco más oscuro para cuando pasas el mouse */
-    --color-texto-oscuro: #1E293B; /* Azul oscuro/pizarra para el texto (más suave que el negro puro) */
+    --color-fondo-app: #F8FAFC;
+    --color-primario-azul: #1A5C9A;
+    --color-azul-claro: #E0F2FE;
+    --color-acento-verde: #14B8A6;
+    --color-verde-hover: #0D9488;
+    --color-texto-oscuro: #1E293B;
     --color-texto-secundario: #64748B;
     --color-blanco: #FFFFFF;
 }
@@ -146,8 +145,8 @@ body {
 
 .tarjeta-promo {
     background-color: var(--color-blanco);
-    border: 1px solid #E2E8F0; /* Borde gris muy sutil en lugar del negro grueso */
-    border-radius: 16px; /* Bordes redondeados modernos */
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
     padding: 30px 20px;
     width: 31%;
     min-width: 260px;
@@ -155,7 +154,6 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    /* Sombra médica difuminada y limpia */
     box-shadow: 0 10px 25px rgba(0,0,0,0.04); 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -221,7 +219,7 @@ body {
     background-color: var(--color-blanco);
     border-radius: 30px;
     overflow: hidden;
-    box-shadow: 0 15px 35px rgba(26, 92, 154, 0.08); /* Sombra elegante médica */
+    box-shadow: 0 15px 35px rgba(26, 92, 154, 0.08);
     border: 1px solid #E2E8F0;
 }
 
@@ -501,13 +499,13 @@ body {
 
 /* --- MODAL DE ERROR (Variante) --- */
 .modal-caja-error {
-    border-top: 6px solid #EF4444; /* Línea roja superior para darle toque de alerta */
+    border-top: 6px solid #EF4444;
 }
 
 .icono-error {
     width: 60px;
     height: 60px;
-    background-color: #EF4444; /* Rojo de alerta médica */
+    background-color: #EF4444;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -525,7 +523,7 @@ body {
 .body-dashboard {
     background-color: #F1F5F9;
     display: flex;
-    flex-direction: row; /* Layout horizontal: menú al lado del contenido */
+    flex-direction: row;
     width: 100vw;
     height: 100vh;
     overflow: hidden;

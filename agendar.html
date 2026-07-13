@@ -142,7 +142,6 @@
         const soloNumeros = /^[0-9]+$/.test(celularValor);
 
         if (!soloNumeros) {
-            // Si el texto contiene letras o símbolos, mostramos el modal ROJO de error
             modalError.classList.add('mostrar-modal');
         } else {
             // Si son puros números, mostramos el modal VERDE de éxito
