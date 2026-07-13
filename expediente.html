@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expediente Clínico - Consultorio Dental Guzmán</title>
+    <title>Directorio de Pacientes - Consultorio Dental Guzmán</title>
     <link rel="stylesheet" href="CSS/stylediv.CSS">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
@@ -24,7 +24,7 @@
             <a href="dashboard.html" class="menu-item">
                 <span class="icon">📊</span><span class="menu-text">Dashboard</span>
             </a>
-            <a href="agendar.html" class="menu-item">
+            <a href="#" class="menu-item">
                 <span class="icon">📅</span><span class="menu-text">Agenda de Citas</span>
             </a>
             <a href="expediente.html" class="menu-item activo">
@@ -36,17 +36,16 @@
             <a href="receta.html" class="menu-item">
                 <span class="icon">📄</span><span class="menu-text">Recetas Médicas</span>
             </a>
-            <a href="#" class="menu-item">
+            <a href="caja.html" class="menu-item">
                 <span class="icon">💳</span><span class="menu-text">Cobros y Caja</span>
             </a>
             <a href="index.html" class="menu-item salir">
                 <span class="icon">🚪</span><span class="menu-text">Cerrar Sesión</span>
             </a>
-        </nav>
+        </nav>s
     </aside>
 
     <div class="dashboard-layout">
-        
         <header class="navbar-dashboard">
             <div class="logo-dashboard">
                 <h1>Consultorio <span>Dental Guzmán</span></h1>
@@ -59,74 +58,71 @@
 
         <main class="dashboard-content">
             
-            <div class="paciente-header">
-                <div class="paciente-info-principal">
-                    <img src="https://via.placeholder.com/100x100.png?text=CM" alt="Foto Paciente" class="paciente-foto">
-                    <div>
-                        <h2 class="paciente-nombre">Carlos Mendoza Valdez</h2>
-                        <p class="paciente-id">ID Paciente: #004582 | Edad: 34 años</p>
-                    </div>
-                </div>
-                <div class="paciente-acciones">
-                    <button class="btn-tabla btn-tabla-secundario">Editar Datos</button>
-                    <button class="btn-tabla">Guardar Cambios</button>
+            <div class="paciente-header" style="padding: 15px 30px; margin-bottom: 20px;">
+                <div class="paciente-info-principal" style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                    <h2 class="paciente-nombre" style="font-size: 1.4rem; margin:0;">Directorio de Pacientes</h2>
+                    <button class="btn-tabla" style="background-color: var(--color-acento-verde);">+ Nuevo Paciente</button>
                 </div>
             </div>
 
-            <div class="expediente-grid">
+            <div class="tarjeta-expediente">
                 
-                <div class="expediente-col-izq">
-                    <div class="tarjeta-expediente">
-                        <h3 class="titulo-tarjeta">Datos Generales</h3>
-                        <div class="datos-lista">
-                            <p><strong>Teléfono:</strong> 967 123 4567</p>
-                            <p><strong>Correo:</strong> carlos.mendoza@email.com</p>
-                            <p><strong>Dirección:</strong> Av. Central 45, Barrio Centro</p>
-                            <p><strong>Ocupación:</strong> Ingeniero de Software</p>
-                            <p><strong>Motivo de Consulta:</strong> Dolor en molar superior derecho al masticar.</p>
-                        </div>
-                    </div>
-
-                    <div class="tarjeta-expediente">
-                        <h3 class="titulo-tarjeta">Cuestionario Médico (Antecedentes)</h3>
-                        <div class="datos-lista">
-                            <p><strong>Alergias:</strong> Penicilina <span class="badge" style="background:#FEE2E2; color:#EF4444;">Alerta</span></p>
-                            <p><strong>Enfermedades crónicas:</strong> Ninguna reportada</p>
-                            <p><strong>Medicamentos actuales:</strong> Paracetamol (ocasional)</p>
-                            <p><strong>Padecimientos del corazón:</strong> No</p>
-                            <p><strong>¿Ha tenido hemorragias?:</strong> No</p>
-                        </div>
-                    </div>
+                <div style="display: flex; gap: 15px; margin-bottom: 25px;">
+                    <input type="text" class="input-medico" placeholder="🔍 Buscar por nombre, ID o teléfono..." style="flex-grow: 1;">
+                    <button class="btn-tabla btn-tabla-secundario">Filtrar</button>
+                </div>
+                
+                <div class="tabla-responsive">
+                    <table class="tabla-medica">
+                        <thead>
+                            <tr>
+                                <th>ID Paciente</th>
+                                <th>Nombre Completo</th>
+                                <th>Teléfono</th>
+                                <th>Última Visita</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>#004582</strong></td>
+                                <td>Carlos Mendoza Valdez</td>
+                                <td>967 123 4567</td>
+                                <td>Hace 2 días</td>
+                                <td>
+                                    <a href="detalle_expediente.html" class="btn-tabla" style="text-decoration: none; display: inline-block;">Ver Expediente</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#004583</strong></td>
+                                <td>Ana Sofía Ruiz</td>
+                                <td>967 987 6543</td>
+                                <td>Hoy</td>
+                                <td>
+                                    <a href="#" class="btn-tabla btn-tabla-secundario" style="text-decoration: none; display: inline-block;">Ver Expediente</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#004584</strong></td>
+                                <td>Luis Fernando Torres</td>
+                                <td>967 555 1234</td>
+                                <td>Hace 1 mes</td>
+                                <td>
+                                    <a href="#" class="btn-tabla btn-tabla-secundario" style="text-decoration: none; display: inline-block;">Ver Expediente</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
-                <div class="expediente-col-der">
-                    <div class="tarjeta-odontograma-acceso">
-                        <h3>Mapa Dental</h3>
-                        <p>Visualiza y registra los tratamientos dentales del paciente de forma gráfica.</p>
-                        <a href="odontograma.html" class="btn-abrir-odontograma">
-                            <span class="icono-diente">🦷</span> ABRIR ODONTOGRAMA
-                        </a>
-                        <a href="visor3d.html" class="btn-abrir-odontograma" style="background-color: #1E293B; margin-top: 10px;">
-                            <span class="icono-diente">💀</span> ABRIR VISOR 3D CBCT
-                        </a>
-                    </div>
-
-                    <div class="tarjeta-expediente">
-                        <h3 class="titulo-tarjeta">Notas Clínicas</h3>
-                        <textarea class="textarea-notas" placeholder="Escribe observaciones de la sesión aquí..."></textarea>
-                    </div>
-                </div>
             </div>
-
         </main>
     </div>
 
     <script>
         const btnToggle = document.getElementById('btnToggle');
         const sidebar = document.getElementById('sidebar');
-        btnToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('colapsado');
-        });
+        btnToggle.addEventListener('click', () => sidebar.classList.toggle('colapsado'));
     </script>
 </body>
 </html>

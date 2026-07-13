@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expediente Clínico - Consultorio Dental Guzmán</title>
+    <link rel="stylesheet" href="CSS/stylediv.CSS">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="body-dashboard">
+
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="brand-info">
+                <h3>Panel Control</h3>
+                <p>Doctor / Especialista</p>
+            </div>
+            <button id="btnToggle" class="btn-toggle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard.html" class="menu-item">
+                <span class="icon">📊</span><span class="menu-text">Dashboard</span>
+            </a>
+            <a href="agendar.html" class="menu-item">
+                <span class="icon">📅</span><span class="menu-text">Agenda de Citas</span>
+            </a>
+            <a href="expediente.html" class="menu-item activo">
+                <span class="icon">👥</span><span class="menu-text">Expedientes Clínicos</span>
+            </a>
+            <a href="odontograma.html" class="menu-item">
+                <span class="icon">🦷</span><span class="menu-text">Odontograma</span>
+            </a>
+            <a href="receta.html" class="menu-item">
+                <span class="icon">📄</span><span class="menu-text">Recetas Médicas</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon">💳</span><span class="menu-text">Cobros y Caja</span>
+            </a>
+            <a href="index.html" class="menu-item salir">
+                <span class="icon">🚪</span><span class="menu-text">Cerrar Sesión</span>
+            </a>
+        </nav>
+    </aside>
+
+    <div class="dashboard-layout">
+        
+        <header class="navbar-dashboard">
+            <div class="logo-dashboard">
+                <h1>Consultorio <span>Dental Guzmán</span></h1>
+            </div>
+            <div class="user-profile">
+                <span>Dr. Guzmán</span>
+                <div class="avatar">D</div>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            
+            <div class="paciente-header">
+                <div class="paciente-info-principal">
+                    <img src="https://via.placeholder.com/100x100.png?text=CM" alt="Foto Paciente" class="paciente-foto">
+                    <div>
+                        <h2 class="paciente-nombre">Carlos Mendoza Valdez</h2>
+                        <p class="paciente-id">ID Paciente: #004582 | Edad: 34 años</p>
+                    </div>
+                </div>
+                <div class="paciente-acciones">
+                    <button class="btn-tabla btn-tabla-secundario">Editar Datos</button>
+                    <button class="btn-tabla">Guardar Cambios</button>
+                </div>
+            </div>
+
+            <div class="expediente-grid">
+                
+                <div class="expediente-col-izq">
+                    <div class="tarjeta-expediente">
+                        <h3 class="titulo-tarjeta">Datos Generales</h3>
+                        <div class="datos-lista">
+                            <p><strong>Teléfono:</strong> 967 123 4567</p>
+                            <p><strong>Correo:</strong> carlos.mendoza@email.com</p>
+                            <p><strong>Dirección:</strong> Av. Central 45, Barrio Centro</p>
+                            <p><strong>Ocupación:</strong> Ingeniero de Software</p>
+                            <p><strong>Motivo de Consulta:</strong> Dolor en molar superior derecho al masticar.</p>
+                        </div>
+                    </div>
+
+                    <div class="tarjeta-expediente">
+                        <h3 class="titulo-tarjeta">Cuestionario Médico (Antecedentes)</h3>
+                        <div class="datos-lista">
+                            <p><strong>Alergias:</strong> Penicilina <span class="badge" style="background:#FEE2E2; color:#EF4444;">Alerta</span></p>
+                            <p><strong>Enfermedades crónicas:</strong> Ninguna reportada</p>
+                            <p><strong>Medicamentos actuales:</strong> Paracetamol (ocasional)</p>
+                            <p><strong>Padecimientos del corazón:</strong> No</p>
+                            <p><strong>¿Ha tenido hemorragias?:</strong> No</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="expediente-col-der">
+                    <div class="tarjeta-odontograma-acceso">
+                        <h3>Mapa Dental</h3>
+                        <p>Visualiza y registra los tratamientos dentales del paciente de forma gráfica.</p>
+                        <a href="odontograma.html" class="btn-abrir-odontograma">
+                            <span class="icono-diente">🦷</span> ABRIR ODONTOGRAMA
+                        </a>
+                        <a href="visor3d.html" class="btn-abrir-odontograma" style="background-color: #1E293B; margin-top: 10px;">
+                            <span class="icono-diente">💀</span> ABRIR VISOR 3D CBCT
+                        </a>
+                    </div>
+
+                    <div class="tarjeta-expediente">
+                        <h3 class="titulo-tarjeta">Notas Clínicas</h3>
+                        <textarea class="textarea-notas" placeholder="Escribe observaciones de la sesión aquí..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        const btnToggle = document.getElementById('btnToggle');
+        const sidebar = document.getElementById('sidebar');
+        btnToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('colapsado');
+        });
+    </script>
+</body>
+</html>
