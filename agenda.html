@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda de Citas - Consultorio Dental Guzmán</title>
+    <link rel="stylesheet" href="CSS/stylediv.CSS">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="body-dashboard">
+
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="brand-info">
+                <h3>Panel Control</h3>
+                <p>Recepcionista / Admin</p>
+            </div>
+            <button id="btnToggle" class="btn-toggle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard.html" class="menu-item">
+                <span class="icon">📊</span><span class="menu-text">Dashboard</span>
+            </a>
+            <a href="agenda.html" class="menu-item activo">
+                <span class="icon">📅</span><span class="menu-text">Agenda de Citas</span>
+            </a>
+            <a href="expediente.html" class="menu-item">
+                <span class="icon">👥</span><span class="menu-text">Expedientes Clínicos</span>
+            </a>
+            <a href="odontograma.html" class="menu-item">
+                <span class="icon">🦷</span><span class="menu-text">Odontograma</span>
+            </a>
+            <a href="receta.html" class="menu-item">
+                <span class="icon">📄</span><span class="menu-text">Recetas Médicas</span>
+            </a>
+            <a href="caja.html" class="menu-item">
+                <span class="icon">💳</span><span class="menu-text">Cobros y Caja</span>
+            </a>
+            <a href="index.html" class="menu-item salir">
+                <span class="icon">🚪</span><span class="menu-text">Cerrar Sesión</span>
+            </a>
+        </nav>
+    </aside>
+
+    <div class="dashboard-layout">
+        <header class="navbar-dashboard">
+            <div class="logo-dashboard">
+                <h1>Consultorio <span>Dental Guzmán</span></h1>
+            </div>
+            <div class="user-profile">
+                <span>Recepción</span>
+                <div class="avatar" style="background-color: #F59E0B;">R</div>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            
+            <div class="paciente-header" style="padding: 15px 30px; margin-bottom: 20px;">
+                <div class="paciente-info-principal" style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                    <h2 class="paciente-nombre" style="font-size: 1.4rem; margin:0;">Gestión de Agenda</h2>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="date" class="input-medico" style="padding: 8px; width: auto;" value="2026-07-14">
+                        <button class="btn-tabla btn-tabla-secundario">📅 Ver Calendario Mensual</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="expediente-grid">
+                
+                <div class="tarjeta-expediente" style="margin-bottom: 0;">
+                    <h3 class="titulo-tarjeta">Citas Programadas (Hoy)</h3>
+                    
+                    <div class="tabla-responsive">
+                        <table class="tabla-medica">
+                            <thead>
+                                <tr>
+                                    <th>Hora</th>
+                                    <th>Paciente</th>
+                                    <th>Motivo</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>09:00 AM</strong></td>
+                                    <td>Carlos Mendoza</td>
+                                    <td>Valoración inicial</td>
+                                    <td><span class="badge-estado pagado" style="background:#D1FAE5; color:#065F46; border-color:#34D399;">🟢 Confirmada</span></td>
+                                    <td>
+                                        <a href="detalle_expediente.html" class="btn-accion-icon" title="Ver Expediente" style="text-decoration:none;">👥</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>10:00 AM</strong></td>
+                                    <td>Ana Ruiz</td>
+                                    <td>Limpieza dental</td>
+                                    <td><span class="badge-estado pendiente">🟡 En espera</span></td>
+                                    <td>
+                                        <a href="detalle_expediente.html" class="btn-accion-icon" title="Ver Expediente" style="text-decoration:none;">👥</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>11:30 AM</strong></td>
+                                    <td>Luis Torres</td>
+                                    <td>Extracción de molar</td>
+                                    <td><span class="badge-estado" style="background:#F1F5F9; color:#64748B; border:1px solid #CBD5E1;">⚪ No ha llegado</span></td>
+                                    <td>
+                                        <button class="btn-accion-icon" title="Reprogramar">🔄</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tarjeta-expediente" style="margin-bottom: 0; background-color: #F8FAFC;">
+                    <h3 class="titulo-tarjeta">Agendar Nueva Cita</h3>
+                    
+                    <form id="formNuevaCita" onsubmit="agendarCita(event)">
+                        <div class="grupo-input" style="margin-bottom: 15px;">
+                            <label>Buscar Paciente (Registrado):</label>
+                            <input type="text" class="input-medico" placeholder="Ej. Carlos Mendoza..." required>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                            <div class="grupo-input">
+                                <label>Fecha:</label>
+                                <input type="date" class="input-medico" required>
+                            </div>
+                            <div class="grupo-input">
+                                <label>Hora:</label>
+                                <input type="time" class="input-medico" required>
+                            </div>
+                        </div>
+
+                        <div class="grupo-input" style="margin-bottom: 15px;">
+                            <label>Doctor Asignado:</label>
+                            <select class="input-medico">
+                                <option>Dr. Guzmán (General)</option>
+                                <option>Dra. Elena (Ortodoncia)</option>
+                                <option>Dr. Roberto (Cirugía)</option>
+                            </select>
+                        </div>
+
+                        <div class="grupo-input" style="margin-bottom: 25px;">
+                            <label>Motivo de la Cita:</label>
+                            <select class="input-medico">
+                                <option>Valoración Inicial</option>
+                                <option>Limpieza / Profilaxis</option>
+                                <option>Extracción</option>
+                                <option>Tratamiento de Caries</option>
+                                <option>Otro</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-agendar btn-login" style="width: 100%;">
+                            ✚ CONFIRMAR CITA
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="modalCita">
+        <div class="modal-caja" style="max-width: 400px; text-align: center; padding: 30px;">
+            <div style="width: 60px; height: 60px; background-color: var(--color-primario-azul); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto; font-size: 1.8rem;">
+                📅
+            </div>
+            <h2 class="modal-titulo">¡Cita Agendada!</h2>
+            <p class="modal-texto">El espacio ha sido bloqueado en el calendario del doctor exitosamente.</p>
+            <button class="btn-tabla" style="background-color: var(--color-primario-azul); margin-top: 15px;" onclick="cerrarModalCita()">Aceptar</button>
+        </div>
+    </div>
+
+    <script>
+        const btnToggle = document.getElementById('btnToggle');
+        const sidebar = document.getElementById('sidebar');
+        btnToggle.addEventListener('click', () => sidebar.classList.toggle('colapsado'));
+
+        function agendarCita(event) {
+            event.preventDefault(); // Evita que la página se recargue
+            const btn = document.querySelector('button[type="submit"]');
+            btn.innerHTML = 'Guardando...';
+            
+            setTimeout(() => {
+                document.getElementById('modalCita').classList.add('mostrar-modal');
+                btn.innerHTML = '✚ CONFIRMAR CITA';
+                document.getElementById('formNuevaCita').reset(); // Limpia el formulario
+            }, 800);
+        }
+
+        function cerrarModalCita() {
+            document.getElementById('modalCita').classList.remove('mostrar-modal');
+        }
+    </script>
+</body>
+</html>

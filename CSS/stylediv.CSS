@@ -1391,3 +1391,71 @@ body {
     border-color: var(--color-primario-azul);
     transform: translateY(-2px);
 }
+
+/* --- VISTA: CALENDARIO MENSUAL DE AGENDA --- */
+.calendario-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.dia-header {
+    text-align: center;
+    font-weight: 900;
+    font-size: 0.8rem;
+    color: var(--color-texto-secundario);
+    padding-bottom: 10px;
+}
+
+.dia-caja {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    height: 70px;
+    padding: 8px;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--color-texto-oscuro);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.dia-caja:hover {
+    border-color: var(--color-primario-azul);
+    background: var(--color-azul-claro);
+    transform: translateY(-2px);
+}
+
+.dia-caja.hoy {
+    background: var(--color-primario-azul);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 10px rgba(26, 92, 154, 0.3);
+}
+
+.dia-inactivo {
+    color: #CBD5E1;
+    background: #F1F5F9;
+    pointer-events: none;
+}
+
+.contenedor-citas {
+    display: flex;
+    gap: 4px;
+    margin-top: auto;
+}
+
+.cita-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-acento-verde);
+    border-radius: 50%;
+}
+
+.cita-dot.lleno { 
+    background-color: #EF4444; 
+}
