@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cobros y Caja - Consultorio Dental Guzmán</title>
+    <link rel="stylesheet" href="CSS/stylediv.CSS">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="body-dashboard">
+
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="brand-info">
+                <h3>Panel Control</h3>
+                <p>Recepcionista / Admin</p>
+            </div>
+            <button id="btnToggle" class="btn-toggle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard.html" class="menu-item">
+                <span class="icon">📊</span><span class="menu-text">Dashboard</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon">📅</span><span class="menu-text">Agenda de Citas</span>
+            </a>
+            <a href="expediente.html" class="menu-item">
+                <span class="icon">👥</span><span class="menu-text">Expedientes Clínicos</span>
+            </a>
+            <a href="odontograma.html" class="menu-item">
+                <span class="icon">🦷</span><span class="menu-text">Odontograma</span>
+            </a>
+            <a href="receta.html" class="menu-item">
+                <span class="icon">📄</span><span class="menu-text">Recetas Médicas</span>
+            </a>
+            <a href="caja.html" class="menu-item activo">
+                <span class="icon">💳</span><span class="menu-text">Cobros y Caja</span>
+            </a>
+            <a href="index.html" class="menu-item salir">
+                <span class="icon">🚪</span><span class="menu-text">Cerrar Sesión</span>
+            </a>
+        </nav>
+    </aside>
+
+    <div class="dashboard-layout">
+        <header class="navbar-dashboard">
+            <div class="logo-dashboard">
+                <h1>Consultorio <span>Dental Guzmán</span></h1>
+            </div>
+            <div class="user-profile">
+                <span>Caja Principal</span>
+                <div class="avatar" style="background-color: var(--color-primario-azul);">C</div>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            
+            <div class="paciente-header" style="padding: 15px 30px; margin-bottom: 20px;">
+                <div class="paciente-info-principal">
+                    <div>
+                        <h2 class="paciente-nombre" style="font-size: 1.2rem; margin:0;">Módulo de Facturación y Cobro</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="expediente-grid">
+                
+                <div class="tarjeta-expediente" style="margin-bottom: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px;">
+                        <h3 class="titulo-tarjeta" style="border: none; padding: 0; margin: 0;">Detalle de la Cuenta</h3>
+                        <span class="badge-estado pendiente">Folio: #F-00892</span>
+                    </div>
+
+                    <div class="grupo-input" style="margin-bottom: 20px; max-width: 60%;">
+                        <label>Paciente a cobrar:</label>
+                        <select class="input-medico" style="background-color: #F8FAFC;">
+                            <option>Carlos Mendoza Valdez - ID: #004582</option>
+                        </select>
+                    </div>
+
+                    <div class="tabla-responsive">
+                        <table class="tabla-medica" style="border: 1px solid #E2E8F0;">
+                            <thead>
+                                <tr>
+                                    <th>Concepto / Tratamiento</th>
+                                    <th>Pieza(s)</th>
+                                    <th>Cant.</th>
+                                    <th style="text-align: right;">Precio U.</th>
+                                    <th style="text-align: right;">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Resina Simple (Estética)</strong></td>
+                                    <td>#14, #16, #25</td>
+                                    <td>3</td>
+                                    <td style="text-align: right;">$ 500.00</td>
+                                    <td style="text-align: right; font-weight: 700;">$ 1,500.00</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Materiales Quirúrgicos (Anestesia)</strong></td>
+                                    <td>-</td>
+                                    <td>1</td>
+                                    <td style="text-align: right;">$ 250.00</td>
+                                    <td style="text-align: right; font-weight: 700;">$ 250.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tarjeta-expediente" style="margin-bottom: 0; background-color: #F8FAFC; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <h3 class="titulo-tarjeta">Resumen de Liquidación</h3>
+                        
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; color: var(--color-texto-secundario); font-weight: 700; font-size: 0.95rem;">
+                            <span>Subtotal Bruto:</span>
+                            <span>$ 1,750.00</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 15px; color: var(--color-texto-secundario); font-weight: 700; font-size: 0.95rem;">
+                            <span>Descuento Clínico:</span>
+                            <span>- $ 0.00</span>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-top: 15px; border-top: 2px dashed #CBD5E1;">
+                            <span style="font-size: 1.1rem; font-weight: 800; color: var(--color-texto-oscuro);">TOTAL NETO:</span>
+                            <span style="font-size: 1.8rem; font-weight: 900; color: var(--color-acento-verde);">$ 1,750.00</span>
+                        </div>
+
+                        <div class="grupo-input" style="margin-bottom: 15px;">
+                            <label>Método de Liquidación:</label>
+                            <select class="input-medico" style="background-color: white;">
+                                <option>💳 Tarjeta de Crédito / Débito</option>
+                                <option>💵 Efectivo M.N.</option>
+                                <option>🏦 Transferencia Interbancaria</option>
+                            </select>
+                        </div>
+
+                        <div class="grupo-input" style="margin-bottom: 20px;">
+                            <label>Monto Recibido ($):</label>
+                            <input type="number" class="input-medico" style="background-color: white; font-weight: 700;" value="1750.00">
+                        </div>
+                    </div>
+
+                    <button class="btn-agendar btn-login" style="margin-top: 10px; width: 100%;" onclick="procesarPago()">
+                        PROCESAR COBRO Y EMITIR TICKET
+                    </button>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="modalPago">
+        <div class="modal-caja" style="max-width: 420px; text-align: center; padding: 35px 25px;">
+            <button class="btn-cerrar-modal" onclick="cerrarModalPago()">×</button>
+            
+            <div style="width: 60px; height: 60px; background-color: var(--color-acento-verde); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto; font-size: 1.8rem; box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);">
+                ✓
+            </div>
+            
+            <h2 class="modal-titulo" style="font-size: 1.3rem; margin-bottom: 10px;">¡Transacción Exitosa!</h2>
+            <p class="modal-texto" style="font-size: 0.9rem; color: var(--color-texto-secundario); margin-bottom: 20px;">
+                El cobro del folio <strong>#F-00892</strong> por un total de <strong>$1,750.00</strong> ha sido asentado en la caja general del consultorio.
+            </p>
+            
+            <div style="background: #F1F5F9; border: 1px dashed #CBD5E1; padding: 15px; border-radius: 6px; text-align: left; font-family: monospace; font-size: 0.8rem; color: #334155; margin-bottom: 25px;">
+                <p style="text-align: center; font-weight: bold; margin-bottom: 5px;">DENTAL GUZMÁN S.A.</p>
+                <p style="text-align: center; margin-bottom: 10px;">TICKET DE CAJA: #F-00892</p>
+                <p>FECHA: 13/Jul/2026 13:45</p>
+                <p>PACIENTE: Carlos Mendoza V.</p>
+                <p>--------------------------------</p>
+                <p>3x Resina Simple      $1500.00</p>
+                <p>1x Materiales         $ 250.00</p>
+                <p>--------------------------------</p>
+                <p style="font-weight: bold;">TOTAL PAGADO:        $1750.00</p>
+                <p style="text-align: center; margin-top: 10px;">¡Gracias por su confianza!</p>
+            </div>
+            
+            <div style="display: flex; gap: 12px; justify-content: center;">
+                <button class="btn-tabla btn-tabla-secundario" onclick="cerrarModalPago()">Cerrar Vista</button>
+                <button class="btn-tabla" style="background-color: var(--color-primario-azul);" onclick="alert('Imprimiendo comprobante en hardware de tickets...')">🖨️ Imprimir</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Menú lateral colapsable
+        const btnToggle = document.getElementById('btnToggle');
+        const sidebar = document.getElementById('sidebar');
+        btnToggle.addEventListener('click', () => sidebar.classList.toggle('colapsado'));
+
+        // Simulación de procesamiento asíncrono
+        function procesarPago() {
+            const btn = document.querySelector('.btn-login');
+            const textoOriginal = btn.innerHTML;
+            btn.innerHTML = 'Validando Transacción... ⏳';
+            btn.style.opacity = '0.7';
+            btn.style.pointerEvents = 'none';
+
+            setTimeout(() => {
+                document.getElementById('modalPago').classList.add('mostrar-modal');
+                btn.innerHTML = textoOriginal;
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+            }, 1200); // 1.2 segundos de delay de red simulado
+        }
+
+        function cerrarModalPago() {
+            document.getElementById('modalPago').classList.remove('mostrar-modal');
+            // Redirigimos automáticamente al dashboard principal al terminar el flujo financiero
+            setTimeout(() => {
+                window.location.href = "dashboard.html";
+            }, 300);
+        }
+    </script>
+</body>
+</html>
