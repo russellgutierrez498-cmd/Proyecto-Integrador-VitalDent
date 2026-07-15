@@ -49,25 +49,105 @@
                     <h4>APROVECHA!!!</h4>
                     <p class="subtitulo-promo">SABEMOS QUE LA DEL JUICIO ES MOLESTA</p>
                     <p class="descripcion-promo">La extracción viene por nuestra parte (El cuidado viene por separado)</p>
-                    <button class="btn-promo">AGENDAR CON PROMOCIÓN</button>
+                    <button class="btn-promo" onclick="abrirModalPromo('Extracción Molar del Juicio')">AGENDAR CON PROMOCIÓN</button>
                 </div>
 
                 <div class="tarjeta-promo">
                     <h4>APROVECHA!!!</h4>
                     <p class="subtitulo-promo">SOLO LOS MARTES</p>
                     <p class="descripcion-promo">15% de descuento en Limpieza Dental</p>
-                    <button class="btn-promo">AGENDAR CON PROMOCIÓN</button>
+                    <button class="btn-promo" onclick="abrirModalPromo('Limpieza Dental')">AGENDAR CON PROMOCIÓN</button>
                 </div>
 
                 <div class="tarjeta-promo">
                     <h4>APROVECHA!!!</h4>
                     <p class="subtitulo-promo">SI LLEVAS MÁS DE DOS CITAS</p>
                     <p class="descripcion-promo">Te damos un descuento del 15 % en tu siguiente cita</p>
-                    <button class="btn-promo">AGENDAR CON PROMOCIÓN</button>
+                    <button class="btn-promo" onclick="abrirModalPromo('Descuento por múltiples citas')">AGENDAR CON PROMOCIÓN</button>
                 </div>
             </div>
         </section>
     </main>
+
+    <div class="modal-overlay" id="modalPromo">
+        <div class="modal-caja" style="max-width: 550px; width: 95%; text-align: left; padding: 30px;">
+            <button class="btn-cerrar-modal" onclick="cerrarModalPromo()">×</button>
+            
+            <h2 class="modal-titulo" style="font-size: 1.4rem; margin-bottom: 5px; color: var(--color-texto-oscuro);">
+                Asegura tu Promoción
+            </h2>
+            <p style="font-size: 0.85rem; color: var(--color-texto-secundario); margin-bottom: 20px;">
+                Estás solicitando: <strong id="promoSeleccionada" style="color: var(--color-primario-azul);"></strong>
+            </p>
+            
+            <form id="formCitaPublica" onsubmit="enviarSolicitud(event)">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div class="grupo-input">
+                        <label>Nombre Completo:</label>
+                        <input type="text" class="input-medico" placeholder="Ej. Juan Pérez" required>
+                    </div>
+                    <div class="grupo-input">
+                        <label>WhatsApp o Teléfono:</label>
+                        <input type="tel" class="input-medico" placeholder="Ej. 967 123 4567" required>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div class="grupo-input">
+                        <label>Fecha Deseada:</label>
+                        <input type="date" class="input-medico" required>
+                    </div>
+                    <div class="grupo-input">
+                        <label>Hora Deseada:</label>
+                        <input type="time" class="input-medico" required>
+                    </div>
+                </div>
+
+                <div class="grupo-input" style="margin-bottom: 25px;">
+                    <label>Doctor / Especialista de preferencia:</label>
+                    <select class="input-medico">
+                        <option>Cualquier Especialista Disponible</option>
+                        <option>Dr. Guzmán (Odontología General)</option>
+                        <option>Dra. Elena (Ortodoncia)</option>
+                        <option>Dr. Roberto (Cirugía Maxilofacial)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-agendar btn-login" style="width: 100%; margin: 0;">
+                    SOLICITAR CITA CON DESCUENTO
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function abrirModalPromo(nombrePromo) {
+            document.getElementById('promoSeleccionada').innerText = nombrePromo;
+            document.getElementById('modalPromo').classList.add('mostrar-modal');
+        }
+
+        function cerrarModalPromo() {
+            document.getElementById('modalPromo').classList.remove('mostrar-modal');
+            document.getElementById('formCitaPublica').reset();
+        }
+
+        // Función que simula el envío a la base de datos
+        function enviarSolicitud(event) {
+            event.preventDefault();
+            
+            const btn = event.target.querySelector('button[type="submit"]');
+            const textoOriginal = btn.innerHTML;
+            btn.innerHTML = 'Procesando tu cita... ⏳';
+            btn.style.opacity = '0.7';
+
+            setTimeout(() => {
+                alert("¡Cita Solicitada con Éxito! Tu registro ha quedado bloqueado en nuestro sistema. El Consultorio Dental Guzmán te enviará un WhatsApp de confirmación en unos minutos.");
+                cerrarModalPromo();
+                btn.innerHTML = textoOriginal;
+                btn.style.opacity = '1';
+            }, 1200);
+        }
+    </script>
 
 </body>
 </html>

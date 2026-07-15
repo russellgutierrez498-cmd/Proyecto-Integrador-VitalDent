@@ -134,31 +134,27 @@
 
     // Cuando el usuario le da a "Confirmar"
     form.addEventListener('submit', function(e) {
-        e.preventDefault(); // Evita que la página se recargue
-
+        e.preventDefault();
         const celularValor = inputCelular.value;
         
-        // Expresión que verifica que TODOS los caracteres sean solo números
         const soloNumeros = /^[0-9]+$/.test(celularValor);
 
         if (!soloNumeros) {
             modalError.classList.add('mostrar-modal');
         } else {
-            // Si son puros números, mostramos el modal VERDE de éxito
             modalExito.classList.add('mostrar-modal');
         }
     });
 
-    // Cerrar modal de éxito y regresar al inicio
     btnCerrarExito.addEventListener('click', function() {
         modalExito.classList.remove('mostrar-modal');
-        window.location.href = 'index.html'; // Redirección
+        window.location.href = 'index.html';
     });
 
     // Cerrar modal de error y quedarse en la página
     btnCerrarError.addEventListener('click', function() {
         modalError.classList.remove('mostrar-modal');
-        inputCelular.focus(); // Ponemos el cursor en el celular para corregir
+        inputCelular.focus();
     });
     </script>
 </body>
