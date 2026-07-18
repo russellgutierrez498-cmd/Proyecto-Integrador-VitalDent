@@ -37,12 +37,12 @@
                 <a href="agendar.html" style="text-decoration: none;"><button class="btn-agendar">Agendar cita</button></a>
             </div>
             <div class="hero-image">
-                <img src="https://via.placeholder.com/300x300.png?text=Dentista" alt="Dentista profesional sonriendo" class="dentist-img">
+                <img src="/img/imagen1.webp" alt="Dentista profesional sonriendo" class="dentist-img">
             </div>
         </section>
 
         <section class="promociones">
-            <h3 class="promociones-titulo">PROMOCIONES DEL DIA</h3>
+            <h3 class="promociones-titulo">PROMOCIONES</h3>
             
             <div class="tarjetas-grid">
                 <div class="tarjeta-promo">
@@ -137,7 +137,7 @@
             
             const btn = event.target.querySelector('button[type="submit"]');
             const textoOriginal = btn.innerHTML;
-            btn.innerHTML = 'Procesando tu cita... ⏳';
+            btn.innerHTML = 'Procesando tu cita...';
             btn.style.opacity = '0.7';
 
             setTimeout(() => {
