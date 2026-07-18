@@ -1769,3 +1769,212 @@ body {
     justify-content: flex-end;
     gap: 12px;
 }
+
+
+.body-paciente {
+    background-color: #F7FAFC;
+    display: block;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+/* Header del Paciente */
+.paciente-header {
+    background-color: white;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.brand-paciente {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-paciente h2 {
+    color: var(--sidebar-bg); 
+    font-size: 1.4rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.portal-badge {
+    background-color: var(--primary-teal);
+    color: white;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.welcome-text {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+/* Layout Principal */
+.paciente-layout {
+    max-width: 1300px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr; 
+    gap: 30px;
+}
+
+/* Visor Card */
+.visor-card {
+    padding: 0; 
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.visor-header-interno {
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.visor-header-interno h3 {
+    color: var(--text-dark);
+}
+
+.fecha-estudio {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Simulador 3D Paciente */
+.simulador-3d-paciente {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-3d-mockup {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    opacity: 0.85;
+}
+
+.overlay-instruccion {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: var(--sidebar-bg);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Controles simplificados */
+.controles-basicos-paciente {
+    padding: 25px;
+    display: flex;
+    gap: 40px;
+    background-color: #f8fafc;
+}
+
+.slider-paciente {
+    width: 100%;
+    margin-top: 10px;
+    accent-color: var(--primary-teal);
+}
+
+/* Panel Derecho (Notas) */
+.notas-card {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.titulo-seccion {
+    color: var(--sidebar-bg);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.doctor-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar-doc {
+    width: 50px;
+    height: 50px;
+    background-color: var(--sidebar-bg);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.text-muted { color: var(--text-muted); font-size: 0.9rem; }
+
+.caja-diagnostico {
+    background-color: #F0F7FF; 
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid var(--sidebar-bg);
+}
+
+.caja-diagnostico h4 {
+    color: var(--sidebar-bg);
+    margin-bottom: 10px;
+}
+
+.caja-diagnostico p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-dark);
+    font-style: italic;
+}
+
+.badges-piezas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-block {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 12px;
+    font-size: 1rem;
+}
