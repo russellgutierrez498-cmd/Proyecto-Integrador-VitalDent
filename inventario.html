@@ -46,18 +46,15 @@
         </nav>
     </aside>
 
-    <!-- Contenedor principal de tu Layout -->
     <div class="dashboard-layout">
         <main class="dashboard-content">
             
             <div class="page-container">
-                <!-- Encabezado del módulo -->
                 <div class="card header-actions">
                     <h2>Inventario de Insumos</h2>
-                    <button class="btn btn-teal">+ Nuevo Artículo</button>
+                    <button class="btn btn-teal" id="btnAbrirModal">+ Nuevo Artículo</button>
                 </div>
 
-                <!-- Tarjeta de la Tabla -->
                 <div class="card">
                     <div class="search-bar-container">
                         <input type="text" class="search-input" placeholder="Buscar por código, artículo o categoría...">
@@ -111,9 +108,84 @@
                     </div>
                 </div>
             </div>
+
+<div id="modalNuevoArticulo" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Agregar Nuevo Artículo</h3>
+            <span class="close-modal" id="btnCerrarModal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form id="formNuevoArticulo">
+                <div class="form-group">
+                    <label>Código del Insumo</label>
+                    <input type="text" placeholder="Ej. #INS-120" class="input-control">
+                </div>
+                <div class="form-group">
+                    <label>Nombre del Artículo</label>
+                    <input type="text" placeholder="Ej. Agujas Dentales" class="input-control">
+                </div>
+                <div class="form-group">
+                    <label>Categoría</label>
+                    <select class="input-control">
+                        <option value="">Selecciona una categoría</option>
+                        <option value="restauracion">Restauración</option>
+                        <option value="desechables">Desechables</option>
+                        <option value="anestesicos">Anestésicos</option>
+                        <option value="instrumental">Instrumental</option>
+                    </select>
+                </div>
+                <div class="form-group row-group">
+                    <div class="half">
+                        <label>Stock Inicial</label>
+                        <input type="number" placeholder="Ej. 10" class="input-control">
+                    </div>
+                    <div class="half">
+                        <label>Unidad de Medida</label>
+                        <select class="input-control">
+                            <option value="cajas">Cajas</option>
+                            <option value="piezas">Piezas</option>
+                            <option value="jeringas">Jeringas</option>
+                            <option value="bolsas">Bolsas</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-gray" id="btnCancelarModal">Cancelar</button>
+            <button class="btn btn-teal">Guardar Artículo</button>
+        </div>
+    </div>
+</div>
             
         </main>
     </div>
+
+    <script>
+    const modal = document.getElementById('modalNuevoArticulo');
+    const btnAbrir = document.getElementById('btnAbrirModal');
+    const btnCerrar = document.getElementById('btnCerrarModal');
+    const btnCancelar = document.getElementById('btnCancelarModal');
+
+    btnAbrir.addEventListener('click', () => {
+        modal.classList.add('mostrar');
+    });
+
+    btnCerrar.addEventListener('click', () => {
+        modal.classList.remove('mostrar');
+    });
+
+    btnCancelar.addEventListener('click', () => {
+        modal.classList.remove('mostrar');
+    });
+
+    window.addEventListener('click', (evento) => {
+        if (evento.target === modal) {
+            modal.classList.remove('mostrar');
+        }
+    });
+</script>
 
 </body>
 </html>
