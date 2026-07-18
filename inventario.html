@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario - Consultorio Dental Guzmán</title>
+    <link rel="stylesheet" href="css/stylediv.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="body-dashboard">
+
+    <!-- Sidebar idéntico a tu estructura -->
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="brand-info">
+                <h3>Panel Control</h3>
+                <p>Administración</p>
+            </div>
+            <button id="btnToggle" class="btn-toggle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard.html" class="menu-item">
+                <span class="icon"></span><span class="menu-text">Dashboard</span>
+            </a>
+            <a href="agenda.html" class="menu-item">
+                <span class="icon"></span><span class="menu-text">Agenda de Citas</span>
+            </a>
+            <a href="expediente.html" class="menu-item">
+                <span class="icon"></span><span class="menu-text">Expedientes Clínicos</span>
+            </a>
+            <a href="odontograma.html" class="menu-item">
+                <span class="icon"></span><span class="menu-text">Odontograma</span>
+            </a>
+            <a href="receta.html" class="menu-item">
+                <span class="icon"></span><span class="menu-text">Recetas Médicas</span>
+            </a>
+            <!-- Se añade la clase 'activo' a la vista actual -->
+            <a href="inventario.html" class="menu-item activo">
+                <span class="icon"></span><span class="menu-text">Inventario</span>
+            </a>
+            <a href="caja.html" class="menu-item">
+                <span class="icon"></span><span class="menu-text">Cobros y Caja</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Contenedor principal de tu Layout -->
+    <div class="dashboard-layout">
+        <main class="dashboard-content">
+            
+            <div class="page-container">
+                <!-- Encabezado del módulo -->
+                <div class="card header-actions">
+                    <h2>Inventario de Insumos</h2>
+                    <button class="btn btn-teal">+ Nuevo Artículo</button>
+                </div>
+
+                <!-- Tarjeta de la Tabla -->
+                <div class="card">
+                    <div class="search-bar-container">
+                        <input type="text" class="search-input" placeholder="Buscar por código, artículo o categoría...">
+                        <button class="btn btn-gray">Filtrar</button>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Artículo</th>
+                                    <th>Stock Actual</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#INS-045</td>
+                                    <td>
+                                        <div class="item-name">Resina Compuesta 3M</div>
+                                        <div class="item-category">Restauración</div>
+                                    </td>
+                                    <td>24 jeringas</td>
+                                    <td><span class="badge badge-success">En Stock</span></td>
+                                    <td><button class="btn btn-blue">Actualizar</button></td>
+                                </tr>
+                                <tr>
+                                    <td>#INS-082</td>
+                                    <td>
+                                        <div class="item-name">Anestesia Lidocaína 2%</div>
+                                        <div class="item-category">Anestésicos</div>
+                                    </td>
+                                    <td>5 cajas</td>
+                                    <td><span class="badge badge-warning">Stock Bajo</span></td>
+                                    <td><button class="btn btn-blue">Actualizar</button></td>
+                                </tr>
+                                <tr>
+                                    <td>#INS-110</td>
+                                    <td>
+                                        <div class="item-name">Guantes de Látex (Talla M)</div>
+                                        <div class="item-category">Desechables</div>
+                                    </td>
+                                    <td>0 cajas</td>
+                                    <td><span class="badge badge-danger">Agotado</span></td>
+                                    <td><button class="btn btn-blue">Actualizar</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+
+</body>
+</html>

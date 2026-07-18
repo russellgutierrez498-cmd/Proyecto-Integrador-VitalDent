@@ -1518,3 +1518,148 @@ body {
     object-fit: cover;
     object-position: center center;
 }
+
+:root {
+    --primary-teal: #1DB99B;
+    --primary-teal-hover: #179c83;
+    --btn-blue: #1C5A94;
+    --btn-gray: #E2E8F0;
+    --text-dark: #2D3748;
+    --text-muted: #718096;
+    --border-color: #E2E8F0;
+}
+
+/* Estructura de la vista */
+.page-container {
+    padding: 20px;
+    width: 100%;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+    margin-bottom: 20px;
+}
+
+/* Encabezado e inputs */
+.header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-actions h2 {
+    color: #1A548B;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.search-bar-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #1A548B;
+}
+
+/* Botones */
+.btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    transition: 0.2s;
+}
+
+.btn-teal { background-color: var(--primary-teal); color: white; }
+.btn-teal:hover { background-color: var(--primary-teal-hover); }
+.btn-blue { background-color: var(--btn-blue); color: white; }
+.btn-gray { background-color: var(--btn-gray); color: var(--text-dark); }
+
+/* Tabla de Inventario */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.table-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.table-wrapper th {
+    padding: 15px 10px;
+    border-bottom: 2px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 800; /* Aprovechando Nunito extra bold */
+}
+
+.table-wrapper td {
+    padding: 18px 10px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.95rem;
+    vertical-align: middle;
+}
+
+.table-wrapper tr:last-child td {
+    border-bottom: none;
+}
+
+.item-name {
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.item-category {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* Badges de Estado */
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid;
+}
+
+.badge::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.badge-success { background-color: #E6F6ED; color: #1e7e34; border-color: #c3e6cb; }
+.badge-success::before { background-color: #1e7e34; }
+
+.badge-warning { background-color: #FFF3CD; color: #856404; border-color: #ffeeba; }
+.badge-warning::before { background-color: #ffc107; }
+
+.badge-danger { background-color: #F8D7DA; color: #721c24; border-color: #f5c6cb; }
+.badge-danger::before { background-color: #dc3545; }
