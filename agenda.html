@@ -94,47 +94,45 @@
                 <div class="tarjeta-expediente" style="margin-bottom: 0; background-color: #F8FAFC;">
                     <h3 class="titulo-tarjeta">Agendar Nueva Cita</h3>
                     
-                    <form id="formNuevaCita" onsubmit="agendarCita(event)">
-                        <div class="grupo-input" style="margin-bottom: 15px;">
-                            <label>Buscar Paciente (Registrado):</label>
-                            <input type="text" class="input-medico" placeholder="Ej. Carlos Mendoza..." required>
-                        </div>
+                   <form id="formNuevaCita">
+    
+                     <div class="grupo-input" style="margin-bottom: 15px;">
+                         <label>Buscar Paciente (Registrado):</label>
+                     <select id="id_paciente" class="form-control">
+                         <option value="" disabled selected>Cargando pacientes...</option>
+                     </select>
+                 </div>
 
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                            <div class="grupo-input">
-                                <label>Fecha:</label>
-                                <input type="date" class="input-medico" required>
-                            </div>
-                            <div class="grupo-input">
-                                <label>Hora:</label>
-                                <input type="time" class="input-medico" required>
-                            </div>
-                        </div>
+                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                     <div class="grupo-input">
+                         <label>Fecha:</label>
+                         <input type="date" class="input-medico" id="fecha" required>
+                     </div>
+                     <div class="grupo-input">
+                         <label>Hora:</label>
+                        <input type="time" class="input-medico" id="hora" required>
+                     </div>
+                 </div>
 
-                        <div class="grupo-input" style="margin-bottom: 15px;">
-                            <label>Doctor Asignado:</label>
-                            <select class="input-medico">
-                                <option>Dr. Guzmán (General)</option>
-                                <option>Dra. Elena (Ortodoncia)</option>
-                                <option>Dr. Roberto (Cirugía)</option>
-                            </select>
-                        </div>
+                 <div class="grupo-input" style="margin-bottom: 25px;">
+                     <label>Motivo de la cita:</label>
+                         <select class="input-medico" id="motivo">
+                             <option>Valoración Inicial</option>
+                             <option>Limpieza dental</option>
+                          </select>
+                 </div>
 
-                        <div class="grupo-input" style="margin-bottom: 25px;">
-                            <label>Motivo de la Cita:</label>
-                            <select class="input-medico">
-                                <option>Valoración Inicial</option>
-                                <option>Limpieza / Profilaxis</option>
-                                <option>Extracción</option>
-                                <option>Tratamiento de Caries</option>
-                                <option>Otro</option>
-                            </select>
-                        </div>
-
-                        <button type="submit" class="btn-agendar btn-login" style="width: 100%;">
-                            ✚ CONFIRMAR CITA
-                        </button>
-                    </form>
+                 <div class="grupo-input" style="margin-bottom: 25px;">
+                     <label>Doctor / Especialista:</label>
+                         <select class="input-medico" id="id_doctor">
+                             <option value="1">Dr. Guzmán (Odontología General)</option>
+                             <option value="2">Dra. Elena (Ortodoncia)</option>
+                             <option value="3">Dr. Roberto (Cirugía Maxilofacial)</option>
+                          </select>
+                    </div>
+    
+                 <button type="submit" class="btn-primario">+ CONFIRMAR CITA</button>
+                </form>
                 </div>
 
             </div>
@@ -306,6 +304,60 @@
             console.error("Error trayendo las citas:", error);
         }
     });
+
+    document.getElementById('formNuevaCita').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+   const nuevaCita = {
+    id_paciente: parseInt(document.getElementById('id_paciente').value),
+    id_doctor: parseInt(document.getElementById('id_doctor').value), // <-- LÍNEA NUEVA
+    fecha: document.getElementById('fecha').value,
+    hora: document.getElementById('hora').value,
+    motivo: document.getElementById('motivo').value
+};
+
+    try {
+        const respuesta = await fetch('http://localhost:7070/api/citas', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(nuevaCita)
+        });
+
+        if(respuesta.ok) {
+            alert("¡Cita agendada con éxito!");
+            window.location.reload();
+        } else {
+            alert("Hubo un error al guardar la cita.");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+</script>
+
+<script>
+async function cargarPacientes() {
+    try {
+        // 1. Pedimos los datos a Java
+        const respuesta = await fetch('/api/pacientes');
+        const pacientes = await respuesta.json();
+        
+        const select = document.getElementById('id_paciente');
+        select.innerHTML = 'Selecciona un paciente...';
+        
+        pacientes.forEach(paciente => {
+            const opcion = document.createElement('option');
+            opcion.value = paciente.id_paciente;
+            opcion.textContent = paciente.nombre;
+            select.appendChild(opcion);
+        });
+        
+    } catch (error) {
+        console.error("No se pudieron cargar los pacientes:", error);
+    }
+}
+
+cargarPacientes();
 </script>
 </body>
 </html>
