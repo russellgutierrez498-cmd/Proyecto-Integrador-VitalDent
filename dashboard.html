@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Administración - Consultorio Dental Guzmán</title>
-        <link rel="stylesheet" href="CSS/stylediv.CSS">
+    <title>Dashboard - Consultorio Dental Guzmán</title>
+    <link rel="stylesheet" href="css/stylediv.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Librería Chart.js para las gráficas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="body-dashboard">
 
+    <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
         <div class="sidebar-header">
             <div class="brand-info">
                 <h3>Panel Control</h3>
-                <p>Recepcionista</p>
+                <p>Administración</p>
             </div>
-            <button id="btnToggle" class="btn-toggle">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-            </button>
         </div>
 
         <nav class="sidebar-menu">
@@ -30,13 +30,13 @@
             <a href="expediente.html" class="menu-item">
                 <span class="icon"></span><span class="menu-text">Expedientes Clínicos</span>
             </a>
-            <a href="#" class="menu-item">
+            <a href="odontograma.html" class="menu-item">
                 <span class="icon"></span><span class="menu-text">Odontograma</span>
             </a>
             <a href="receta.html" class="menu-item">
                 <span class="icon"></span><span class="menu-text">Recetas Médicas</span>
             </a>
-            <a href="inventario.html" class="menu-item activo">
+            <a href="inventario.html" class="menu-item">
                 <span class="icon"></span><span class="menu-text">Inventario</span>
             </a>
             <a href="caja.html" class="menu-item">
@@ -49,68 +49,133 @@
     </aside>
 
     <div class="dashboard-layout">
-        
-        <header class="navbar-dashboard">
-            <div class="logo-dashboard">
-                <h1>Consultorio <span>Dental Guzmán</span></h1>
-            </div>
-            <div class="user-profile">
-                <span>Hola, Recepción</span>
-                <div class="avatar">R</div>
-            </div>
-        </header>
-
         <main class="dashboard-content">
-            <h2 class="content-title">Vista de Agenda Diaria</h2>
+            
+            <div class="page-container">
+                <div class="header-actions" style="margin-bottom: 20px;">
+                    <h2>Métricas y Rendimiento</h2>
+                </div>
 
-            <div class="tabla-contenedor">
-                <table class="tabla-medica">
-                    <thead>
-                        <tr>
-                            <th>Hora</th>
-                            <th>Paciente</th>
-                            <th>Motivo de la Cita</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>09:00 AM</strong></td>
-                            <td>Carlos Mendoza</td>
-                            <td>Valoración Inicial</td>
-                            <td><span class="badge badge-confirmada">🟢 Confirmada</span></td>
-                            <td><button class="btn-tabla">Iniciar</button></td>
-                        </tr>
-                        <tr>
-                            <td><strong>10:00 AM</strong></td>
-                            <td>Ana Ruiz</td>
-                            <td>Limpieza Dental</td>
-                            <td><span class="badge badge-espera">🟡 En Sala</span></td>
-                            <td><button class="btn-tabla">Iniciar</button></td>
-                        </tr>
-                        <tr>
-                            <td><strong>11:30 AM</strong></td>
-                            <td>Luis Torres</td>
-                            <td>Extracción Molar</td>
-                            <td><span class="badge badge-no-llega">⚪ Pendiente</span></td>
-                            <td><button class="btn-tabla btn-tabla-secundario">Llamar</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-titulo">Pacientes Activos</div>
+                        <div class="kpi-valor">1,284</div>
+                        <div class="kpi-tendencia positiva">+12% este mes</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-titulo">Citas Hoy</div>
+                        <div class="kpi-valor">18</div>
+                        <div class="kpi-tendencia">5 pendientes</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-titulo">Insumos Críticos</div>
+                        <div class="kpi-valor" style="color: #e53e3e;">3</div>
+                        <div class="kpi-tendencia negativa">Requieren compra</div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    
+                    <div class="chart-card">
+                        <h3>Días de Mayor Afluencia</h3>
+                        <canvas id="graficaDias"></canvas>
+                    </div>
+
+                    <div class="chart-card">
+                        <h3>Servicios más Solicitados</h3>
+                        <canvas id="graficaServicios"></canvas>
+                    </div>
+
+                    <div class="chart-card">
+                        <h3>¿Cómo nos conocieron?</h3>
+                        <canvas id="graficaOrigen"></canvas>
+                    </div>
+
+                    <div class="chart-card">
+                        <h3>Nivel de Inventario (Top 5)</h3>
+                        <canvas id="graficaInventario"></canvas>
+                    </div>
+
+                </div>
             </div>
+            
         </main>
     </div>
 
-    <script>
-        const btnToggle = document.getElementById('btnToggle');
-        const sidebar = document.getElementById('sidebar');
+    <script src="js/dashboard-charts.js"></script>
 
-        // Escuchamos el clic en las tres rayitas
-        btnToggle.addEventListener('click', () => {
-            // "toggle" agrega la clase si no está, y la quita si ya está
-            sidebar.classList.toggle('colapsado');
-        });
-    </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const colorAzul = '#1A548B';
+    const colorTeal = '#1DB99B';
+    const colorTealClaro = '#4fd1c5';
+    const colorGris = '#E2E8F0';
+    const colorNaranja = '#ed8936'; // Para alertas
+
+    const ctxDias = document.getElementById('graficaDias').getContext('2d');
+    new Chart(ctxDias, {
+        type: 'bar',
+        data: {
+            labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            datasets: [{
+                label: 'Citas Atendidas',
+                data: [25, 30, 28, 35, 40, 45],
+                backgroundColor: colorTeal,
+                borderRadius: 4
+            }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+    });
+
+    const ctxServicios = document.getElementById('graficaServicios').getContext('2d');
+    new Chart(ctxServicios, {
+        type: 'doughnut',
+        data: {
+            labels: ['Limpieza Dental', 'Ortodoncia', 'Extracciones', 'Blanqueamiento', 'Implantes'],
+            datasets: [{
+                data: [45, 25, 15, 10, 5],
+                backgroundColor: [colorAzul, colorTeal, colorTealClaro, '#cbd5e0', colorNaranja],
+                borderWidth: 0
+            }]
+        },
+        options: { responsive: true, cutout: '70%' }
+    });
+
+    const ctxOrigen = document.getElementById('graficaOrigen').getContext('2d');
+    new Chart(ctxOrigen, {
+        type: 'pie',
+        data: {
+            labels: ['Facebook', 'Instagram', 'Recomendación', 'Google Maps'],
+            datasets: [{
+                data: [35, 40, 15, 10],
+                backgroundColor: ['#4267B2', '#E1306C', colorTeal, colorAzul], // Colores reales de marcas + los tuyos
+                borderWidth: 0
+            }]
+        },
+        options: { responsive: true }
+    });
+
+    const ctxInventario = document.getElementById('graficaInventario').getContext('2d');
+    new Chart(ctxInventario, {
+        type: 'bar',
+        indexAxis: 'y',
+        data: {
+            labels: ['Resina 3M', 'Anestesia', 'Guantes M', 'Eyectores', 'Agujas'],
+            datasets: [{
+                label: 'Stock Actual',
+                data: [15, 50, 5, 120, 80],
+                backgroundColor: function(context) {
+                    const value = context.dataset.data[context.dataIndex];
+                    return value < 10 ? '#e53e3e' : colorAzul;
+                },
+                borderRadius: 4
+            }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+    });
+
+});</script>
+
 </body>
 </html>

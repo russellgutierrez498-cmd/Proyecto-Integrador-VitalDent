@@ -157,5 +157,43 @@
         inputCelular.focus();
     });
     </script>
+
+    <script>
+    const valoresURL = new URLSearchParams(window.location.search);
+    
+    // 2. Extraer los datos si existen
+    const nombre = valoresURL.get('nombre');
+    const apellidos = valoresURL.get('apellidos');
+    const celular = valoresURL.get('celular');
+
+    // 3. Si hay datos en la URL, autocompletar el formulario
+    if(nombre && apellidos) {
+        // Asegúrate de que tus inputs tengan estos IDs en tu HTML
+        const inputNombre = document.getElementById('inputNombre');
+        const inputApellidos = document.getElementById('inputApellidos');
+        const inputCelular = document.getElementById('inputCelular');
+
+        if(inputNombre) {
+            inputNombre.value = nombre;
+            inputNombre.readOnly = true;
+            inputNombre.style.backgroundColor = "#f0f4f8";
+        }
+        
+        if(inputApellidos) {
+            inputApellidos.value = apellidos;
+            inputApellidos.readOnly = true;
+            inputApellidos.style.backgroundColor = "#f0f4f8";
+        }
+
+        if(inputCelular && celular) {
+            inputCelular.value = celular;
+        }
+        
+        const tituloAgenda = document.querySelector('h2');
+        if(tituloAgenda) {
+            tituloAgenda.innerText = `Agenda tu cita de seguimiento, ${nombre}`;
+        }
+    }
+    </script>
 </body>
 </html>
