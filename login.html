@@ -38,15 +38,36 @@
     </div>
 
     <script>
-        const formLogin = document.getElementById('formLogin');
-        
-        formLogin.addEventListener('submit', function(e) {
-            e.preventDefault(); // Evita que la página intente procesar datos reales
-            
-            // Simulamos que la contraseña fue correcta y pasamos al dashboard
-            window.location.href = 'dashboard.html'; 
-        });
-    </script>
+    document.getElementById('formLogin').addEventListener('submit', async (e) => {
+        e.preventDefault(); 
 
+        // Obtenemos los valores de los inputs
+        const correo = document.getElementById('usuario').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            const respuesta = await fetch('http://localhost:7070/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ correo, password })
+            });
+
+            const data = await respuesta.json();
+
+            if (data.success) {
+                if (data.rol === 'Doctor' || data.rol === 'Recepcionista') {
+                    window.location.href = 'dashboard.html';
+                } else if (data.rol === 'Paciente') {
+                    window.location.href = 'visor_paciente.html';
+                }
+            } else {
+                alert('Error: ' + data.mensaje);
+            }
+        } catch (error) {
+            console.error("Error conectando al servidor:", error);
+            alert("El servidor de Java está apagado o hay un problema de conexión.");
+        }
+    });
+</script>
 </body>
 </html>

@@ -84,35 +84,7 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>09:00 AM</strong></td>
-                                    <td>Carlos Mendoza</td>
-                                    <td>Valoración inicial</td>
-                                    <td><span class="badge-estado pagado" style="background:#D1FAE5; color:#065F46; border-color:#34D399;">🟢 Confirmada</span></td>
-                                    <td>
-                                        <a href="detalle_expediente.html" class="btn-accion-icon" title="Ver Expediente" style="text-decoration:none;"></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>10:00 AM</strong></td>
-                                    <td>Ana Ruiz</td>
-                                    <td>Limpieza dental</td>
-                                    <td><span class="badge-estado pendiente">🟡 En espera</span></td>
-                                    <td>
-                                        <a href="detalle_expediente.html" class="btn-accion-icon" title="Ver Expediente" style="text-decoration:none;"></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>11:30 AM</strong></td>
-                                    <td>Luis Torres</td>
-                                    <td>Extracción de molar</td>
-                                    <td><span class="badge-estado" style="background:#F1F5F9; color:#64748B; border:1px solid #CBD5E1;">⚪ No ha llegado</span></td>
-                                    <td>
-                                        <button class="btn-accion-icon" title="Reprogramar"></button>
-                                    </td>
-                                </tr>
-                            </tbody>
+                            <tbody id="cuerpoTablaCitas"></tbody>
                         </table>
                     </div>
                 </div>
@@ -285,5 +257,38 @@
             document.getElementById('modalCalendarioMensual').classList.remove('mostrar-modal');
         }
     </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        try {
+            const respuesta = await fetch('http://localhost:7070/api/citas');
+            const citas = await respuesta.json();
+            
+            const tbody = document.getElementById('cuerpoTablaCitas');
+            tbody.innerHTML = ''; // Limpiamos por si había algo de prueba
+            
+            citas.forEach(cita => {
+    const fila = `
+        
+            
+                ${cita.hora}
+                ${cita.fecha}
+            
+            ${cita.nombrePaciente}
+            ${cita.motivo}
+            🟢 ${cita.estado}
+            
+                📄
+            
+        
+    `;
+    tbody.innerHTML += fila;
+});
+            
+        } catch (error) {
+            console.error("Error trayendo las citas:", error);
+        }
+    });
+</script>
 </body>
 </html>
