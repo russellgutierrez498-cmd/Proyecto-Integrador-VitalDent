@@ -75,17 +75,19 @@
                     
                     <div class="tabla-responsive">
                         <table class="tabla-medica">
-                            <thead>
-                                <tr>
-                                    <th>Hora</th>
-                                    <th>Paciente</th>
-                                    <th>Motivo</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="cuerpoTablaCitas"></tbody>
-                        </table>
+                             <thead>
+                                 <tr>
+                                     <th>Hora</th>
+                                     <th>Paciente</th>
+                                     <th>Motivo</th>
+                                     <th>Estado</th>
+                                     <th>Acciones</th>
+                                 </tr>
+                             </thead>
+                             <tbody id="cuerpoTablaCitas">
+
+                             </tbody>
+                         </table>
                     </div>
                 </div>
 
@@ -177,14 +179,14 @@
         btnToggle.addEventListener('click', () => sidebar.classList.toggle('colapsado'));
 
         function agendarCita(event) {
-            event.preventDefault(); // Evita que la página se recargue
+            event.preventDefault();
             const btn = document.querySelector('button[type="submit"]');
             btn.innerHTML = 'Guardando...';
             
             setTimeout(() => {
                 document.getElementById('modalCita').classList.add('mostrar-modal');
                 btn.innerHTML = '✚ CONFIRMAR CITA';
-                document.getElementById('formNuevaCita').reset(); // Limpia el formulario
+                document.getElementById('formNuevaCita').reset();
             }, 800);
         }
 
@@ -265,25 +267,40 @@
             const citas = await respuesta.json();
             
             const tbody = document.getElementById('cuerpoTablaCitas');
-            tbody.innerHTML = ''; // Limpiamos por si había algo de prueba
+            tbody.innerHTML = ''; 
             
             citas.forEach(cita => {
-    const fila = `
-        
-            
-                ${cita.hora}
-                ${cita.fecha}
-            
-            ${cita.nombrePaciente}
-            ${cita.motivo}
-            🟢 ${cita.estado}
-            
-                📄
-            
-        
-    `;
-    tbody.innerHTML += fila;
-});
+                const horaCorta = cita.hora.substring(0, 5); 
+
+                let badgeStyle = "background:#F1F5F9; color:#64748B; border:1px solid #CBD5E1;"; 
+                let icono = "⚪";
+                
+                if(cita.estado === 'Confirmada') {
+                    badgeStyle = "background:#D1FAE5; color:#065F46; border-color:#34D399;";
+                    icono = "🟢";
+                } else if(cita.estado === 'Pendiente') {
+                    badgeStyle = "background:#FEF3C7; color:#92400E; border-color:#FCD34D;";
+                    icono = "🟡";
+                }
+
+                const fila = `
+                    <tr>
+                        <td>
+                            <strong>${horaCorta}</strong><br>
+                            <span style="font-size: 0.75em; color: #64748B;">${cita.fecha}</span>
+                        </td>
+                        <td>${cita.nombrePaciente}</td>
+                        <td>${cita.motivo}</td>
+                        <td><span class="badge-estado" style="${badgeStyle}">${icono} ${cita.estado}</span></td>
+                        <td>
+                            <a href="detalle_expediente.html" class="btn-accion-icon" title="Ver Expediente" 
+                               style="background-color: #1A5C9A; color: white; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.9em; display: inline-block;"> Ver
+                             </a>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += fila;
+            });
             
         } catch (error) {
             console.error("Error trayendo las citas:", error);
