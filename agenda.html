@@ -172,95 +172,10 @@
     </div>
 
     <script>
-        const btnToggle = document.getElementById('btnToggle');
-        const sidebar = document.getElementById('sidebar');
-        btnToggle.addEventListener('click', () => sidebar.classList.toggle('colapsado'));
-
-        function agendarCita(event) {
-            event.preventDefault();
-            const btn = document.querySelector('button[type="submit"]');
-            btn.innerHTML = 'Guardando...';
-            
-            setTimeout(() => {
-                document.getElementById('modalCita').classList.add('mostrar-modal');
-                btn.innerHTML = '✚ CONFIRMAR CITA';
-                document.getElementById('formNuevaCita').reset();
-            }, 800);
-        }
-
-        function cerrarModalCita() {
-            document.getElementById('modalCita').classList.remove('mostrar-modal');
-        }
-
-        // --- MOTOR DEL CALENDARIO DINÁMICO ---
-        const nombresMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-        
-        let mesActual = 6; 
-        let anioActual = 2026;
-
-        function renderizarCalendario() {
-            const grid = document.getElementById('calendarioGrid');
-            const titulo = document.getElementById('mesTitulo');
-            
-            titulo.innerText = `${nombresMeses[mesActual]} ${anioActual}`;
-            
-            grid.innerHTML = `
-                <div class="dia-header">DOM</div><div class="dia-header">LUN</div><div class="dia-header">MAR</div>
-                <div class="dia-header">MIE</div><div class="dia-header">JUE</div><div class="dia-header">VIE</div><div class="dia-header">SAB</div>
-            `;
-
-            // 3. Calcula cuántos días tiene el mes y en qué día de la semana empieza
-            let primerDiaDelMes = new Date(anioActual, mesActual, 1).getDay();
-            let diasEnElMes = new Date(anioActual, mesActual + 1, 0).getDate();
-            let diasMesAnterior = new Date(anioActual, mesActual, 0).getDate();
-
-            for (let i = primerDiaDelMes; i > 0; i--) {
-                grid.innerHTML += `<div class="dia-caja dia-inactivo">${diasMesAnterior - i + 1}</div>`;
-            }
-
-            for (let i = 1; i <= diasEnElMes; i++) {
-                let esHoy = (i === 14 && mesActual === 6 && anioActual === 2026) ? 'hoy' : '';
-                
-                let citasHtml = '';
-                if (Math.random() > 0.75 && !esHoy) { // Días aleatorios con citas
-                    let numCitas = Math.floor(Math.random() * 3) + 1;
-                    let esLleno = numCitas > 2 ? 'lleno' : '';
-                    let dots = Array(numCitas).fill(`<span class="cita-dot ${esLleno}"></span>`).join('');
-                    citasHtml = `<div class="contenedor-citas">${dots}</div>`;
-                }
-
-                grid.innerHTML += `<div class="dia-caja ${esHoy}">${i} ${citasHtml}</div>`;
-            }
-        }
-
-        function cambiarMes(direccion) {
-            mesActual += direccion;
-            
-            if (mesActual > 11) {
-                mesActual = 0;
-                anioActual++;
-            } 
-            else if (mesActual < 0) {
-                mesActual = 11;
-                anioActual--;
-            }
-            
-            renderizarCalendario();
-        }
-
-        function abrirCalendarioMensual() {
-            renderizarCalendario();
-            document.getElementById('modalCalendarioMensual').classList.add('mostrar-modal');
-        }
-
-        function cerrarCalendarioMensual() {
-            document.getElementById('modalCalendarioMensual').classList.remove('mostrar-modal');
-        }
-    </script>
-
-    <script>
+    // --- 1. CARGAR CITAS EN LA TABLA ---
     document.addEventListener("DOMContentLoaded", async () => {
         try {
+            // CORRECCIÓN: URL completa a Javalin
             const respuesta = await fetch('http://localhost:7070/api/citas');
             const citas = await respuesta.json();
             
@@ -269,7 +184,6 @@
             
             citas.forEach(cita => {
                 const horaCorta = cita.hora.substring(0, 5); 
-
                 let badgeStyle = "background:#F1F5F9; color:#64748B; border:1px solid #CBD5E1;"; 
                 let icono = "⚪";
                 
@@ -299,65 +213,61 @@
                 `;
                 tbody.innerHTML += fila;
             });
-            
         } catch (error) {
             console.error("Error trayendo las citas:", error);
         }
     });
 
     document.getElementById('formNuevaCita').addEventListener('submit', async (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-   const nuevaCita = {
-    id_paciente: parseInt(document.getElementById('id_paciente').value),
-    id_doctor: parseInt(document.getElementById('id_doctor').value), // <-- LÍNEA NUEVA
-    fecha: document.getElementById('fecha').value,
-    hora: document.getElementById('hora').value,
-    motivo: document.getElementById('motivo').value
-};
+        const nuevaCita = {
+            id_paciente: parseInt(document.getElementById('id_paciente').value),
+            id_doctor: parseInt(document.getElementById('id_doctor').value),
+            fecha: document.getElementById('fecha').value,
+            hora: document.getElementById('hora').value,
+            motivo: document.getElementById('motivo').value
+        };
 
-    try {
-        const respuesta = await fetch('http://localhost:7070/api/citas', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(nuevaCita)
-        });
+        try {
+            const respuesta = await fetch('http://localhost:7070/api/citas', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(nuevaCita)
+            });
 
-        if(respuesta.ok) {
-            alert("¡Cita agendada con éxito!");
-            window.location.reload();
-        } else {
-            alert("Hubo un error al guardar la cita.");
+            if(respuesta.ok) {
+                alert("¡Cita agendada con éxito!");
+                window.location.reload();
+            } else {
+                alert("Hubo un error al guardar la cita. Verifica la consola.");
+            }
+        } catch (error) {
+            console.error("Error de conexión:", error);
         }
-    } catch (error) {
-        console.error("Error:", error);
-    }
-});
-</script>
+    });
 
-<script>
-async function cargarPacientes() {
-    try {
-        // 1. Pedimos los datos a Java
-        const respuesta = await fetch('/api/pacientes');
-        const pacientes = await respuesta.json();
-        
-        const select = document.getElementById('id_paciente');
-        select.innerHTML = 'Selecciona un paciente...';
-        
-        pacientes.forEach(paciente => {
-            const opcion = document.createElement('option');
-            opcion.value = paciente.id_paciente;
-            opcion.textContent = paciente.nombre;
-            select.appendChild(opcion);
-        });
-        
-    } catch (error) {
-        console.error("No se pudieron cargar los pacientes:", error);
+    async function cargarPacientes() {
+        try {
+            const respuesta = await fetch('http://localhost:7070/api/pacientes');
+            const pacientes = await respuesta.json();
+            
+            const select = document.getElementById('id_paciente');
+            select.innerHTML = '<option value="" disabled selected>Selecciona un paciente...</option>';
+            
+            pacientes.forEach(paciente => {
+                const opcion = document.createElement('option');
+                opcion.value = paciente.id_paciente;
+                opcion.textContent = paciente.nombre;
+                select.appendChild(opcion);
+            });
+            
+        } catch (error) {
+            console.error("No se pudieron cargar los pacientes:", error);
+        }
     }
-}
 
-cargarPacientes();
+    cargarPacientes();
 </script>
 </body>
 </html>

@@ -32,55 +32,54 @@
 
             <div class="agendar-formulario-contenedor">
                 <h2 class="titulo-agendar">Agenda tu cita</h2>
-                
-                <div class="fecha-hora-grid">
-                    <div class="calendario-mockup">
-                        <div class="mes-header">◄ Octubre 2026 ►</div>
-                        <div class="dias-grid">
-                            <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
-                            <span class="dia-pasado">28</span><span class="dia-pasado">29</span><span class="dia-pasado">30</span><span>1</span><span>2</span><span>3</span><span>4</span>
-                            <span>5</span><span>6</span><span>7</span><span>8</span><span class="dia-activo">9</span><span>10</span><span>11</span>
-                            <span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span>
-                        </div>
-                    </div>
-                    <div class="horas-mockup">
-                        <div class="hora-header">Hora</div>
-                        <div class="lista-horas">
-                            <button class="btn-hora">7:00</button>
-                            <button class="btn-hora">8:00</button>
-                            <button class="btn-hora activo">9:00</button>
-                            <button class="btn-hora">10:00</button>
-                        </div>
-                    </div>
-                </div>
 
                 <form id="formNuevaCita" class="formulario-datos">
+
                     <div class="inputs-grid">
-                        <input type="text" placeholder="Nombre" required class="input-medico">
-                        <input type="text" placeholder="Apellidos" required class="input-medico">
-                        <input type="tel" placeholder="Celular" required class="input-medico">
-                        <input type="email" placeholder="Correo electrónico" required class="input-medico">
+                        <div class="campo-form">
+                            <label for="fecha">Fecha de la cita:</label>
+                            <input type="date" id="fecha" required class="input-medico">
+                        </div>
+                        <div class="campo-form">
+                           <label for="hora">Hora:</label>
+                           <select id="hora" required class="input-medico">
+                                <option value="" disabled selected>Elige una hora</option>
+                                <option value="07:00">7:00 AM</option>
+                                <option value="08:00">8:00 AM</option>
+                                <option value="09:00">9:00 AM</option>
+                                <option value="10:00">10:00 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="12:00">12:00 PM</option>
+                           </select>
+                       </div>
                     </div>
-                    
-                    <div class="resumen-cita">
+                    <br>
+                    <div class="inputs-grid">
+                        <input type="text" id="nombre" placeholder="Nombre" required class="input-medico">
+                        <input type="text" id="apellidos" placeholder="Apellidos" required class="input-medico">
+                        <input type="tel" id="celular" placeholder="Celular" required class="input-medico">
+                        <input type="email" id="correo" placeholder="Correo electrónico" required class="input-medico">
+                    </div>
+    
+                     <div class="resumen-cita">
                         <div class="campo-tratamiento">
                             <label>Tratamiento:</label>
-                            <select class="input-medico select-tratamiento">
+                            <select id="tratamiento" class="input-medico select-tratamiento">
                                 <option>Limpieza Dental</option>
                                 <option>Extracción</option>
                                 <option>Valoración Inicial</option>
                             </select>
                         </div>
-                        <div class="precio-total">
-                            <span>Precio Total:</span>
-                            <strong>$400</strong>
-                        </div>
+                    <div class="precio-total">
+                        <span>Precio Total:</span>
+                        <strong>$400</strong>
+                   </div>
                     </div>
-                    
-                    <div class="boton-contenedor">
-                        <button type="submit" class="btn-confirmar">CONFIRMAR</button>
-                    </div>
-                </form>
+    
+                <div class="boton-contenedor">
+                    <button type="submit" class="btn-confirmar">CONFIRMAR</button>
+                 </div>
+                 </form>
             </div>
         </section>
     </main>
@@ -123,77 +122,61 @@
     </div>
 
     <script>
-        const form = document.getElementById('formNuevaCita');
+    const form = document.getElementById('formNuevaCita');
     const modalExito = document.getElementById('modalExito');
     const modalError = document.getElementById('modalError');
     const btnCerrarExito = document.getElementById('btnCerrarModal');
     const btnCerrarError = document.getElementById('btnCerrarError');
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault(); // Esto evita que la página se recargue de golpe
+
+        const datosCita = {
+            nombre: document.getElementById('nombre').value,
+            apellidos: document.getElementById('apellidos').value,
+            celular: document.getElementById('celular').value,
+            correo: document.getElementById('correo').value,
+            tratamiento: document.getElementById('tratamiento').value,
+            fecha: document.getElementById('fecha').value,
+            hora: document.getElementById('hora').value
+        };
     
-    // Capturamos específicamente el input del celular
-    const inputCelular = document.querySelector('input[type="tel"]');
-
-    // Cuando el usuario le da a "Confirmar"
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const celularValor = inputCelular.value;
-        
-        const soloNumeros = /^[0-9]+$/.test(celularValor);
-
+        // Validación rápida del celular
+        const soloNumeros = /^[0-9]+$/.test(datosCita.celular);
         if (!soloNumeros) {
             modalError.classList.add('mostrar-modal');
-        } else {
-            modalExito.classList.add('mostrar-modal');
+            return;
+        }
+
+        try {
+            const respuesta = await fetch('http://localhost:7070/api/agendar-completo', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datosCita)
+            });
+
+            if (respuesta.ok) {
+                modalExito.classList.add('mostrar-modal');
+            } else {
+                console.error("El servidor rechazó los datos");
+                modalError.classList.add('mostrar-modal');
+            }
+            
+        } catch (error) {
+            console.error("Error de conexión con el servidor Java:", error);
+            modalError.classList.add('mostrar-modal');
         }
     });
 
     btnCerrarExito.addEventListener('click', function() {
         modalExito.classList.remove('mostrar-modal');
-        window.location.href = 'index.html';
+        // Opcional: limpiar el formulario después del éxito
+        document.getElementById('formNuevaCita').reset(); 
     });
 
-    // Cerrar modal de error y quedarse en la página
     btnCerrarError.addEventListener('click', function() {
         modalError.classList.remove('mostrar-modal');
-        inputCelular.focus();
     });
-    </script>
-
-    <script>
-    const valoresURL = new URLSearchParams(window.location.search);
-    
-    // 2. Extraer los datos si existen
-    const nombre = valoresURL.get('nombre');
-    const apellidos = valoresURL.get('apellidos');
-    const celular = valoresURL.get('celular');
-
-    // 3. Si hay datos en la URL, autocompletar el formulario
-    if(nombre && apellidos) {
-        // Asegúrate de que tus inputs tengan estos IDs en tu HTML
-        const inputNombre = document.getElementById('inputNombre');
-        const inputApellidos = document.getElementById('inputApellidos');
-        const inputCelular = document.getElementById('inputCelular');
-
-        if(inputNombre) {
-            inputNombre.value = nombre;
-            inputNombre.readOnly = true;
-            inputNombre.style.backgroundColor = "#f0f4f8";
-        }
-        
-        if(inputApellidos) {
-            inputApellidos.value = apellidos;
-            inputApellidos.readOnly = true;
-            inputApellidos.style.backgroundColor = "#f0f4f8";
-        }
-
-        if(inputCelular && celular) {
-            inputCelular.value = celular;
-        }
-        
-        const tituloAgenda = document.querySelector('h2');
-        if(tituloAgenda) {
-            tituloAgenda.innerText = `Agenda tu cita de seguimiento, ${nombre}`;
-        }
-    }
-    </script>
+</script>
 </body>
 </html>
