@@ -64,12 +64,12 @@
             
             <div class="paciente-header">
                 <div class="paciente-info-principal">
-                    <img src="https://via.placeholder.com/100x100.png?text=CM" alt="Foto Paciente" class="paciente-foto">
-                    <div>
-                        <h2 class="paciente-nombre">Carlos Mendoza Valdez</h2>
-                        <p class="paciente-id">ID Paciente: #004582 | Edad: 34 años</p>
-                    </div>
-                </div>
+                     <img src="https://via.placeholder.com/100x100.png?text=Paciente" alt="Foto Paciente" class="paciente-foto">
+                     <div>
+                         <h2 class="paciente-nombre" id="det-nombre">Cargando...</h2>
+                         <p class="paciente-id" id="det-id">Cargando...</p>
+                     </div>
+                 </div>
                 <div class="paciente-acciones">
                     <button class="btn-tabla btn-tabla-secundario">Editar Datos</button>
                     <button class="btn-tabla">Guardar Cambios</button>
@@ -82,22 +82,20 @@
                     <div class="tarjeta-expediente">
                         <h3 class="titulo-tarjeta">Datos Generales</h3>
                         <div class="datos-lista">
-                            <p><strong>Teléfono:</strong> 967 123 4567</p>
-                            <p><strong>Correo:</strong> carlos.mendoza@email.com</p>
-                            <p><strong>Dirección:</strong> Av. Central 45, Barrio Centro</p>
-                            <p><strong>Ocupación:</strong> Ingeniero de Software</p>
-                            <p><strong>Motivo de Consulta:</strong> Dolor en molar superior derecho al masticar.</p>
+                            <p><strong>Teléfono:</strong> <span id="gen-telefono">Cargando...</span></p>
+                            <p><strong>Correo:</strong> <span id="gen-correo">Cargando...</span></p>
+                            <p><strong>Dirección:</strong> <span id="gen-direccion">No registrada</span></p>
+                            <p><strong>Ocupación:</strong> <span id="gen-ocupacion">No registrada</span></p>
+                            <p><strong>Motivo de Consulta:</strong> <span id="gen-motivo">No registrado</span></p>
                         </div>
                     </div>
 
                     <div class="tarjeta-expediente">
                         <h3 class="titulo-tarjeta">Cuestionario Médico (Antecedentes)</h3>
                         <div class="datos-lista">
-                            <p><strong>Alergias:</strong> Penicilina <span class="badge" style="background:#FEE2E2; color:#EF4444;">Alerta</span></p>
-                            <p><strong>Enfermedades crónicas:</strong> Ninguna reportada</p>
-                            <p><strong>Medicamentos actuales:</strong> Paracetamol (ocasional)</p>
-                            <p><strong>Padecimientos del corazón:</strong> No</p>
-                            <p><strong>¿Ha tenido hemorragias?:</strong> No</p>
+                            <p><strong>Teléfono:</strong> <span id="det-celular">Cargando...</span></p>
+                            <p><strong>Correo:</strong> <span id="det-correo">Cargando...</span></p>
+                            <p><strong>Fecha de Nacimiento:</strong> <span id="det-fecha">Cargando...</span></p>
                         </div>
                     </div>
                 </div>
@@ -131,5 +129,40 @@
             sidebar.classList.toggle('colapsado');
         });
     </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const parametros = new URLSearchParams(window.location.search);
+        const idPaciente = parametros.get('id');
+
+        if (!idPaciente) {
+            alert("No se especificó un paciente.");
+            window.location.href = 'expediente.html';
+            return;
+        }
+
+        try {
+            const respuesta = await fetch(`http://localhost:7070/api/pacientes/${idPaciente}`);
+            
+            if (!respuesta.ok) {
+                throw new Error("Paciente no encontrado");
+            }
+
+            const paciente = await respuesta.json();
+
+            document.getElementById('det-nombre').innerText = paciente.nombreCompleto;
+            document.getElementById('det-id').innerText = `ID Paciente: #${paciente.id_paciente}`;
+            document.getElementById('det-celular').innerText = paciente.celular || 'No registrado';
+            document.getElementById('det-correo').innerText = paciente.correo || 'No registrado';
+            document.getElementById('det-fecha').innerText = paciente.fecha_nacimiento || 'No registrada';
+            document.getElementById('gen-telefono').innerText = paciente.celular || 'No registrado';
+            document.getElementById('gen-correo').innerText = paciente.correo || 'No registrado';
+            
+
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Hubo un problema cargando la información del paciente.");
+        }
+    });
+</script>
 </body>
 </html>

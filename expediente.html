@@ -69,147 +69,246 @@
             </div>
 
             <div class="tarjeta-expediente">
-                
                 <div style="display: flex; gap: 15px; margin-bottom: 25px;">
                     <input type="text" class="input-medico" placeholder="Buscar por nombre, ID o teléfono..." style="flex-grow: 1;">
                     <button class="btn-tabla btn-tabla-secundario">Filtrar</button>
                 </div>
-                
-                <div class="tabla-responsive">
-                    <table class="tabla-medica">
-                        <thead>
-                            <tr>
-                                <th>ID Paciente</th>
-                                <th>Nombre Completo</th>
-                                <th>Teléfono</th>
-                                <th>Última Visita</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>#004582</strong></td>
-                                <td>Carlos Mendoza Valdez</td>
-                                <td>967 123 4567</td>
-                                <td>Hace 2 días</td>
-                                <td>
-                                    <a href="detalle_expediente.html" class="btn-tabla" style="text-decoration: none; display: inline-block;">Ver Expediente</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>#004583</strong></td>
-                                <td>Ana Sofía Ruiz</td>
-                                <td>967 987 6543</td>
-                                <td>Hoy</td>
-                                <td>
-                                    <a href="#" class="btn-tabla btn-tabla-secundario" style="text-decoration: none; display: inline-block;">Ver Expediente</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>#004584</strong></td>
-                                <td>Luis Fernando Torres</td>
-                                <td>967 555 1234</td>
-                                <td>Hace 1 mes</td>
-                                <td>
-                                    <a href="#" class="btn-tabla btn-tabla-secundario" style="text-decoration: none; display: inline-block;">Ver Expediente</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
             </div>
-            <div class="modal-overlay" id="modalNuevoPaciente">
-        <div class="modal-caja" style="max-width: 700px; width: 90%; text-align: left; padding: 30px;">
-            <button class="btn-cerrar-modal" onclick="cerrarModalPaciente()">×</button>
-            
-            <h2 class="modal-titulo" style="font-size: 1.4rem; margin-bottom: 20px; border-bottom: 2px solid #E2E8F0; padding-bottom: 10px;">
-                Registrar Nuevo Paciente
-            </h2>
-            
-            <form id="formNuevoPaciente" onsubmit="guardarPaciente(event)">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                    
-                    <div>
-                        <div class="grupo-input" style="margin-bottom: 15px;">
-                            <label>Nombre(s):</label>
-                            <input type="text" class="input-medico" placeholder="Ej. Juan Carlos" required>
-                        </div>
-                        <div class="grupo-input" style="margin-bottom: 15px;">
-                            <label>Apellidos:</label>
-                            <input type="text" class="input-medico" placeholder="Ej. Pérez Gómez" required>
-                        </div>
-                        <div class="grupo-input" style="margin-bottom: 15px;">
-                            <label>Fecha de Nacimiento:</label>
-                            <input type="date" class="input-medico" required>
-                        </div>
-                        <div class="grupo-input" style="margin-bottom: 15px;">
-                            <label>Género:</label>
-                            <select class="input-medico">
-                                <option>Masculino</option>
-                                <option>Femenino</option>
-                                <option>Otro</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <div class="grupo-input" style="margin-bottom: 15px;">
-                            <label>Teléfono de Contacto:</label>
-                            <input type="tel" class="input-medico" placeholder="Ej. 967 123 4567" required>
-                        </div>
-                        <div class="grupo-input" style="margin-bottom: 15px;">
-                            <label>Correo Electrónico:</label>
-                            <input type="email" class="input-medico" placeholder="ejemplo@correo.com">
-                        </div>
-                        <div class="grupo-input" style="margin-bottom: 15px;">
-                            <label>Antecedentes Médicos / Alergias:</label>
-                            <textarea class="textarea-notas" style="height: 108px;" placeholder="Ej. Hipertensión, alergia a la penicilina, ninguna..."></textarea>
-                        </div>
-                    </div>
-                    
-                </div>
 
-                <div style="display: flex; justify-content: flex-end; gap: 15px; margin-top: 25px; border-top: 1px solid #E2E8F0; padding-top: 20px;">
-                    <button type="button" class="btn-tabla btn-tabla-secundario" onclick="cerrarModalPaciente()">Cancelar</button>
-                    <button type="submit" class="btn-tabla" style="background-color: var(--color-primario-azul);">Guardar Expediente</button>
+            <div class="tabla-responsive">
+                <table class="tabla-medica">
+                    <thead>
+                        <tr>
+                            <th>Nombre Completo</th>
+                            <th>Teléfono</th>
+                            <th>Correo</th>
+                            <th>Fecha de Nacimiento</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTablaPacientes"></tbody>
+                </table>
+            </div>
+
+            <div class="modal-overlay" id="modalNuevoPaciente">
+                <div class="modal-caja" style="max-width: 700px; width: 90%; text-align: left; padding: 30px;">
+                   <button class="btn-cerrar-modal" onclick="cerrarModalPaciente()">×</button>
+                        <h2 class="modal-titulo" style="font-size: 1.4rem; margin-bottom: 20px; border-bottom: 2px solid #E2E8F0; padding-bottom: 10px;">
+                          Registrar Nuevo Paciente
+                        </h2>
+                        <form id="formNuevoPaciente" onsubmit="crearNuevoPaciente(event)">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                                <div class="grupo-input">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #475569;">Nombre(s):</label>
+                                    <input type="text" id="nombre" class="input-medico" required style="width: 100%; box-sizing: border-box;">
+                                </div>
+                                <div class="grupo-input">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #475569;">Apellidos:</label>
+                                    <input type="text" id="apellidos" class="input-medico" required style="width: 100%; box-sizing: border-box;">
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                                <div class="grupo-input">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #475569;">Teléfono:</label>
+                                    <input type="tel" id="celular" class="input-medico" required style="width: 100%; box-sizing: border-box;">
+                                </div>
+                                <div class="grupo-input">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #475569;">Correo:</label>
+                                    <input type="email" id="correo" class="input-medico" style="width: 100%; box-sizing: border-box;">
+                                </div>
+                                <div class="grupo-input">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #475569;">Nacimiento:</label>
+                                    <input type="date" id="fecha_nacimiento" class="input-medico" style="width: 100%; box-sizing: border-box;">
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                                <div class="grupo-input">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #475569;">Dirección:</label>
+                                    <input type="text" id="direccion" class="input-medico" style="width: 100%; box-sizing: border-box;">
+                                </div>
+                                <div class="grupo-input">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #475569;">Ocupación:</label>
+                                    <input type="text" id="ocupacion" class="input-medico" style="width: 100%; box-sizing: border-box;">
+                                </div>
+                            </div>
+
+                            <div class="grupo-input" style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #475569;">Motivo de Consulta:</label>
+                                <input type="text" id="motivo_consulta" class="input-medico" placeholder="Ej. Dolor en molar..." style="width: 100%; box-sizing: border-box;">
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                                <div class="grupo-input">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #475569;">Alergias:</label>
+                                    <textarea id="alergias" class="textarea-notas" style="height: 60px; width: 100%; box-sizing: border-box;" placeholder="Ninguna..."></textarea>
+                                </div>
+                                <div class="grupo-input">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #475569;">Enfermedades:</label>
+                                    <textarea id="enfermedades" class="textarea-notas" style="height: 60px; width: 100%; box-sizing: border-box;" placeholder="Ej. Diabetes..."></textarea>
+                                </div>
+                                <div class="grupo-input">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #475569;">Medicamentos:</label>
+                                    <textarea id="medicamentos" class="textarea-notas" style="height: 60px; width: 100%; box-sizing: border-box;" placeholder="Ninguno..."></textarea>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: flex-end; gap: 15px; margin-top: 25px; border-top: 1px solid #E2E8F0; padding-top: 20px;">
+                                <button type="button" class="btn-tabla btn-tabla-secundario" onclick="cerrarModalPaciente()">Cancelar</button>
+                                <button type="submit" class="btn-tabla" style="background-color: var(--color-primario-azul);">Guardar Expediente</button>
+                            </div>
+
+                        </form>
                 </div>
-            </form>
-        </div>
-    </div>
+            </div>
         </main>
     </div>
 
     <script>
-        const btnToggle = document.getElementById('btnToggle');
-        const sidebar = document.getElementById('sidebar');
-        btnToggle.addEventListener('click', () => sidebar.classList.toggle('colapsado'));
+    const btnToggle = document.getElementById('btnToggle');
+    const sidebar = document.getElementById('sidebar');
+    if(btnToggle) btnToggle.addEventListener('click', () => sidebar.classList.toggle('colapsado'));
 
-        function abrirModalPaciente() {
-            document.getElementById('modalNuevoPaciente').classList.add('mostrar-modal');
-        }
+    function abrirModalPaciente() {
+        document.getElementById('modalNuevoPaciente').classList.add('mostrar-modal');
+    }
 
-        function cerrarModalPaciente() {
-            document.getElementById('modalNuevoPaciente').classList.remove('mostrar-modal');
-            document.getElementById('formNuevoPaciente').reset();
-        }
+    function cerrarModalPaciente() {
+        document.getElementById('modalNuevoPaciente').classList.remove('mostrar-modal');
+        document.getElementById('formNuevoPaciente').reset();
+    }
 
-        function guardarPaciente(event) {
-            event.preventDefault();
+    document.addEventListener("DOMContentLoaded", async () => {
+        try {
+           const respuesta = await fetch('http://localhost:7070/api/pacientes');
+            const pacientes = await respuesta.json();
             
-            const btnGuardar = document.querySelector('#formNuevoPaciente button[type="submit"]');
-            btnGuardar.innerHTML = 'Guardando en BD...';
-            btnGuardar.style.opacity = '0.7';
-
-            setTimeout(() => {
-                alert("¡Expediente creado con éxito! El nuevo paciente ha sido registrado en el sistema.");
-                cerrarModalPaciente();
-                btnGuardar.innerHTML = 'Guardar Expediente';
-                btnGuardar.style.opacity = '1';
-                
-                window.location.reload(); 
-            }, 1000);
+            const tbody = document.getElementById('cuerpoTablaPacientes');
+            if(!tbody) return; 
+            
+            tbody.innerHTML = ''; 
+            
+            pacientes.forEach(paciente => {
+                const fila = `
+                    <tr>
+                        <td><strong>${paciente.nombreCompleto}</strong></td>
+                        <td>${paciente.celular}</td>
+                        <td>${paciente.correo || 'N/A'}</td>
+                        <td>${paciente.fecha_nacimiento || 'Sin registro'}</td>
+                        <td>
+                            <div style="display: flex; gap: 10px;">
+                               <button onclick="window.location.href='detalle_expediente.html?id=${paciente.id_paciente}'" class="btn-tabla" style="background-color: #2563eb; color: white;">Ver Expediente</button>
+                               <button onclick="confirmarEliminar(${paciente.id_paciente})" class="btn-tabla" style="background-color: #ef4444; color: white; border: none;">Eliminar</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += fila;
+            });
+        } catch (error) {
+            console.error("Error trayendo pacientes:", error);
         }
+    });
+
+    async function crearNuevoPaciente(event) {
+    event.preventDefault();
+
+    const datosPaciente = {
+        nombre: document.getElementById('nombre').value,
+        apellidos: document.getElementById('apellidos').value,
+        celular: document.getElementById('celular').value,
+        correo: document.getElementById('correo').value,
+        fecha_nacimiento: document.getElementById('fecha_nacimiento').value,
+        direccion: document.getElementById('direccion').value,
+        ocupacion: document.getElementById('ocupacion').value,
+        motivo_consulta: document.getElementById('motivo_consulta').value,
+        alergias: document.getElementById('alergias').value,
+        enfermedades: document.getElementById('enfermedades').value,
+        medicamentos: document.getElementById('medicamentos').value
+    };
+
+    try {
+        const respuesta = await fetch('http://localhost:7070/api/pacientes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datosPaciente)
+        });
+
+        if (respuesta.ok) {
+            Swal.fire({
+                title: '¡Registro Exitoso!',
+                text: 'El paciente ha sido guardado correctamente.',
+                icon: 'success',
+                confirmButtonColor: '#2563eb', 
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    cerrarModalPaciente();
+                    document.getElementById('formNuevoPaciente').reset(); // Limpia el formulario
+                    
+                    location.reload(); 
+                }
+            });
+        } else {
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al guardar el paciente.',
+                icon: 'error',
+                confirmButtonColor: '#ef4444'
+            });
+        }
+    } catch (error) {
+        console.error('Error al conectar con el servidor:', error);
+        alert('No se pudo establecer conexión con el servidor.');
+    }
+}
     </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function confirmarEliminar(idPaciente) {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "Esta acción borrará todo el expediente y no se puede deshacer.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444', // Rojo de peligro
+        cancelButtonColor: '#94a3b8',  // Gris para cancelar
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`http://localhost:8080/api/pacientes/${idPaciente}`, {
+                method: 'DELETE'
+            })
+            .then(respuesta => {
+                if (respuesta.ok) {
+                    Swal.fire({
+                        title: '¡Eliminado!',
+                        text: 'El paciente ha sido borrado del directorio.',
+                        icon: 'success',
+                        confirmButtonColor: '#2563eb'
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    throw new Error('Error al eliminar');
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Hubo un problema al intentar eliminar el paciente.',
+                    icon: 'error',
+                    confirmButtonColor: '#ef4444'
+                });
+            });
+        }
+    });
+}
+</script>
 </body>
 </html>

@@ -172,10 +172,8 @@
     </div>
 
     <script>
-    // --- 1. CARGAR CITAS EN LA TABLA ---
     document.addEventListener("DOMContentLoaded", async () => {
         try {
-            // CORRECCIÓN: URL completa a Javalin
             const respuesta = await fetch('http://localhost:7070/api/citas');
             const citas = await respuesta.json();
             
