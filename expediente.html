@@ -191,10 +191,10 @@
             pacientes.forEach(paciente => {
                 const fila = `
                     <tr>
-                        <td><strong>${paciente.nombreCompleto}</strong></td>
+                        <td>${paciente.nombreCompleto}</td>
                         <td>${paciente.celular}</td>
-                        <td>${paciente.correo || 'N/A'}</td>
-                        <td>${paciente.fecha_nacimiento || 'Sin registro'}</td>
+                        <td>${paciente.correo}</td>
+                        <td>${paciente.fecha_nacimiento}</td>
                         <td>
                             <div style="display: flex; gap: 10px;">
                                <button onclick="window.location.href='detalle_expediente.html?id=${paciente.id_paciente}'" class="btn-tabla" style="background-color: #2563eb; color: white;">Ver Expediente</button>
@@ -246,7 +246,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     cerrarModalPaciente();
-                    document.getElementById('formNuevoPaciente').reset(); // Limpia el formulario
+                    document.getElementById('formNuevoPaciente').reset();
                     
                     location.reload(); 
                 }
@@ -264,12 +264,8 @@
         alert('No se pudo establecer conexión con el servidor.');
     }
 }
-    </script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
-    function confirmarEliminar(idPaciente) {
+function confirmarEliminar(idPaciente) {
     Swal.fire({
         title: '¿Estás seguro?',
         text: "Esta acción borrará todo el expediente y no se puede deshacer.",
@@ -278,10 +274,12 @@
         confirmButtonColor: '#ef4444', // Rojo de peligro
         cancelButtonColor: '#94a3b8',  // Gris para cancelar
         confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
+        cancelButtonText: 'Cancelar',
+        heightAuto: false
     }).then((result) => {
         if (result.isConfirmed) {
-            fetch(`http://localhost:8080/api/pacientes/${idPaciente}`, {
+            // Si el doctor confirma, llamamos al backend para borrar
+            fetch(`http://localhost:7070/api/pacientes/${idPaciente}`, {
                 method: 'DELETE'
             })
             .then(respuesta => {
@@ -290,9 +288,10 @@
                         title: '¡Eliminado!',
                         text: 'El paciente ha sido borrado del directorio.',
                         icon: 'success',
+                        heightAuto: false,
                         confirmButtonColor: '#2563eb'
                     }).then(() => {
-                        location.reload();
+                        location.reload(); // Recarga la página para actualizar la tabla
                     });
                 } else {
                     throw new Error('Error al eliminar');
@@ -309,6 +308,9 @@
         }
     });
 }
-</script>
+    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 </html>
