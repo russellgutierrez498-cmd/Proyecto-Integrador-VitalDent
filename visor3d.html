@@ -93,5 +93,26 @@
         
     </div>
 
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const parametros = new URLSearchParams(window.location.search);
+    const nombrePaciente = parametros.get('nombre');
+    const idPaciente = parametros.get('id');
+
+    if (nombrePaciente) {
+        // Busca el h2 que dice "Paciente: ..." y le cambia el nombre
+        const h2Nombre = document.querySelector('.paciente-nombre') || document.querySelector('.visor-info-paciente h2');
+        if (h2Nombre) {
+            h2Nombre.innerHTML = `Paciente: <span>${nombrePaciente}</span>`;
+        }
+    }
+
+    // Opcional: Arreglar el botón "Volver al Expediente" para que regrese al mismo paciente
+    const btnVolver = document.querySelector('a[href="expediente.html"]');
+    if (btnVolver && idPaciente) {
+        btnVolver.href = `detalle_expediente.html?id=${idPaciente}`; 
+    }
+});</script>
+
 </body>
 </html>

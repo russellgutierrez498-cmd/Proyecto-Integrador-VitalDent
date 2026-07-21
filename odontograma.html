@@ -6,6 +6,30 @@
     <title>Odontograma - Consultorio Dental Guzmán</title>
     <link rel="stylesheet" href="CSS/stylediv.CSS">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 para alertas elegantes -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        /* Estilos visuales para los estados del Odontograma según la Leyenda */
+        .diente.diente-seleccionado {
+            background-color: #10b981 !important; /* Verde */
+            color: #ffffff !important;
+            border-color: #059669 !important;
+            font-weight: bold;
+        }
+        .diente.diente-caries {
+            background-color: #ef4444 !important; /* Rojo */
+            color: #ffffff !important;
+            border-color: #dc2626 !important;
+            font-weight: bold;
+        }
+        .diente.diente-tratado {
+            background-color: #3b82f6 !important; /* Azul */
+            color: #ffffff !important;
+            border-color: #2563eb !important;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body class="body-dashboard">
 
@@ -36,7 +60,7 @@
             <a href="receta.html" class="menu-item">
                 <span class="icon"></span><span class="menu-text">Recetas Médicas</span>
             </a>
-            <a href="inventario.html" class="menu-item activo">
+            <a href="inventario.html" class="menu-item">
                 <span class="icon"></span><span class="menu-text">Inventario</span>
             </a>
             <a href="caja.html" class="menu-item">
@@ -64,10 +88,10 @@
             <div class="paciente-header" style="padding: 15px 30px; margin-bottom: 20px;">
                 <div class="paciente-info-principal">
                     <div>
-                        <h2 class="paciente-nombre" style="font-size: 1.2rem; margin:0;">Paciente: Carlos Mendoza Valdez</h2>
+                        <h2 class="paciente-nombre" style="font-size: 1.2rem; margin:0;">Paciente: Cargando...</h2>
                     </div>
                 </div>
-                <a href="expediente.html" class="btn-tabla btn-tabla-secundario" style="text-decoration:none;">← Volver al Expediente</a>
+                <a id="btnVolverExpediente" href="expediente.html" class="btn-tabla btn-tabla-secundario" style="text-decoration:none;">← Volver al Expediente</a>
             </div>
 
             <div class="expediente-grid">
@@ -88,7 +112,7 @@
                             <div class="dientes-fila">
                                 <button class="diente" data-diente="18">18</button>
                                 <button class="diente" data-diente="17">17</button>
-                                <button class="diente diente-caries" data-diente="16">16</button>
+                                <button class="diente" data-diente="16">16</button>
                                 <button class="diente" data-diente="15">15</button>
                                 <button class="diente" data-diente="14">14</button>
                                 <button class="diente" data-diente="13">13</button>
@@ -99,7 +123,7 @@
                                 <button class="diente" data-diente="22">22</button>
                                 <button class="diente" data-diente="23">23</button>
                                 <button class="diente" data-diente="24">24</button>
-                                <button class="diente diente-tratado" data-diente="25">25</button>
+                                <button class="diente" data-diente="25">25</button>
                                 <button class="diente" data-diente="26">26</button>
                                 <button class="diente" data-diente="27">27</button>
                                 <button class="diente" data-diente="28">28</button>
@@ -184,23 +208,24 @@
                     
                     <div class="grupo-input" style="margin-top: 15px;">
                         <label>Diagnóstico / Procedimiento:</label>
-                        <select class="input-medico">
-                            <option>Limpieza / Profilaxis</option>
-                            <option>Resina Simple</option>
-                            <option>Extracción</option>
-                            <option>Endodoncia</option>
-                            <option>Corona</option>
+                        <select id="selectDiagnostico" class="input-medico">
+                            <option value="Limpieza / Profilaxis">Limpieza / Profilaxis</option>
+                            <option value="Caries detectada">Caries detectada</option>
+                            <option value="Resina Simple">Resina Simple</option>
+                            <option value="Extracción">Extracción</option>
+                            <option value="Endodoncia">Endodoncia</option>
+                            <option value="Corona">Corona</option>
                         </select>
                     </div>
 
                     <div class="grupo-input" style="margin-top: 15px;">
                         <label>Costo Estimado ($):</label>
-                        <input type="number" class="input-medico" placeholder="0.00">
+                        <input type="number" id="inputCosto" class="input-medico" placeholder="0.00" step="0.50">
                     </div>
 
-                    <a href="historial.html" class="btn-agendar btn-login" style="margin-top: 20px; display: block; text-align: center; text-decoration: none;">
+                    <button type="button" onclick="guardarTratamiento()" class="btn-agendar btn-login" style="margin-top: 20px; width: 100%; border: none; cursor: pointer;">
                         AGREGAR AL HISTORIAL
-                    </a>
+                    </button>
                 </div>
 
             </div>
@@ -208,23 +233,54 @@
     </div>
 
     <script>
+        // Sidebar Toggle
         const btnToggle = document.getElementById('btnToggle');
         const sidebar = document.getElementById('sidebar');
         btnToggle.addEventListener('click', () => sidebar.classList.toggle('colapsado'));
 
-        const dientes = document.querySelectorAll('.diente');
-        const inputDiente = document.getElementById('dienteSeleccionado');
-        
-        let dientesSeleccionados = [];
+        // Variables Globales
+        let numeroDienteSeleccionado = null;
+        let idPaciente = null;
 
+        document.addEventListener("DOMContentLoaded", async () => {
+            // 1. Obtener parámetros de la URL
+            const parametros = new URLSearchParams(window.location.search);
+            idPaciente = parametros.get('id');
+            const nombrePaciente = parametros.get('nombre');
+
+            // Actualizar interfaz con datos del paciente
+            const h2Nombre = document.querySelector('.paciente-nombre');
+            if (nombrePaciente && h2Nombre) {
+                h2Nombre.innerHTML = `Paciente: <span>${nombrePaciente}</span>`;
+            } else if (h2Nombre) {
+                h2Nombre.innerHTML = `Paciente: <span>Carlos Mendoza Pérez</span>`; // Fallback de prueba
+            }
+
+            const btnVolver = document.getElementById('btnVolverExpediente');
+            if (btnVolver && idPaciente) {
+                btnVolver.href = `detalle_expediente.html?id=${idPaciente}`;
+            }
+
+            // 2. Configurar eventos de clic en los dientes
+            configurarClicsDientes();
+
+            // 3. Cargar tratamientos desde la Base de Datos para pintar los dientes
+            if (idPaciente) {
+                await cargarHistorialDentario();
+            }
+        });
+
+        // Alternar entre Mapa Adulto e Infantil
         function cambiarMapa(tipo) {
             const mapaAdulto = document.getElementById('mapaAdulto');
             const mapaInfantil = document.getElementById('mapaInfantil');
             const btnAdulto = document.getElementById('btnAdulto');
             const btnInfantil = document.getElementById('btnInfantil');
+            const inputDiente = document.getElementById('dienteSeleccionado');
             
-            dientes.forEach(d => d.classList.remove('diente-seleccionado'));
-            dientesSeleccionados = [];
+            // Limpiar selección actual
+            document.querySelectorAll('.diente').forEach(d => d.classList.remove('diente-seleccionado'));
+            numeroDienteSeleccionado = null;
             inputDiente.value = "";
             
             if(tipo === 'infantil') {
@@ -240,27 +296,119 @@
             }
         }
 
-        dientes.forEach(diente => {
-            diente.addEventListener('click', function() {
-                const numeroDiente = this.getAttribute('data-diente');
-                
-                this.classList.toggle('diente-seleccionado');
-                
-                if (this.classList.contains('diente-seleccionado')) {
-                    dientesSeleccionados.push(numeroDiente);
-                } else {
-                    dientesSeleccionados = dientesSeleccionados.filter(d => d !== numeroDiente);
-                }
-                
-                dientesSeleccionados.sort((a, b) => a - b);
-                
-                if (dientesSeleccionados.length > 0) {
-                    inputDiente.value = "Piezas: #" + dientesSeleccionados.join(', #');
-                } else {
-                    inputDiente.value = "";
-                }
+        // Registrar evento Clic en cada botón de diente
+        function configurarClicsDientes() {
+            const todosLosDientes = document.querySelectorAll('.diente');
+            const inputDiente = document.getElementById('dienteSeleccionado');
+
+            todosLosDientes.forEach(diente => {
+                diente.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // Quitar estilo de selección previa
+                    todosLosDientes.forEach(d => d.classList.remove('diente-seleccionado'));
+
+                    // Marcar diente actual
+                    this.classList.add('diente-seleccionado');
+                    numeroDienteSeleccionado = this.getAttribute('data-diente');
+
+                    // Mostrar número en caja de texto
+                    inputDiente.value = `Pieza: #${numeroDienteSeleccionado}`;
+                });
             });
-        });
+        }
+
+        // Cargar tratamientos de la BD y pintar visualmente los dientes
+        async function cargarHistorialDentario() {
+            try {
+                const respuesta = await fetch(`http://localhost:7070/api/odontograma/${idPaciente}`);
+                if (!respuesta.ok) return;
+
+                const historial = await respuesta.json();
+                const todosLosDientes = document.querySelectorAll('.diente');
+
+                historial.forEach(item => {
+                    todosLosDientes.forEach(diente => {
+                        const numDiente = diente.getAttribute('data-diente');
+                        if (numDiente === item.numero_diente) {
+                            // Limpiar clases de estado previas
+                            diente.classList.remove('diente-caries', 'diente-tratado');
+                            
+                            // Aplicar clase correspondiente
+                            if (item.estado.toLowerCase() === 'caries') {
+                                diente.classList.add('diente-caries');
+                            } else {
+                                diente.classList.add('diente-tratado');
+                            }
+                        }
+                    });
+                });
+            } catch (error) {
+                console.error("Error al obtener historial del odontograma:", error);
+            }
+        }
+
+        // Enviar el tratamiento registrado al servidor Java
+        async function guardarTratamiento() {
+            if (!idPaciente) {
+                Swal.fire('Atención', 'No hay un paciente seleccionado.', 'warning');
+                return;
+            }
+
+            if (!numeroDienteSeleccionado) {
+                Swal.fire('Atención', 'Por favor selecciona un diente del mapa primero.', 'warning');
+                return;
+            }
+
+            const selectDiag = document.getElementById('selectDiagnostico');
+            const inputCosto = document.getElementById('inputCosto');
+
+            const diagnosticoVal = selectDiag.value;
+            const costoVal = parseFloat(inputCosto.value) || 0;
+
+            // Determinar si es caries (rojo) o tratado (azul)
+            let estadoCalculado = 'tratado';
+            if (diagnosticoVal.toLowerCase().includes('caries')) {
+                estadoCalculado = 'caries';
+            }
+
+            const datosTratamiento = {
+                id_paciente: parseInt(idPaciente),
+                numero_diente: numeroDienteSeleccionado,
+                diagnostico: diagnosticoVal,
+                estado: estadoCalculado,
+                costo: costoVal
+            };
+
+            try {
+                const res = await fetch('http://localhost:7070/api/odontograma', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(datosTratamiento)
+                });
+
+                if (res.ok) {
+                    Swal.fire({
+                        title: '¡Registrado!',
+                        text: `El tratamiento se agregó al diente #${numeroDienteSeleccionado}`,
+                        icon: 'success',
+                        timer: 1800,
+                        showConfirmButton: false
+                    });
+
+                    // Reset de campos
+                    inputCosto.value = '';
+                    
+                    // Volver a cargar para actualizar colores en pantalla
+                    await cargarHistorialDentario();
+                } else {
+                    Swal.fire('Error', 'No se pudo guardar el registro.', 'error');
+                }
+            } catch (error) {
+                console.error("Error al guardar tratamiento:", error);
+                Swal.fire('Error', 'Error de conexión con el servidor Java.', 'error');
+            }
+        }
     </script>
 </body>
 </html>
