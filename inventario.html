@@ -9,183 +9,211 @@
 </head>
 <body class="body-dashboard">
 
-    <!-- Sidebar idéntico a tu estructura -->
+    <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
         <div class="sidebar-header">
             <div class="brand-info">
                 <h3>Panel Control</h3>
                 <p>Administración</p>
             </div>
-            <button id="btnToggle" class="btn-toggle">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
-            </button>
         </div>
 
         <nav class="sidebar-menu">
-            <a href="dashboard.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Dashboard</span>
-            </a>
-            <a href="agenda.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Agenda de Citas</span>
-            </a>
-            <a href="expediente.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Expedientes Clínicos</span>
-            </a>
-            <a href="odontograma.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Odontograma</span>
-            </a>
-            <a href="receta.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Recetas Médicas</span>
-            </a>
-            <a href="inventario.html" class="menu-item activo">
-                <span class="icon"></span><span class="menu-text">Inventario</span>
-            </a>
-            <a href="caja.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Cobros y Caja</span>
-            </a>
+            <a href="dashboard.html" class="menu-item"><span class="menu-text">Dashboard</span></a>
+            <a href="agenda.html" class="menu-item"><span class="menu-text">Agenda de Citas</span></a>
+            <a href="expediente.html" class="menu-item"><span class="menu-text">Expedientes Clínicos</span></a>
+            <a href="odontograma.html" class="menu-item"><span class="menu-text">Odontograma</span></a>
+            <a href="receta.html" class="menu-item"><span class="menu-text">Recetas Médicas</span></a>
+            <a href="inventario.html" class="menu-item activo"><span class="menu-text">Inventario</span></a>
+            <a href="caja.html" class="menu-item"><span class="menu-text">Cobros y Caja</span></a>
+            <a href="index.html" class="menu-item salir"><span class="menu-text">Cerrar Sesión</span></a>
         </nav>
     </aside>
 
     <div class="dashboard-layout">
         <main class="dashboard-content">
-            
             <div class="page-container">
                 <div class="card header-actions">
                     <h2>Inventario de Insumos</h2>
-                    <button class="btn btn-teal" id="btnAbrirModal">+ Nuevo Artículo</button>
+                    <button class="btn btn-teal" id="btnAbrirModal" onclick="abrirModalNuevo()">+ Nuevo Artículo</button>
                 </div>
 
                 <div class="card">
-                    <div class="search-bar-container">
-                        <input type="text" class="search-input" placeholder="Buscar por código, artículo o categoría...">
-                        <button class="btn btn-gray">Filtrar</button>
-                    </div>
-
                     <div class="table-wrapper">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Código</th>
-                                    <th>Artículo</th>
+                                    <th>ID</th>
+                                    <th>Artículo / Categoría</th>
                                     <th>Stock Actual</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>#INS-045</td>
-                                    <td>
-                                        <div class="item-name">Resina Compuesta 3M</div>
-                                        <div class="item-category">Restauración</div>
-                                    </td>
-                                    <td>24 jeringas</td>
-                                    <td><span class="badge badge-success">En Stock</span></td>
-                                    <td><button class="btn btn-blue">Actualizar</button></td>
-                                </tr>
-                                <tr>
-                                    <td>#INS-082</td>
-                                    <td>
-                                        <div class="item-name">Anestesia Lidocaína 2%</div>
-                                        <div class="item-category">Anestésicos</div>
-                                    </td>
-                                    <td>5 cajas</td>
-                                    <td><span class="badge badge-warning">Stock Bajo</span></td>
-                                    <td><button class="btn btn-blue">Actualizar</button></td>
-                                </tr>
-                                <tr>
-                                    <td>#INS-110</td>
-                                    <td>
-                                        <div class="item-name">Guantes de Látex (Talla M)</div>
-                                        <div class="item-category">Desechables</div>
-                                    </td>
-                                    <td>0 cajas</td>
-                                    <td><span class="badge badge-danger">Agotado</span></td>
-                                    <td><button class="btn btn-blue">Actualizar</button></td>
-                                </tr>
+                            <!-- Aquí se inyectarán los datos desde Java -->
+                            <tbody id="tablaInventario">
+                                <tr><td colspan="5">Cargando inventario...</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-<div id="modalNuevoArticulo" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>Agregar Nuevo Artículo</h3>
-            <span class="close-modal" id="btnCerrarModal">&times;</span>
-        </div>
-        <div class="modal-body">
-            <form id="formNuevoArticulo">
-                <div class="form-group">
-                    <label>Código del Insumo</label>
-                    <input type="text" placeholder="Ej. #INS-120" class="input-control">
-                </div>
-                <div class="form-group">
-                    <label>Nombre del Artículo</label>
-                    <input type="text" placeholder="Ej. Agujas Dentales" class="input-control">
-                </div>
-                <div class="form-group">
-                    <label>Categoría</label>
-                    <select class="input-control">
-                        <option value="">Selecciona una categoría</option>
-                        <option value="restauracion">Restauración</option>
-                        <option value="desechables">Desechables</option>
-                        <option value="anestesicos">Anestésicos</option>
-                        <option value="instrumental">Instrumental</option>
-                    </select>
-                </div>
-                <div class="form-group row-group">
-                    <div class="half">
-                        <label>Stock Inicial</label>
-                        <input type="number" placeholder="Ej. 10" class="input-control">
+            <!-- Modal Dinámico (Sirve para Crear y Editar) -->
+            <div id="modalNuevoArticulo" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="modalTitulo">Agregar Nuevo Artículo</h3>
+                        <span class="close-modal" id="btnCerrarModal" onclick="cerrarModal()">&times;</span>
                     </div>
-                    <div class="half">
-                        <label>Unidad de Medida</label>
-                        <select class="input-control">
-                            <option value="cajas">Cajas</option>
-                            <option value="piezas">Piezas</option>
-                            <option value="jeringas">Jeringas</option>
-                            <option value="bolsas">Bolsas</option>
-                        </select>
+                    <div class="modal-body">
+                        <form id="formInventario">
+                            <input type="hidden" id="idArticulo"> <!-- Para saber si actualizamos -->
+                            
+                            <div class="form-group">
+                                <label>Nombre del Artículo</label>
+                                <input type="text" id="nombreArticulo" placeholder="Ej. Agujas Dentales" class="input-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Categoría</label>
+                                <select id="categoriaArticulo" class="input-control" required>
+                                    <option value="">Selecciona una categoría</option>
+                                    <option value="Material Clínico">Material Clínico</option>
+                                    <option value="Desechable">Desechable</option>
+                                    <option value="Medicamento">Medicamento</option>
+                                    <option value="Instrumental">Instrumental</option>
+                                </select>
+                            </div>
+                            <div class="form-group row-group">
+                                <div class="half">
+                                    <label>Stock Actual</label>
+                                    <input type="number" id="stockActual" placeholder="Ej. 10" class="input-control" required>
+                                </div>
+                                <div class="half">
+                                    <label>Stock Mínimo (Alerta)</label>
+                                    <input type="number" id="stockMinimo" placeholder="Ej. 5" class="input-control" required>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-gray" onclick="cerrarModal()">Cancelar</button>
+                        <button class="btn btn-teal" onclick="guardarArticulo()">Guardar Artículo</button>
                     </div>
                 </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-gray" id="btnCancelarModal">Cancelar</button>
-            <button class="btn btn-teal">Guardar Artículo</button>
-        </div>
-    </div>
-</div>
+            </div>
             
         </main>
     </div>
 
     <script>
-    const modal = document.getElementById('modalNuevoArticulo');
-    const btnAbrir = document.getElementById('btnAbrirModal');
-    const btnCerrar = document.getElementById('btnCerrarModal');
-    const btnCancelar = document.getElementById('btnCancelarModal');
+    const urlApi = 'http://localhost:7000/api/inventario';
 
-    btnAbrir.addEventListener('click', () => {
-        modal.classList.add('mostrar');
-    });
+    // 1. Cargar datos al abrir la página
+    document.addEventListener("DOMContentLoaded", cargarInventario);
 
-    btnCerrar.addEventListener('click', () => {
-        modal.classList.remove('mostrar');
-    });
+    function cargarInventario() {
+        fetch(urlApi)
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('tablaInventario');
+                tbody.innerHTML = ''; 
 
-    btnCancelar.addEventListener('click', () => {
-        modal.classList.remove('mostrar');
-    });
+                data.forEach(item => {
+                    // Calculamos el estado visual del stock
+                    let badgeClass = "badge-success";
+                    let estadoTexto = "En Stock";
+                    
+                    if (item.stock_actual === 0) {
+                        badgeClass = "badge-danger";
+                        estadoTexto = "Agotado";
+                    } else if (item.stock_actual <= item.stock_minimo) {
+                        badgeClass = "badge-warning";
+                        estadoTexto = "Stock Bajo";
+                    }
 
-    window.addEventListener('click', (evento) => {
-        if (evento.target === modal) {
-            modal.classList.remove('mostrar');
+                    // Inyectamos la fila
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>#${item.id_articulo}</td>
+                            <td>
+                                <div class="item-name">${item.nombre_articulo}</div>
+                                <div class="item-category">${item.categoria}</div>
+                            </td>
+                            <td>${item.stock_actual}</td>
+                            <td><span class="badge ${badgeClass}">${estadoTexto}</span></td>
+                            <td>
+                                <button class="btn btn-blue" onclick="editarArticulo(${item.id_articulo}, '${item.nombre_articulo}', '${item.categoria}', ${item.stock_actual}, ${item.stock_minimo})">Editar</button>
+                                <button class="btn btn-gray" onclick="eliminarArticulo(${item.id_articulo})" style="background-color: #e53e3e; color: white;">Eliminar</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            })
+            .catch(err => console.error("Error al cargar:", err));
+    }
+
+    // 2. Controladores del Modal
+    function abrirModalNuevo() {
+        document.getElementById('idArticulo').value = '';
+        document.getElementById('formInventario').reset();
+        document.getElementById('modalTitulo').innerText = 'Agregar Nuevo Artículo';
+        document.getElementById('modalNuevoArticulo').classList.add('mostrar');
+    }
+
+    function cerrarModal() {
+        document.getElementById('modalNuevoArticulo').classList.remove('mostrar');
+    }
+
+    function editarArticulo(id, nombre, categoria, stock, minimo) {
+        document.getElementById('idArticulo').value = id;
+        document.getElementById('nombreArticulo').value = nombre;
+        document.getElementById('categoriaArticulo').value = categoria;
+        document.getElementById('stockActual').value = stock;
+        document.getElementById('stockMinimo').value = minimo;
+        document.getElementById('modalTitulo').innerText = 'Editar Artículo';
+        document.getElementById('modalNuevoArticulo').classList.add('mostrar');
+    }
+
+    // 3. Guardar (Crear o Actualizar)
+    function guardarArticulo() {
+        const id = document.getElementById('idArticulo').value;
+        
+        // Usamos URLSearchParams para enviar como formulario clásico
+        const formData = new URLSearchParams();
+        formData.append('nombre', document.getElementById('nombreArticulo').value);
+        formData.append('categoria', document.getElementById('categoriaArticulo').value);
+        formData.append('stock_actual', document.getElementById('stockActual').value);
+        formData.append('stock_minimo', document.getElementById('stockMinimo').value);
+
+        // Si hay ID, es actualizar (PUT). Si no hay ID, es crear (POST).
+        const method = id ? 'PUT' : 'POST';
+        const urlFetch = id ? `${urlApi}/${id}` : urlApi;
+
+        fetch(urlFetch, {
+            method: method,
+            body: formData,
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        })
+        .then(response => {
+            if(response.ok) {
+                cerrarModal();
+                cargarInventario(); // Recargar la tabla
+            } else {
+                alert("Error al guardar el artículo");
+            }
+        });
+    }
+
+    // 4. Eliminar
+    function eliminarArticulo(id) {
+        if(confirm("¿Estás seguro de eliminar este artículo del inventario?")) {
+            fetch(`${urlApi}/${id}`, { method: 'DELETE' })
+            .then(response => {
+                if(response.ok) cargarInventario();
+            });
         }
-    });
-</script>
-
+    }
+    </script>
 </body>
 </html>

@@ -21,30 +21,14 @@
         </div>
 
         <nav class="sidebar-menu">
-            <a href="dashboard.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Dashboard</span>
-            </a>
-            <a href="agenda.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Agenda de Citas</span>
-            </a>
-            <a href="expediente.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Expedientes Clínicos</span>
-            </a>
-            <a href="odontograma.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Odontograma</span>
-            </a>
-            <a href="receta.html" class="menu-item activo">
-                <span class="icon"></span><span class="menu-text">Recetas Médicas</span>
-            </a>
-            <a href="inventario.html" class="menu-item activo">
-                <span class="icon"></span><span class="menu-text">Inventario</span>
-            </a>
-            <a href="caja.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Cobros y Caja</span>
-            </a>
-            <a href="index.html" class="menu-item salir">
-                <span class="icon"></span><span class="menu-text">Cerrar Sesión</span>
-            </a>
+            <a href="dashboard.html" class="menu-item activo"><span class="menu-text">Dashboard</span></a>
+            <a href="agenda.html" class="menu-item"><span class="menu-text">Agenda de Citas</span></a>
+            <a href="expediente.html" class="menu-item"><span class="menu-text">Expedientes Clínicos</span></a>
+            <a href="odontograma.html" class="menu-item"><span class="menu-text">Odontograma</span></a>
+            <a href="receta.html" class="menu-item"><span class="menu-text">Recetas Médicas</span></a>
+            <a href="inventario.html" class="menu-item"><span class="menu-text">Inventario</span></a>
+            <a href="caja.html" class="menu-item"><span class="menu-text">Cobros y Caja</span></a>
+            <a href="index.html" class="menu-item salir"><span class="menu-text">Cerrar Sesión</span></a>
         </nav>
     </aside>
 
@@ -73,67 +57,40 @@
                 
                 <div class="grupo-input" style="margin-bottom: 25px; max-width: 50%;">
                     <label>Paciente:</label>
-                    <select class="input-medico" style="background-color: #F8FAFC;">
-                        <option>Carlos Mendoza Valdez - ID: #004582</option>
-                        <option>Ana Ruiz - ID: #004583</option>
+                    <select id="selectPaciente" class="input-medico" style="background-color: #F8FAFC;">
+                        <option value="">Cargando pacientes...</option>
                     </select>
-                    <p style="color: #EF4444; font-size: 0.85rem; margin-top: 8px; font-weight: 700;">
-                         Alergias reportadas: Penicilina
-                    </p>
                 </div>
 
                 <div class="expediente-grid">
+                    <!-- Columna Izquierda: Diagnóstico y Tratamiento -->
                     <div class="expediente-col-izq">
                         <div class="grupo-input" style="margin-bottom: 15px;">
                             <label>Diagnóstico:</label>
-                            <textarea class="textarea-notas" style="height: 100px;" placeholder="Ej. Caries profunda en pieza #16, dolor agudo..."></textarea>
+                            <textarea id="inputDiagnostico" class="textarea-notas" style="height: 100px;" placeholder="Ej. Caries profunda en pieza #16, dolor agudo..."></textarea>
                         </div>
                         <div class="grupo-input">
                             <label>Tratamiento realizado:</label>
-                            <textarea class="textarea-notas" style="height: 100px;" placeholder="Ej. Resina simple, profilaxis..."></textarea>
+                            <textarea id="inputTratamiento" class="textarea-notas" style="height: 100px;" placeholder="Ej. Resina simple, profilaxis..."></textarea>
                         </div>
                     </div>
 
+                    <!-- Columna Derecha: Prescripción de Medicamentos -->
                     <div class="expediente-col-der" style="border: 1px solid #E2E8F0; padding: 20px; border-radius: 12px; background-color: #F8FAFC;">
                         <h3 class="titulo-tarjeta" style="margin-top: 0;">Prescripción</h3>
                         
                         <div id="listaMedicamentos">
-                            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #E2E8F0; margin-bottom: 15px;">
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
-                                    <div class="grupo-input">
-                                        <label>Medicamento:</label>
-                                        <input type="text" class="input-medico" placeholder="Ej. Ibuprofeno 600mg">
-                                    </div>
-                                    <div class="grupo-input">
-                                        <label>Dosis / Frecuencia:</label>
-                                        <input type="text" class="input-medico" placeholder="Ej. 1 tableta cada 8 hrs">
-                                    </div>
-                                </div>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                                    <div class="grupo-input">
-                                        <label>Duración:</label>
-                                        <input type="text" class="input-medico" placeholder="Ej. 5 días">
-                                    </div>
-                                    <div class="grupo-input">
-                                        <label>Vía de Administración:</label>
-                                        <select class="input-medico">
-                                            <option>Oral</option>
-                                            <option>Sublingual</option>
-                                            <option>Intramuscular</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- Los bloques de medicamentos se crean dinámicamente desde JS -->
                         </div>
 
-                        <button class="btn-tabla btn-tabla-secundario" style="width: 100%; border: 1px dashed var(--color-primario-azul); background: transparent; color: var(--color-primario-azul);" onclick="agregarMedicamento()">
+                        <button class="btn-tabla btn-tabla-secundario" style="width: 100%; border: 1px dashed var(--color-primario-azul); background: transparent; color: var(--color-primario-azul); font-weight: bold; padding: 10px; cursor: pointer;" onclick="agregarMedicamento()">
                             + Agregar Medicamento
                         </button>
                     </div>
                 </div>
 
                 <div style="display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; border-top: 1px solid #E2E8F0; padding-top: 20px;">
-                    <button class="btn-tabla" style="background-color: var(--color-texto-secundario);">
+                    <button class="btn-tabla" style="background-color: var(--color-texto-secundario);" onclick="guardarReceta()">
                          Guardar y Enviar
                     </button>
                     <button class="btn-tabla" style="background-color: var(--color-primario-azul);" onclick="imprimirReceta()">
@@ -142,32 +99,124 @@
                 </div>
 
             </div>
+
+            <!-- HOJA MEMBRETADA PARA IMPRESIÓN (Solo visible en Ctrl+P o al Imprimir) -->
+            <div id="hojaImpresion">
+                <div class="encabezado-receta">
+                    <div class="logo-receta">
+                        <h2>Consultorio Dental Guzmán</h2>
+                        <p><strong>Dr. Guzmán</strong> - Cirujano Dentista</p>
+                        <p><small>Céd. Prof. 12345678 | Tel: (961) 123-4567</small></p>
+                        <p><small>Dirección: Av. Central #123, Tuxtla Gutiérrez, Chiapas</small></p>
+                    </div>
+                    <div class="fecha-receta">
+                        <p><strong>Fecha:</strong> <span id="printFecha"></span></p>
+                    </div>
+                </div>
+
+                <hr class="linea-receta">
+
+                <div class="datos-paciente-receta">
+                    <p><strong>Paciente:</strong> <span id="printPaciente"></span></p>
+                    <p><strong>Diagnóstico:</strong> <span id="printDiagnostico"></span></p>
+                </div>
+
+                <hr class="linea-receta">
+
+                <div class="cuerpo-receta">
+                    <h3 style="margin-bottom: 10px;">Rx / Prescripción Médica</h3>
+                    <div id="printMedicamentos">
+                        <!-- Medicamentos formateados -->
+                    </div>
+
+                    <div style="margin-top: 25px;">
+                        <p><strong>Tratamiento / Indicaciones Adicionales:</strong></p>
+                        <p id="printTratamiento" style="margin-top: 5px; color: #333;"></p>
+                    </div>
+                </div>
+
+                <div class="pie-receta">
+                    <div class="firma-box">
+                        <div class="linea-firma"></div>
+                        <p><strong>Dr. Guzmán</strong></p>
+                        <p><small>Firma del Médico</small></p>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 
     <script>
+        const API_URL = 'http://localhost:7000/api';
+
         const btnToggle = document.getElementById('btnToggle');
         const sidebar = document.getElementById('sidebar');
-        btnToggle.addEventListener('click', () => sidebar.classList.toggle('colapsado'));
+        if (btnToggle && sidebar) {
+            btnToggle.addEventListener('click', () => sidebar.classList.toggle('colapsado'));
+        }
 
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarPacientes();
+            agregarMedicamento(); // Carga el primer bloque automáticamente al iniciar
+        });
+
+        // 1. Cargar la lista de pacientes desde el backend
+        async function cargarPacientes() {
+            try {
+                const res = await fetch(`${API_URL}/citas/pacientes`);
+                if (res.ok) {
+                    const pacientes = await res.json();
+                    const select = document.getElementById('selectPaciente');
+                    select.innerHTML = '<option value="">-- Selecciona un Paciente --</option>';
+
+                    pacientes.forEach(p => {
+                        const option = document.createElement('option');
+                        option.value = p.id_paciente;
+                        option.textContent = `${p.nombre || p.nombre_paciente} - ID: #${String(p.id_paciente).padStart(6, '0')}`;
+                        select.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error("Error al cargar pacientes:", error);
+            }
+        }
+
+        // 2. Agregar bloques dinámicos para medicamentos
         function agregarMedicamento() {
             const lista = document.getElementById('listaMedicamentos');
+            if (!lista) return;
+
             const nuevoBloque = document.createElement('div');
+            nuevoBloque.className = "bloque-medicamento";
             nuevoBloque.style.cssText = "background: white; padding: 15px; border-radius: 8px; border: 1px solid #E2E8F0; margin-bottom: 15px;";
+            
             nuevoBloque.innerHTML = `
                 <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                    <span style="font-weight: 700; color: var(--color-texto-secundario); font-size: 0.85rem;">MEDICAMENTO ADICIONAL</span>
-                    <button onclick="this.parentElement.parentElement.remove()" style="color: #EF4444; background: none; border: none; cursor: pointer; font-weight: bold;">X Quitar</button>
+                    <span style="font-weight: 700; color: #475569; font-size: 0.85rem;">MEDICAMENTO</span>
+                    <button onclick="this.parentElement.parentElement.remove()" style="color: #EF4444; background: none; border: none; cursor: pointer; font-weight: bold;">✕ Quitar</button>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
-                    <div class="grupo-input"><input type="text" class="input-medico" placeholder="Medicamento"></div>
-                    <div class="grupo-input"><input type="text" class="input-medico" placeholder="Dosis / Frecuencia"></div>
+                    <div class="grupo-input">
+                        <label>Medicamento:</label>
+                        <input type="text" class="input-medico med-nombre" placeholder="Ej. Paracetamol 500mg">
+                    </div>
+                    <div class="grupo-input">
+                        <label>Dosis / Frecuencia:</label>
+                        <input type="text" class="input-medico med-dosis" placeholder="Ej. 1 tableta c/8 hrs">
+                    </div>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <div class="grupo-input"><input type="text" class="input-medico" placeholder="Duración"></div>
                     <div class="grupo-input">
-                        <select class="input-medico">
-                            <option>Oral</option><option>Sublingual</option><option>Intramuscular</option>
+                        <label>Duración:</label>
+                        <input type="text" class="input-medico med-duracion" placeholder="Ej. 5 días">
+                    </div>
+                    <div class="grupo-input">
+                        <label>Vía de Administración:</label>
+                        <select class="input-medico med-via">
+                            <option>Oral</option>
+                            <option>Sublingual</option>
+                            <option>Intramuscular</option>
                         </select>
                     </div>
                 </div>
@@ -175,8 +224,104 @@
             lista.appendChild(nuevoBloque);
         }
 
+        // 3. Guardar en Base de Datos
+        async function guardarReceta() {
+            const idPaciente = document.getElementById('selectPaciente').value;
+            const diagnostico = document.getElementById('inputDiagnostico').value;
+            const tratamiento = document.getElementById('inputTratamiento').value;
+
+            if (!idPaciente) return alert("Por favor selecciona un paciente.");
+            if (!diagnostico) return alert("Ingresa el diagnóstico médico.");
+
+            const bloques = document.querySelectorAll('.bloque-medicamento');
+            const medicamentos = [];
+
+            bloques.forEach(bloque => {
+                const nombre = bloque.querySelector('.med-nombre').value;
+                const dosis = bloque.querySelector('.med-dosis').value;
+                const duracion = bloque.querySelector('.med-duracion').value;
+                const via = bloque.querySelector('.med-via').value;
+
+                if (nombre.trim() !== "") {
+                    medicamentos.push({ medicamento: nombre, dosis, duracion, via });
+                }
+            });
+
+            if (medicamentos.length === 0) {
+                return alert("Agrega al menos un medicamento con su nombre antes de guardar.");
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/recetas`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        id_paciente: parseInt(idPaciente),
+                        diagnostico,
+                        tratamiento,
+                        medicamentos
+                    })
+                });
+
+                if (response.ok) {
+                    alert("¡Receta guardada exitosamente!");
+                } else {
+                    alert("Hubo un error al guardar la receta.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("No se pudo conectar con el servidor.");
+            }
+        }
+
+        // 4. Imprimir Receta Membretada
         function imprimirReceta() {
-            alert("Preparando PDF para impresión con hoja membretada...");
+            const selectPaciente = document.getElementById('selectPaciente');
+            const pacienteTexto = selectPaciente.options[selectPaciente.selectedIndex]?.text || 'Paciente no seleccionado';
+            const diagnostico = document.getElementById('inputDiagnostico').value || 'Sin diagnóstico especificado';
+            const tratamiento = document.getElementById('inputTratamiento').value || 'Sin indicaciones adicionales';
+
+            const hoy = new Date().toLocaleDateString('es-MX', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            document.getElementById('printFecha').textContent = hoy;
+            document.getElementById('printPaciente').textContent = pacienteTexto;
+            document.getElementById('printDiagnostico').textContent = diagnostico;
+            document.getElementById('printTratamiento').textContent = tratamiento;
+
+            const containerMeds = document.getElementById('printMedicamentos');
+            containerMeds.innerHTML = '';
+
+            const bloques = document.querySelectorAll('.bloque-medicamento');
+            let tieneMedicamentos = false;
+
+            bloques.forEach((bloque, index) => {
+                const nombre = bloque.querySelector('.med-nombre').value;
+                const dosis = bloque.querySelector('.med-dosis').value;
+                const duracion = bloque.querySelector('.med-duracion').value;
+                const via = bloque.querySelector('.med-via').value;
+
+                if (nombre.trim() !== '') {
+                    tieneMedicamentos = true;
+                    containerMeds.innerHTML += `
+                        <div class="item-print-med">
+                            <p><strong>${index + 1}. ${nombre}</strong> — <em>Vía ${via}</em></p>
+                            <p style="padding-left: 15px; color: #475569;">
+                                <strong>Tomar:</strong> ${dosis} | <strong>Durante:</strong> ${duracion}
+                            </p>
+                        </div>
+                    `;
+                }
+            });
+
+            if (!tieneMedicamentos) {
+                alert("Por favor ingresa al menos un medicamento con su nombre antes de imprimir.");
+                return;
+            }
+
             window.print();
         }
     </script>

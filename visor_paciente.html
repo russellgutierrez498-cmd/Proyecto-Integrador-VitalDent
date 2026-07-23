@@ -86,5 +86,150 @@
 
     </main>
 
+    <script>
+document.addEventListener("DOMContentLoaded", async () => {
+    const idPacienteLogueado = 1; 
+
+    try {
+        const res = await fetch(`http://localhost:7000/api/radiografias/${idPacienteLogueado}`);
+        if (res.ok) {
+            const datos = await res.json();
+            
+            const imgVisor = document.querySelector('.img-3d-mockup');
+            if(imgVisor) imgVisor.src = datos.ruta_archivo;
+            
+            // Actualizar las notas del médico
+            const cajaNotas = document.querySelector('.caja-diagnostico p');
+            if(cajaNotas) cajaNotas.textContent = `"${datos.notas_medico}"`;
+
+        } else {
+            console.log("El paciente aún no tiene radiografías en su historial.");
+        }
+    } catch (error) {
+        console.error("Error conectando con el servidor:", error);
+    }
+});
+
+// Controles de Zoom y Rotación para el Paciente
+const imgPaciente = document.querySelector('.img-3d-mockup');
+const slidersPaciente = document.querySelectorAll('.slider-paciente');
+
+if (imgPaciente && slidersPaciente.length >= 2) {
+    const rotPaciente = slidersPaciente[0];
+    const zoomPaciente = slidersPaciente[1];
+
+    if (imgPaciente.parentElement) {
+        imgPaciente.parentElement.style.overflow = 'hidden';
+    }
+
+    function transformarImagenPaciente() {
+        const rotacion = (rotPaciente.value - 180) / 6;
+        const zoom = zoomPaciente.value / 50;
+
+        imgPaciente.style.transform = `scale(${zoom}) rotate(${rotacion}deg)`;
+        imgPaciente.style.transition = 'transform 0.05s ease';
+    }
+
+    rotPaciente.addEventListener('input', transformarImagenPaciente);
+    zoomPaciente.addEventListener('input', transformarImagenPaciente);
+}
+</script>
+
+<script>
+// ID del paciente (en la vida real, lo sacas de la sesión del usuario que inició sesión)
+const miIdPaciente = 1; 
+
+async function cargarMiEstudio() {
+    try {
+        const respuesta = await fetch('http://localhost:7000/api/radiografias/' + idPaciente)
+        
+        if (respuesta.ok) {
+            const datos = await respuesta.json();
+            
+            // 1. Mostrar la imagen real
+            const miImagen = document.querySelector('.img-3d-mockup');
+            if(miImagen && datos.ruta_archivo) {
+                miImagen.src = datos.ruta_archivo;
+            }
+
+            // 2. Mostrar las notas del doctor
+            const notasDoctor = document.querySelector('.caja-diagnostico p');
+            if(notasDoctor && datos.notas_medico) {
+                // Reemplazamos el texto estático por las notas de la base de datos
+                notasDoctor.textContent = `"${datos.notas_medico}"`;
+            }
+
+            // 3. Mostrar las piezas afectadas
+            const contenedorPiezas = document.querySelector('.badges-piezas');
+            if(contenedorPiezas && datos.piezas_afectadas) {
+                // Limpiamos los badges de prueba
+                contenedorPiezas.innerHTML = ''; 
+                
+                // Supongamos que el doctor escribió "16, 24" en las piezas afectadas.
+                // Separamos ese texto por comas y creamos un badge por cada pieza.
+                const piezasArreglo = datos.piezas_afectadas.split(','); 
+                
+                piezasArreglo.forEach(pieza => {
+                    const badge = document.createElement('span');
+                    badge.className = 'badge badge-warning'; // Un color estándar por ahora
+                    badge.textContent = `Pieza ${pieza.trim()}`;
+                    badge.style.marginRight = '5px'; // Espacio entre badges
+                    contenedorPiezas.appendChild(badge);
+                });
+            }
+            
+            // 4. Actualizar la fecha (Opcional, si agregas fecha en tu backend)
+            // const fechaEstudio = document.querySelector('.fecha-estudio');
+            // fechaEstudio.textContent = "Realizado: " + datos.fecha_subida;
+
+        } else {
+             // Si no hay estudio, mostramos un mensaje amigable
+             document.querySelector('.simulador-3d-paciente').innerHTML = '<p style="padding: 20px; text-align: center;">Aún no tienes estudios radiológicos registrados.</p>';
+             document.querySelector('.caja-diagnostico p').textContent = "No hay notas médicas disponibles en este momento.";
+             document.querySelector('.badges-piezas').innerHTML = '<span class="text-muted">Ninguna</span>';
+        }
+    } catch (error) {
+        console.error("Error al cargar los datos del paciente:", error);
+    }
+    
+}
+// Ejecutamos la función al cargar la página
+window.onload = cargarMiEstudio;
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Obtenemos el ID del paciente desde la sesión
+        const pacienteId = localStorage.getItem('paciente_id');
+        const sesionPersonal = JSON.parse(localStorage.getItem('usuario_sesion') || '{}');
+
+        // Si no hay ni sesión de paciente ni de doctor/personal, expulsar a la página principal
+        if (!pacienteId && !sesionPersonal.rol) {
+            alert('Debes iniciar sesión para ver tus radiografías.');
+            window.location.href = 'index.html';
+            return;
+        }
+
+        // Si es paciente, cargamos las imágenes correspondientes a su ID
+        if (pacienteId) {
+            console.log("Cargando radiografías del paciente ID:", pacienteId);
+            cargarRadiografiasDelPaciente(pacienteId);
+        }
+    });
+
+    async function cargarRadiografiasDelPaciente(id) {
+        try {
+            // Consulta las imágenes/estudios del paciente a tu backend
+            const response = await fetch(`http://localhost:7000/api/pacientes/${id}/radiografias`);
+            if (response.ok) {
+                const estudios = await response.json();
+                // Renderizar las imágenes en el visor...
+            }
+        } catch (error) {
+            console.error("Error cargando radiografías:", error);
+        }
+    }
+</script>
+
 </body>
 </html>

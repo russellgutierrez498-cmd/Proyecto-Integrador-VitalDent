@@ -6,266 +6,343 @@
     <title>Agenda de Citas - Consultorio Dental Guzmán</title>
     <link rel="stylesheet" href="CSS/stylediv.CSS">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos rápidos para la ventana modal (Pop-up) */
+        .modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
+            justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background-color: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 500px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .close { float: right; font-size: 24px; font-weight: bold; cursor: pointer; color: #64748b; }
+        .close:hover { color: #ef4444; }
+    </style>
 </head>
 <body class="body-dashboard">
 
+    <!-- BARRA LATERAL -->
     <aside id="sidebar" class="sidebar">
         <div class="sidebar-header">
             <div class="brand-info">
                 <h3>Panel Control</h3>
-                <p>Recepcionista / Admin</p>
+                <p>Doctor / Especialista</p>
             </div>
-            <button id="btnToggle" class="btn-toggle">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-            </button>
         </div>
 
         <nav class="sidebar-menu">
-            <a href="dashboard.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Dashboard</span>
-            </a>
-            <a href="agenda.html" class="menu-item activo">
-                <span class="icon"></span><span class="menu-text">Agenda de Citas</span>
-            </a>
-            <a href="expediente.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Expedientes Clínicos</span>
-            </a>
-            <a href="odontograma.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Odontograma</span>
-            </a>
-            <a href="receta.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Recetas Médicas</span>
-            </a>
-            <a href="inventario.html" class="menu-item activo">
-                <span class="icon"></span><span class="menu-text">Inventario</span>
-            </a>
-            <a href="caja.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Cobros y Caja</span>
-            </a>
-            <a href="index.html" class="menu-item salir">
-                <span class="icon"></span><span class="menu-text">Cerrar Sesión</span>
-            </a>
+            <a href="dashboard.html" class="menu-item activo"><span class="menu-text">Dashboard</span></a>
+            <a href="agenda.html" class="menu-item"><span class="menu-text">Agenda de Citas</span></a>
+            <a href="expediente.html" class="menu-item"><span class="menu-text">Expedientes Clínicos</span></a>
+            <a href="odontograma.html" class="menu-item"><span class="menu-text">Odontograma</span></a>
+            <a href="receta.html" class="menu-item"><span class="menu-text">Recetas Médicas</span></a>
+            <a href="inventario.html" class="menu-item"><span class="menu-text">Inventario</span></a>
+            <a href="caja.html" class="menu-item"><span class="menu-text">Cobros y Caja</span></a>
+            <a href="index.html" class="menu-item salir"><span class="menu-text">Cerrar Sesión</span></a>
+        </nav>
         </nav>
     </aside>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <div class="dashboard-layout">
         <header class="navbar-dashboard">
             <div class="logo-dashboard">
                 <h1>Consultorio <span>Dental Guzmán</span></h1>
             </div>
             <div class="user-profile">
-                <span>Recepción</span>
-                <div class="avatar" style="background-color: #F59E0B;">R</div>
+                <span>Dr. Guzmán</span>
+                <div class="avatar">D</div>
             </div>
         </header>
 
         <main class="dashboard-content">
-            
-            <div class="paciente-header" style="padding: 15px 30px; margin-bottom: 20px;">
-                <div class="paciente-info-principal" style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
-                    <h2 class="paciente-nombre" style="font-size: 1.4rem; margin:0;">Gestión de Agenda</h2>
-                    <button class="btn-tabla btn-tabla-secundario" onclick="abrirCalendarioMensual()">Ver Calendario Mensual</button>
-                </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="color: #1E40AF; margin: 0;">Agenda de Citas</h2>
+                <button onclick="abrirModal()" class="btn-tabla" style="background-color: #3B82F6; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">
+                    + Nueva Cita
+                </button>
             </div>
 
-            <div class="expediente-grid">
-                
-                <div class="tarjeta-expediente" style="margin-bottom: 0;">
-                    <h3 class="titulo-tarjeta">Citas Programadas (Hoy)</h3>
-                    
-                    <div class="tabla-responsive">
-                        <table class="tabla-medica">
-                             <thead>
-                                 <tr>
-                                     <th>Hora</th>
-                                     <th>Paciente</th>
-                                     <th>Motivo</th>
-                                     <th>Estado</th>
-                                     <th>Acciones</th>
-                                 </tr>
-                             </thead>
-                             <tbody id="cuerpoTablaCitas">
-
-                             </tbody>
-                         </table>
-                    </div>
-                </div>
-
-                <div class="tarjeta-expediente" style="margin-bottom: 0; background-color: #F8FAFC;">
-                    <h3 class="titulo-tarjeta">Agendar Nueva Cita</h3>
-                    
-                   <form id="formNuevaCita">
-    
-                     <div class="grupo-input" style="margin-bottom: 15px;">
-                         <label>Buscar Paciente (Registrado):</label>
-                     <select id="id_paciente" class="form-control">
-                         <option value="" disabled selected>Cargando pacientes...</option>
-                     </select>
-                 </div>
-
-                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                     <div class="grupo-input">
-                         <label>Fecha:</label>
-                         <input type="date" class="input-medico" id="fecha" required>
-                     </div>
-                     <div class="grupo-input">
-                         <label>Hora:</label>
-                        <input type="time" class="input-medico" id="hora" required>
-                     </div>
-                 </div>
-
-                 <div class="grupo-input" style="margin-bottom: 25px;">
-                     <label>Motivo de la cita:</label>
-                         <select class="input-medico" id="motivo">
-                             <option>Valoración Inicial</option>
-                             <option>Limpieza dental</option>
-                          </select>
-                 </div>
-
-                 <div class="grupo-input" style="margin-bottom: 25px;">
-                     <label>Doctor / Especialista:</label>
-                         <select class="input-medico" id="id_doctor">
-                             <option value="1">Dr. Guzmán (Odontología General)</option>
-                             <option value="2">Dra. Elena (Ortodoncia)</option>
-                             <option value="3">Dr. Roberto (Cirugía Maxilofacial)</option>
-                          </select>
-                    </div>
-    
-                 <button type="submit" class="btn-primario">+ CONFIRMAR CITA</button>
-                </form>
-                </div>
-
+            <!-- Tabla de Citas -->
+            <div class="tarjeta-expediente">
+                <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                    <thead>
+                        <tr style="background-color: #F8FAFC; text-align: left; border-bottom: 2px solid #E2E8F0;">
+                            <th style="padding: 15px; color: #475569;">Fecha y Hora</th>
+                            <th style="padding: 15px; color: #475569;">Paciente</th>
+                            <th style="padding: 15px; color: #475569;">Motivo</th>
+                            <th style="padding: 15px; color: #475569;">Estado</th>
+                        </tr>
+                        <tr>
+                            <th>Fecha y Hora</th>
+                            <th>Paciente</th>
+                            <th>Motivo</th>
+                            <th>Estado</th>
+                            <th style="text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaCitas">
+                        <!-- Las citas se inyectarán aquí con JavaScript -->
+                    </tbody>
+                </table>
             </div>
         </main>
     </div>
 
-    <div class="modal-overlay" id="modalCita">
-        <div class="modal-caja" style="max-width: 400px; text-align: center; padding: 30px;">
-            <div style="width: 60px; height: 60px; background-color: var(--color-primario-azul); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto; font-size: 1.8rem;">
-                📅
-            </div>
-            <h2 class="modal-titulo">¡Cita Agendada!</h2>
-            <p class="modal-texto">El espacio ha sido bloqueado en el calendario del doctor exitosamente.</p>
-            <button class="btn-tabla" style="background-color: var(--color-primario-azul); margin-top: 15px;" onclick="cerrarModalCita()">Aceptar</button>
+    <!-- MODAL PARA AGENDAR CITA -->
+    <div id="modalCita" class="modal">
+        <div class="modal-content">
+    <span class="close" onclick="cerrarModal()">&times;</span>
+    <h3 style="margin-top: 0; color: #0F172A; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px;">Agendar Nueva Cita</h3>
+    
+    <!-- Selector de Tipo de Paciente -->
+    <div style="margin: 15px 0; display: flex; gap: 20px; background-color: #F1F5F9; padding: 10px; border-radius: 8px;">
+        <label style="cursor: pointer;"><input type="radio" name="tipoPaciente" value="existente" checked onchange="toggleTipo()">Paciente Registrado</label>
+        <label style="cursor: pointer;"><input type="radio" name="tipoPaciente" value="nuevo" onchange="toggleTipo()">Nuevo Paciente</label>
+    </div>
+
+    <!-- Opcion A: Paciente Existente -->
+    <div id="divExistente" class="grupo-input">
+        <label style="font-weight: 700; display: block; margin-bottom: 5px;">Seleccionar Paciente:</label>
+        <select id="selectPaciente" class="input-medico" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #CBD5E1;">
+            <option value="">Seleccione un paciente...</option>
+        </select>
+    </div>
+
+    <!-- Opcion B: Paciente Nuevo (Oculto por defecto) -->
+    <div id="divNuevo" style="display: none; background-color: #F8FAFC; padding: 15px; border-radius: 8px; border: 1px dashed #CBD5E1; margin-bottom: 15px;">
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <input type="text" id="inputNombre" placeholder="Nombre(s)" style="flex: 1; padding: 8px; border-radius: 4px; border: 1px solid #CBD5E1;">
+            <input type="text" id="inputApellidos" placeholder="Apellidos" style="flex: 1; padding: 8px; border-radius: 4px; border: 1px solid #CBD5E1;">
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <input type="text" id="inputTelefono" placeholder="Teléfono" style="flex: 1; padding: 8px; border-radius: 4px; border: 1px solid #CBD5E1;">
+            <input type="email" id="inputCorreo" placeholder="Correo (opcional)" style="flex: 1; padding: 8px; border-radius: 4px; border: 1px solid #CBD5E1;">
         </div>
     </div>
 
-    <div class="modal-overlay" id="modalCalendarioMensual">
-        <div class="modal-caja" style="max-width: 800px; width: 90%;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #E2E8F0; padding-bottom: 15px;">
-                <h2 class="modal-titulo" id="mesTitulo" style="margin: 0;">Julio 2026</h2>
-                <div style="display: flex; gap: 10px;">
-                    <button class="btn-tabla btn-tabla-secundario" onclick="cambiarMes(-1)">← Mes Anterior</button>
-                    <button class="btn-tabla btn-tabla-secundario" onclick="cambiarMes(1)">Siguiente Mes →</button>
-                    <button class="btn-cerrar-modal" style="position: relative; top: 0; right: 0; margin-left: 15px;" onclick="cerrarCalendarioMensual()">×</button>
-                </div>
-            </div>
-
-            <div class="calendario-grid" id="calendarioGrid">
-                </div>
-
-            <div style="display: flex; gap: 20px; margin-top: 20px; font-size: 0.8rem; color: var(--color-texto-secundario); font-weight: 700; justify-content: flex-end;">
-                <span style="display: flex; align-items: center; gap: 5px;"><span class="cita-dot"></span> Citas Disponibles</span>
-                <span style="display: flex; align-items: center; gap: 5px;"><span class="cita-dot lleno"></span> Agenda Llena</span>
-            </div>
+    <!-- Datos de la cita (Fecha, Hora, Motivo) -->
+    <div style="display: flex; gap: 15px; margin-top: 15px;">
+        <div class="grupo-input" style="flex: 1;">
+            <label style="font-weight: 700; display: block; margin-bottom: 5px;">Fecha:</label>
+            <input type="date" id="inputFecha" class="input-medico" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #CBD5E1;">
+        </div>
+        <div class="grupo-input" style="flex: 1;">
+            <label style="font-weight: 700; display: block; margin-bottom: 5px;">Hora:</label>
+            <input type="time" id="inputHora" class="input-medico" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #CBD5E1;">
         </div>
     </div>
 
+    <div class="grupo-input" style="margin-top: 15px;">
+        <label style="font-weight: 700; display: block; margin-bottom: 5px;">Motivo del tratamiento:</label>
+        <input type="text" id="inputMotivo" placeholder="Ej. Limpieza, Resina, Valoración..." class="input-medico" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #CBD5E1;">
+    </div>
+
+    <button onclick="guardarCitaDinamica()" class="btn-tabla" style="margin-top: 25px; width: 100%; padding: 12px; background-color: #10B981; color: white; border: none; border-radius: 8px; font-weight: 800; cursor: pointer;">
+        AGENDAR CITA
+    </button>
+</div>
+    </div>
+
+    <!-- JAVASCRIPT CONECTADO A CitaController.java -->
     <script>
-    document.addEventListener("DOMContentLoaded", async () => {
+    const API_URL = 'http://localhost:7000/api';
+    const ENDPOINT_CITAS = `${API_URL}/citas`; 
+    const ENDPOINT_PACIENTES = `${API_URL}/citas/pacientes`;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        cargarCitas();
+        cargarPacientesEnSelect();
+    });
+
+    // 1. Mostrar todas las citas en la tabla
+    async function cargarCitas() {
         try {
-            const respuesta = await fetch('http://localhost:7070/api/citas');
-            const citas = await respuesta.json();
-            
-            const tbody = document.getElementById('cuerpoTablaCitas');
-            tbody.innerHTML = ''; 
-            
-            citas.forEach(cita => {
-                const horaCorta = cita.hora.substring(0, 5); 
-                let badgeStyle = "background:#F1F5F9; color:#64748B; border:1px solid #CBD5E1;"; 
-                let icono = "⚪";
-                
-                if(cita.estado === 'Confirmada') {
-                    badgeStyle = "background:#D1FAE5; color:#065F46; border-color:#34D399;";
-                    icono = "🟢";
-                } else if(cita.estado === 'Pendiente') {
-                    badgeStyle = "background:#FEF3C7; color:#92400E; border-color:#FCD34D;";
-                    icono = "🟡";
+            const res = await fetch(ENDPOINT_CITAS);
+            if (res.ok) {
+                const citas = await res.json();
+                const tbody = document.getElementById('tablaCitas');
+                tbody.innerHTML = '';
+
+                if (!citas || citas.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #64748B;">No hay citas agendadas.</td></tr>';
+                    return;
                 }
 
-                const fila = `
-                    <tr>
-                        <td>
-                            <strong>${horaCorta}</strong><br>
-                            <span style="font-size: 0.75em; color: #64748B;">${cita.fecha}</span>
-                        </td>
-                        <td>${cita.nombrePaciente}</td>
-                        <td>${cita.motivo}</td>
-                        <td><span class="badge-estado" style="${badgeStyle}">${icono} ${cita.estado}</span></td>
-                        <td>
-                            <a href="detalle_expediente.html" class="btn-accion-icon" title="Ver Expediente" 
-                               style="background-color: #1A5C9A; color: white; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.9em; display: inline-block;"> Ver
-                             </a>
-                        </td>
-                    </tr>
-                `;
-                tbody.innerHTML += fila;
-            });
-        } catch (error) {
-            console.error("Error trayendo las citas:", error);
-        }
-    });
+                citas.forEach(cita => {
+                    // Prevenir campos nulos o nombres con distintos formatos
+                    const idCita = cita.id_cita || cita.id;
+                    const nombrePaciente = cita.nombreCompleto || cita.nombrePaciente || cita.nombre_paciente || cita.paciente || 'Paciente';
+                    const fechaLimpia = cita.fecha ? cita.fecha.substring(0, 10) : 'Sin fecha';
+                    const horaLimpia = cita.hora ? cita.hora.substring(0, 5) : '00:00';
+                    const estado = cita.estado || 'Pendiente';
 
-    document.getElementById('formNuevaCita').addEventListener('submit', async (e) => {
-        e.preventDefault();
+                    // Colores para el estado
+                    let colorEstado = estado === 'Pendiente' ? '#F59E0B' : '#10B981';
 
-        const nuevaCita = {
-            id_paciente: parseInt(document.getElementById('id_paciente').value),
-            id_doctor: parseInt(document.getElementById('id_doctor').value),
-            fecha: document.getElementById('fecha').value,
-            hora: document.getElementById('hora').value,
-            motivo: document.getElementById('motivo').value
-        };
-
-        try {
-            const respuesta = await fetch('http://localhost:7070/api/citas', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(nuevaCita)
-            });
-
-            if(respuesta.ok) {
-                alert("¡Cita agendada con éxito!");
-                window.location.reload();
-            } else {
-                alert("Hubo un error al guardar la cita. Verifica la consola.");
+                    // Una SOLA fila (tr) por cada cita
+                    tbody.innerHTML += `
+                        <tr style="border-bottom: 1px solid #E2E8F0;">
+                            <td style="padding: 15px; font-weight: bold; color: #0F172A;">
+                                ${fechaLimpia} <br> 
+                                <span style="color: #64748B; font-weight: normal;">${horaLimpia}</span>
+                            </td>
+                            <td style="padding: 15px; font-weight: 600; color: #1E40AF;">${nombrePaciente}</td>
+                            <td style="padding: 15px; color: #475569;">${cita.motivo || '-'}</td>
+                            <td style="padding: 15px;">
+                                <span style="background-color: ${colorEstado}20; color: ${colorEstado}; padding: 5px 10px; border-radius: 20px; font-weight: bold; font-size: 0.85rem;">
+                                    ${estado}
+                                </span>
+                            </td>
+                            <td style="padding: 15px; text-align: center;">
+                                <button class="btn-eliminar" onclick="eliminarCita(${idCita})" title="Eliminar Cita">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    `; 
+                });
             }
         } catch (error) {
-            console.error("Error de conexión:", error);
-        }
-    });
-
-    async function cargarPacientes() {
-        try {
-            const respuesta = await fetch('http://localhost:7070/api/pacientes');
-            const pacientes = await respuesta.json();
-            
-            const select = document.getElementById('id_paciente');
-            select.innerHTML = '<option value="" disabled selected>Selecciona un paciente...</option>';
-            
-            pacientes.forEach(paciente => {
-                const opcion = document.createElement('option');
-                opcion.value = paciente.id_paciente;
-                opcion.textContent = paciente.nombre;
-                select.appendChild(opcion);
-            });
-            
-        } catch (error) {
-            console.error("No se pudieron cargar los pacientes:", error);
+            console.error("Error al cargar citas:", error);
         }
     }
 
-    cargarPacientes();
+    // 2. Función GLOBAL para eliminar citas (ahora sí accesible desde el onclick)
+    function eliminarCita(idCita) {
+        if (!idCita) {
+            alert("No se pudo obtener el ID de la cita.");
+            return;
+        }
+
+        if (confirm("¿Estás seguro de que deseas eliminar esta cita de la agenda?")) {
+            fetch(`${ENDPOINT_CITAS}/${idCita}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (!response.ok) throw new Error("Error al eliminar");
+                return response.json();
+            })
+            .then(data => {
+                alert("Cita eliminada exitosamente.");
+                cargarCitas(); // Recargar la tabla
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("No se pudo eliminar la cita.");
+            });
+        }
+    }
+
+    // 3. Llenar el <select> con los pacientes registrados
+    async function cargarPacientesEnSelect() {
+        try {
+            const res = await fetch(ENDPOINT_PACIENTES);
+            if (res.ok) {
+                const pacientes = await res.json();
+                const select = document.getElementById('selectPaciente');
+                if (!select) return;
+
+                select.innerHTML = '<option value="">-- Selecciona un paciente --</option>';
+                
+                pacientes.forEach(p => {
+                    let opcion = document.createElement('option');
+                    opcion.value = p.id_paciente;
+                    opcion.textContent = p.nombre || p.nombre_paciente;
+                    select.appendChild(opcion);
+                });
+            }
+        } catch (error) {
+            console.error("Error al cargar pacientes:", error);
+        }
+    }
+
+    // 4. Guardar una nueva cita
+    function toggleTipo() {
+        const tipo = document.querySelector('input[name="tipoPaciente"]:checked').value;
+        document.getElementById('divExistente').style.display = tipo === 'existente' ? 'block' : 'none';
+        document.getElementById('divNuevo').style.display = tipo === 'nuevo' ? 'block' : 'none';
+    }
+
+    async function guardarCitaDinamica() {
+        const tipo = document.querySelector('input[name="tipoPaciente"]:checked').value;
+        const fecha = document.getElementById('inputFecha').value;
+        const hora = document.getElementById('inputHora').value;
+        const motivo = document.getElementById('inputMotivo').value;
+
+        if (!fecha || !hora || !motivo) {
+            alert("La fecha, hora y motivo son obligatorios.");
+            return;
+        }
+
+        try {
+            let res;
+            if (tipo === 'existente') {
+                const idPaciente = document.getElementById('selectPaciente').value;
+                if (!idPaciente) return alert("Selecciona un paciente.");
+
+                res = await fetch(ENDPOINT_CITAS, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id_paciente: parseInt(idPaciente), id_doctor: 1, fecha, hora, motivo })
+                });
+            } else {
+                const nombre = document.getElementById('inputNombre').value;
+                const apellidos = document.getElementById('inputApellidos').value;
+                const celular = document.getElementById('inputTelefono').value;
+                if (!nombre || !apellidos) return alert("Nombre y apellidos son obligatorios para un nuevo paciente.");
+
+                res = await fetch(`${API_URL}/citas/nuevo-paciente`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        nombre, apellidos, celular, 
+                        correo: document.getElementById('inputCorreo').value, 
+                        fecha, hora, tratamiento: motivo 
+                    })
+                });
+            }
+
+            if (res.ok) {
+                alert("¡Cita agendada con éxito!");
+                cerrarModal();
+                cargarCitas();
+                cargarPacientesEnSelect();
+            } else {
+                alert("Error al intentar guardar.");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("No se pudo conectar con el servidor.");
+        }
+    }
+
+    // --- Control del Modal ---
+    function abrirModal() {
+        const modal = document.getElementById("modalCita");
+        if (modal) {
+            modal.style.display = "flex";
+            document.getElementById('inputFecha').value = "";
+            document.getElementById('inputHora').value = "";
+            document.getElementById('inputMotivo').value = "";
+            if (document.getElementById('inputNombre')) document.getElementById('inputNombre').value = "";
+            if (document.getElementById('inputApellidos')) document.getElementById('inputApellidos').value = "";
+        }
+    }
+
+    function cerrarModal() { 
+        const modal = document.getElementById("modalCita");
+        if (modal) modal.style.display = "none"; 
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById("modalCita");
+        if (event.target == modal) {
+            cerrarModal();
+        }
+    }
 </script>
 </body>
 </html>

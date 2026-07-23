@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultorio Dental Guzmán - Landing Page</title>
     
-    <link rel="stylesheet" href="CSS/stylediv.CSS">
+    <!-- Evita la advertencia 404 del favicon -->
+    <link rel="icon" href="data:,">
     
+    <link rel="stylesheet" href="CSS/stylediv.CSS">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <header class="navbar" style="display: flex; justify-content: space-between; align-items: center;">
+    <!-- NAVBAR -->
+    <header class="navbar" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 30px;">
         <div class="logo">
             <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="#1A5C9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s-4-2-4-8c0-3.3 2.7-6 6-6s6 2.7 6 6c0 6-4 8-4 8"></path>
@@ -24,60 +27,71 @@
             </div>
         </div>
         
-        <a href="login.html" class="btn-promo" style="text-decoration: none; display: flex; align-items: center; gap: 8px;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            Personal
-        </a>
+        <div style="display: flex; gap: 12px; align-items: center;">
+            <!-- BOTÓN PARA ABRIR LOGIN DE PACIENTE -->
+            <button onclick="abrirModalLoginPaciente()" class="btn-promo" style="background-color: #10B981; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: 8px; color: white; font-weight: bold;">
+                Soy Paciente
+            </button>
+
+            <!-- BOTÓN PARA ACCESO DE PERSONAL / DOCTOR -->
+            <a href="login.html" class="btn-promo" style="text-decoration: none; display: flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                Personal
+            </a>
+        </div>
     </header>
 
     <main>
+        <!-- HERO SECTION -->
         <section class="hero">
             <div class="hero-content">
-                <h1 class="hero-title">Clinica dental</h1>
-                <a href="agendar.html" style="text-decoration: none;"><button class="btn-agendar">Agendar cita</button></a>
+                <h1 class="hero-title">Clínica Dental</h1>
+                <a href="agendar.html" style="text-decoration: none;"><button class="btn-agendar">Agendar Cita</button></a>
             </div>
             <div class="hero-image">
                 <img src="/img/imagen1.webp" alt="Dentista profesional sonriendo" class="dentist-img">
             </div>
         </section>
 
+        <!-- SECCIÓN DE PROMOCIONES -->
         <section class="promociones">
             <h3 class="promociones-titulo">PROMOCIONES</h3>
             
             <div class="tarjetas-grid">
                 <div class="tarjeta-promo">
-                    <h4>APROVECHA!!!</h4>
+                    <h4>¡¡¡APROVECHA!!!</h4>
                     <p class="subtitulo-promo">SABEMOS QUE LA DEL JUICIO ES MOLESTA</p>
                     <p class="descripcion-promo">La extracción viene por nuestra parte (El cuidado viene por separado)</p>
                     <button class="btn-promo" onclick="abrirModalPromo('Extracción Molar del Juicio')">AGENDAR CON PROMOCIÓN</button>
                 </div>
 
                 <div class="tarjeta-promo">
-                    <h4>APROVECHA!!!</h4>
+                    <h4>¡¡¡APROVECHA!!!</h4>
                     <p class="subtitulo-promo">SOLO LOS MARTES</p>
                     <p class="descripcion-promo">15% de descuento en Limpieza Dental</p>
                     <button class="btn-promo" onclick="abrirModalPromo('Limpieza Dental')">AGENDAR CON PROMOCIÓN</button>
                 </div>
 
                 <div class="tarjeta-promo">
-                    <h4>APROVECHA!!!</h4>
+                    <h4>¡¡¡APROVECHA!!!</h4>
                     <p class="subtitulo-promo">SI LLEVAS MÁS DE DOS CITAS</p>
-                    <p class="descripcion-promo">Te damos un descuento del 15 % en tu siguiente cita</p>
+                    <p class="descripcion-promo">Te damos un descuento del 15% en tu siguiente cita</p>
                     <button class="btn-promo" onclick="abrirModalPromo('Descuento por múltiples citas')">AGENDAR CON PROMOCIÓN</button>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- 1. MODAL SOLICITAR PROMOCIÓN -->
     <div class="modal-overlay" id="modalPromo">
         <div class="modal-caja" style="max-width: 550px; width: 95%; text-align: left; padding: 30px;">
             <button class="btn-cerrar-modal" onclick="cerrarModalPromo()">×</button>
             
-            <h2 class="modal-titulo" style="font-size: 1.4rem; margin-bottom: 5px; color: var(--color-texto-oscuro);">
+            <h2 class="modal-titulo" style="font-size: 1.4rem; margin-bottom: 5px; color: var(--color-texto-oscuro, #1E293B);">
                 Asegura tu Promoción
             </h2>
-            <p style="font-size: 0.85rem; color: var(--color-texto-secundario); margin-bottom: 20px;">
-                Estás solicitando: <strong id="promoSeleccionada" style="color: var(--color-primario-azul);"></strong>
+            <p style="font-size: 0.85rem; color: var(--color-texto-secundario, #64748B); margin-bottom: 20px;">
+                Estás solicitando: <strong id="promoSeleccionada" style="color: var(--color-primario-azul, #2563EB);"></strong>
             </p>
             
             <form id="formCitaPublica" onsubmit="enviarSolicitud(event)">
@@ -120,7 +134,39 @@
         </div>
     </div>
 
+    <!-- 2. MODAL LOGIN DE PACIENTE -->
+    <div class="modal-overlay" id="modalLoginPaciente">
+        <div class="modal-caja" style="max-width: 400px; width: 90%; padding: 30px;">
+            <button class="btn-cerrar-modal" onclick="cerrarModalLoginPaciente()">×</button>
+            
+            <h2 class="modal-titulo" style="font-size: 1.4rem; margin-bottom: 5px; color: #1E293B;">Portal Pacientes</h2>
+            <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 20px;">
+                Ingresa con tus datos registrados para consultar tus recetas médicas.
+            </p>
+
+            <form onsubmit="iniciarSesionPaciente(event)">
+                <div class="grupo-input" style="margin-bottom: 15px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; color: #334155;">Correo Electrónico:</label>
+                    <input type="email" id="inputCorreo" class="input-medico" placeholder="ejemplo@correo.com" required style="width: 100%; padding: 10px; border: 1px solid #CBD5E1; border-radius: 6px;">
+                </div>
+
+                <div class="grupo-input" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; color: #334155;">Teléfono / Celular:</label>
+                    <input type="tel" id="inputTelefono" class="input-medico" placeholder="Ej. 9671234567" required style="width: 100%; padding: 10px; border: 1px solid #CBD5E1; border-radius: 6px;">
+                </div>
+
+                <button type="submit" class="btn-agendar btn-login" style="width: 100%; margin: 0; background-color: #10B981; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">
+                    INGRESAR A MI PORTAL
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
     <script>
+        const API_URL = 'http://localhost:7000/api';
+
+        // --- Funciones para Modal de Promoción ---
         function abrirModalPromo(nombrePromo) {
             document.getElementById('promoSeleccionada').innerText = nombrePromo;
             document.getElementById('modalPromo').classList.add('mostrar-modal');
@@ -131,7 +177,16 @@
             document.getElementById('formCitaPublica').reset();
         }
 
-        // Función que simula el envío a la base de datos
+        // --- Funciones para Modal de Login Paciente ---
+        function abrirModalLoginPaciente() {
+            document.getElementById('modalLoginPaciente').classList.add('mostrar-modal');
+        }
+
+        function cerrarModalLoginPaciente() {
+            document.getElementById('modalLoginPaciente').classList.remove('mostrar-modal');
+        }
+
+        // --- Simulación de envío de cita pública ---
         function enviarSolicitud(event) {
             event.preventDefault();
             
@@ -141,11 +196,51 @@
             btn.style.opacity = '0.7';
 
             setTimeout(() => {
-                alert("¡Cita Solicitada con Éxito! Tu registro ha quedado bloqueado en nuestro sistema. El Consultorio Dental Guzmán te enviará un WhatsApp de confirmación en unos minutos.");
+                alert("¡Cita Solicitada con Éxito! Tu registro ha quedado registrado. El Consultorio te enviará un mensaje de confirmación.");
                 cerrarModalPromo();
                 btn.innerHTML = textoOriginal;
                 btn.style.opacity = '1';
             }, 1200);
+        }
+
+        // --- Login Real de Pacientes conectado a MySQL (Main.java) ---
+        async function iniciarSesionPaciente(event) {
+            event.preventDefault();
+
+            const correoInput = document.getElementById('inputCorreo');
+            const celularInput = document.getElementById('inputTelefono');
+
+            if (!correoInput || !celularInput) {
+                alert("Error: No se encontraron los campos del formulario.");
+                return;
+            }
+
+            const correo = correoInput.value.trim();
+            const celular = celularInput.value.trim();
+
+            try {
+                const response = await fetch(`${API_URL}/pacientes/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ correo, celular })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.status === "success") {
+                    // Guardamos la sesión en el localStorage del navegador
+                    localStorage.setItem('paciente_id', data.id_paciente);
+                    localStorage.setItem('paciente_nombre', data.nombre);
+
+                    // Redirigimos al portal del paciente
+                    window.location.href = 'portal_paciente.html';
+                } else {
+                    alert(data.mensaje || "Correo o teléfono incorrectos.");
+                }
+            } catch (error) {
+                console.error("Error al procesar login:", error);
+                alert("No se pudo conectar con el servidor Java. Verifica que esté corriendo en http://localhost:7000.");
+            }
         }
     </script>
 

@@ -2033,3 +2033,374 @@ body {
     margin-bottom: 20px;
     text-align: center;
 }
+
+/* ==========================================
+   ESTILOS PARA EL MODAL Y TABLA DE INVENTARIO
+   ========================================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal.mostrar {
+    display: flex !important;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #334155;
+}
+
+.input-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.row-group {
+    display: flex;
+    gap: 10px;
+}
+
+.half {
+    flex: 1;
+}
+
+/* Badges de Estado de Stock */
+.badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.badge-success {
+    background: #D1FAE5;
+    color: #065F46;
+}
+
+.badge-warning {
+    background: #FEF3C7;
+    color: #92400E;
+}
+
+.badge-danger {
+    background: #FEE2E2;
+    color: #991B1B;
+}
+
+/* Estilos para Modal de Caja y Ticket */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.modal-overlay.mostrar-modal {
+    display: flex !important;
+}
+
+.modal-caja {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    position: relative;
+}
+
+.btn-cerrar-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #64748B;
+}
+
+/* Botón para Eliminar Citas */
+.btn-eliminar {
+    background-color: #FEE2E2;
+    color: #991B1B;
+    border: 1px solid #FCA5A5;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-eliminar:hover {
+    background-color: #EF4444;
+    color: #ffffff;
+    border-color: #DC2626;
+    transform: scale(1.05);
+}
+    #hojaImpresion {
+        display: none;
+    }
+
+    /* ========================================================= */
+    /* ESTILOS DE IMPRESIÓN (Se activan al dar clic en Imprimir) */
+    /* ========================================================= */
+    @media print {
+        /* Ocultar toda la interfaz del sistema web */
+        .sidebar, .navbar-dashboard, .paciente-header, .tarjeta-expediente, button, header, aside {
+            display: none !important;
+        }
+
+        body, .dashboard-layout, .dashboard-content {
+            background: white !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* Mostrar únicamente la Hoja Membretada */
+        #hojaImpresion {
+            display: block !important;
+            padding: 40px;
+            font-family: 'Nunito', Arial, sans-serif;
+            color: #1E293B;
+        }
+
+        .encabezado-receta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .logo-receta h2 {
+            margin: 0;
+            color: #1E40AF;
+            font-size: 1.6rem;
+        }
+
+        .logo-receta p {
+            margin: 3px 0;
+            font-size: 0.9rem;
+        }
+
+        .linea-receta {
+            border: none;
+            border-top: 2px solid #2563EB;
+            margin: 15px 0;
+        }
+
+        .datos-paciente-receta p {
+            font-size: 1.05rem;
+            margin: 6px 0;
+        }
+
+        .cuerpo-receta h3 {
+            color: #1E40AF;
+            font-size: 1.15rem;
+            border-bottom: 1px solid #CBD5E1;
+            padding-bottom: 5px;
+        }
+
+        .item-print-med {
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #E2E8F0;
+        }
+
+        .item-print-med p {
+            margin: 3px 0;
+            font-size: 1rem;
+        }
+
+        .pie-receta {
+            margin-top: 90px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .firma-box {
+            text-align: center;
+            width: 220px;
+        }
+
+        .linea-firma {
+            border-bottom: 1px solid #000;
+            margin-bottom: 6px;
+        }
+    }
+
+.tarjeta-paciente {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .receta-card {
+            border: 1px solid #CBD5E1;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #F8FAFC;
+        }
+
+        .receta-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #2563EB;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .med-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 4px solid #2563EB;
+            margin-bottom: 8px;
+        }
+
+        @media print {
+            .navbar-dashboard, .selector-box, button, header {
+                display: none !important;
+            }
+            body { background: white !important; }
+            .tarjeta-paciente { border: none !important; box-shadow: none !important; }
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-icon {
+            width: 48px;
+            height: 48px;
+            color: #1E3A8A;
+            margin-bottom: 10px;
+        }
+
+        .login-card h2 {
+            margin: 0;
+            color: #1E3A8A;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .login-card h3 {
+            margin: 15px 0 5px 0;
+            color: #0F172A;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .login-card p {
+            margin: 0 0 25px 0;
+            color: #64748B;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #334155;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #2563EB;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: #065F46;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: #047857;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #475569;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .back-link:hover {
+            color: #0F172A;
+        }

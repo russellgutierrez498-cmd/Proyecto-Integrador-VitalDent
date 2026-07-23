@@ -6,12 +6,10 @@
     <title>Dashboard - Consultorio Dental Guzmán</title>
     <link rel="stylesheet" href="css/stylediv.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Librería Chart.js para las gráficas -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="body-dashboard">
 
-    <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
         <div class="sidebar-header">
             <div class="brand-info">
@@ -19,38 +17,20 @@
                 <p>Administración</p>
             </div>
         </div>
-
         <nav class="sidebar-menu">
-            <a href="dashboard.html" class="menu-item activo">
-                <span class="icon"></span><span class="menu-text">Dashboard</span>
-            </a>
-            <a href="agenda.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Agenda de Citas</span>
-            </a>
-            <a href="expediente.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Expedientes Clínicos</span>
-            </a>
-            <a href="odontograma.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Odontograma</span>
-            </a>
-            <a href="receta.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Recetas Médicas</span>
-            </a>
-            <a href="inventario.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Inventario</span>
-            </a>
-            <a href="caja.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Cobros y Caja</span>
-            </a>
-            <a href="index.html" class="menu-item salir">
-                <span class="icon"></span><span class="menu-text">Cerrar Sesión</span>
-            </a>
+            <a href="dashboard.html" class="menu-item activo"><span class="menu-text">Dashboard</span></a>
+            <a href="agenda.html" class="menu-item"><span class="menu-text">Agenda de Citas</span></a>
+            <a href="expediente.html" class="menu-item"><span class="menu-text">Expedientes Clínicos</span></a>
+            <a href="odontograma.html" class="menu-item"><span class="menu-text">Odontograma</span></a>
+            <a href="receta.html" class="menu-item"><span class="menu-text">Recetas Médicas</span></a>
+            <a href="inventario.html" class="menu-item"><span class="menu-text">Inventario</span></a>
+            <a href="caja.html" class="menu-item"><span class="menu-text">Cobros y Caja</span></a>
+            <a href="index.html" class="menu-item salir"><span class="menu-text">Cerrar Sesión</span></a>
         </nav>
     </aside>
 
     <div class="dashboard-layout">
         <main class="dashboard-content">
-            
             <div class="page-container">
                 <div class="header-actions" style="margin-bottom: 20px;">
                     <h2>Métricas y Rendimiento</h2>
@@ -59,123 +39,169 @@
                 <div class="kpi-grid">
                     <div class="kpi-card">
                         <div class="kpi-titulo">Pacientes Activos</div>
-                        <div class="kpi-valor">1,284</div>
-                        <div class="kpi-tendencia positiva">+12% este mes</div>
+                        <!-- ID AGREGADO AQUÍ PARA INYECTAR EL DATO -->
+                        <div class="kpi-valor" id="kpi-pacientes">Cargando...</div>
+                        <div class="kpi-tendencia positiva">Registrados en BD</div>
                     </div>
                     <div class="kpi-card">
-                        <div class="kpi-titulo">Citas Hoy</div>
-                        <div class="kpi-valor">18</div>
-                        <div class="kpi-tendencia">5 pendientes</div>
+                        <div class="kpi-titulo">Citas Pendientes</div>
+                        <!-- ID AGREGADO AQUÍ -->
+                        <div class="kpi-valor" id="kpi-citas">Cargando...</div>
+                        <div class="kpi-tendencia">Por atender</div>
                     </div>
                     <div class="kpi-card">
                         <div class="kpi-titulo">Insumos Críticos</div>
-                        <div class="kpi-valor" style="color: #e53e3e;">3</div>
+                        <!-- ID AGREGADO AQUÍ -->
+                        <div class="kpi-valor" id="kpi-insumos" style="color: #e53e3e;">Cargando...</div>
                         <div class="kpi-tendencia negativa">Requieren compra</div>
                     </div>
                 </div>
 
                 <div class="charts-grid">
-                    
                     <div class="chart-card">
                         <h3>Días de Mayor Afluencia</h3>
                         <canvas id="graficaDias"></canvas>
                     </div>
-
                     <div class="chart-card">
                         <h3>Servicios más Solicitados</h3>
                         <canvas id="graficaServicios"></canvas>
                     </div>
-
                     <div class="chart-card">
                         <h3>¿Cómo nos conocieron?</h3>
                         <canvas id="graficaOrigen"></canvas>
                     </div>
-
                     <div class="chart-card">
                         <h3>Nivel de Inventario (Top 5)</h3>
                         <canvas id="graficaInventario"></canvas>
                     </div>
-
                 </div>
             </div>
-            
         </main>
     </div>
 
-    <script src="js/dashboard-charts.js"></script>
-
     <script>
-document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        const colorAzul = '#1A548B';
+        const colorTeal = '#1DB99B';
+        const colorTealClaro = '#4fd1c5';
+        const colorGris = '#E2E8F0';
+        const colorNaranja = '#ed8936';
+        const coloresDinamicos = [colorAzul, colorTeal, colorTealClaro, colorGris, colorNaranja, '#4267B2', '#E1306C'];
 
-    const colorAzul = '#1A548B';
-    const colorTeal = '#1DB99B';
-    const colorTealClaro = '#4fd1c5';
-    const colorGris = '#E2E8F0';
-    const colorNaranja = '#ed8936'; // Para alertas
+        fetch('http://localhost:7000/api/dashboard')
+            .then(response => {
+                if(!response.ok) throw new Error("Error en la API");
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('kpi-pacientes').innerText = data.totalPacientes || 0;
+                document.getElementById('kpi-citas').innerText = data.citasPendientes || 0;
+                document.getElementById('kpi-insumos').innerText = data.insumosCriticos || 0;
 
-    const ctxDias = document.getElementById('graficaDias').getContext('2d');
-    new Chart(ctxDias, {
-        type: 'bar',
-        data: {
-            labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-            datasets: [{
-                label: 'Citas Atendidas',
-                data: [25, 30, 28, 35, 40, 45],
-                backgroundColor: colorTeal,
-                borderRadius: 4
-            }]
-        },
-        options: { responsive: true, plugins: { legend: { display: false } } }
+                const diasJava = data.dias || {};
+                const datosPorDia = [
+                    diasJava['2'] || 0,
+                    diasJava['3'] || 0,
+                    diasJava['4'] || 0,
+                    diasJava['5'] || 0,
+                    diasJava['6'] || 0,
+                    diasJava['7'] || 0 
+                ];
+                
+                new Chart(document.getElementById('graficaDias').getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                        datasets: [{ label: 'Citas Atendidas', data: datosPorDia, backgroundColor: colorTeal, borderRadius: 4 }]
+                    },
+                    options: { responsive: true, plugins: { legend: { display: false } } }
+                });
+
+                const etiquetasServicios = Object.keys(data.servicios || {});
+                const valoresServicios = Object.values(data.servicios || {});
+                
+                new Chart(document.getElementById('graficaServicios').getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: etiquetasServicios.length > 0 ? etiquetasServicios : ['Sin datos'],
+                        datasets: [{ 
+                            data: valoresServicios.length > 0 ? valoresServicios : [1], 
+                            backgroundColor: coloresDinamicos, 
+                            borderWidth: 0 
+                        }]
+                    },
+                    options: { responsive: true, cutout: '70%' }
+                });
+
+                const etiquetasInventario = data.invLabels || [];
+                const valoresInventario = data.invData || [];
+
+                new Chart(document.getElementById('graficaInventario').getContext('2d'), {
+                    type: 'bar',
+                    indexAxis: 'y',
+                    data: {
+                        labels: etiquetasInventario,
+                        datasets: [{
+                            label: 'Stock Actual',
+                            data: valoresInventario,
+                            backgroundColor: function(context) { 
+                                return context.dataset.data[context.dataIndex] < 10 ? '#e53e3e' : colorAzul; 
+                            },
+                            borderRadius: 4
+                        }]
+                    },
+                    options: { responsive: true, plugins: { legend: { display: false } } }
+                });
+            })
+            .catch(err => console.error("Error cargando dashboard:", err));
+
+        // 2. Llenar Gráfica de Origen de Pacientes
+        cargarGraficaOrigen();
     });
 
-    const ctxServicios = document.getElementById('graficaServicios').getContext('2d');
-    new Chart(ctxServicios, {
-        type: 'doughnut',
-        data: {
-            labels: ['Limpieza Dental', 'Ortodoncia', 'Extracciones', 'Blanqueamiento', 'Implantes'],
-            datasets: [{
-                data: [45, 25, 15, 10, 5],
-                backgroundColor: [colorAzul, colorTeal, colorTealClaro, '#cbd5e0', colorNaranja],
-                borderWidth: 0
-            }]
-        },
-        options: { responsive: true, cutout: '70%' }
-    });
+    async function cargarGraficaOrigen() {
+        try {
+            const respuesta = await fetch('http://localhost:7000/api/dashboard/origen');
+            const datos = await respuesta.json();
 
-    const ctxOrigen = document.getElementById('graficaOrigen').getContext('2d');
-    new Chart(ctxOrigen, {
-        type: 'pie',
-        data: {
-            labels: ['Facebook', 'Instagram', 'Recomendación', 'Google Maps'],
-            datasets: [{
-                data: [35, 40, 15, 10],
-                backgroundColor: ['#4267B2', '#E1306C', colorTeal, colorAzul],
-                borderWidth: 0
-            }]
-        },
-        options: { responsive: true }
-    });
+            const labels = datos.map(d => d.origen || 'Sin especificar');
+            const valores = datos.map(d => d.cantidad);
 
-    const ctxInventario = document.getElementById('graficaInventario').getContext('2d');
-    new Chart(ctxInventario, {
-        type: 'bar',
-        indexAxis: 'y',
-        data: {
-            labels: ['Resina 3M', 'Anestesia', 'Guantes M', 'Eyectores', 'Agujas'],
-            datasets: [{
-                label: 'Stock Actual',
-                data: [15, 50, 5, 120, 80],
-                backgroundColor: function(context) {
-                    const value = context.dataset.data[context.dataIndex];
-                    return value < 10 ? '#e53e3e' : colorAzul;
+            const mapaColores = {
+                'Facebook': '#1877F2',
+                'Instagram': '#E1306C',
+                'Recomendación': '#34D399',
+                'Google / Búsqueda': '#F59E0B',
+                'Volante / Calle': '#6B7280'
+            };
+
+            const backgroundColors = labels.map(label => mapaColores[label] || '#1A5C9A');
+
+            const canvas = document.getElementById('graficaOrigen');
+            if (!canvas) return;
+
+            new Chart(canvas.getContext('2d'), {
+                type: 'pie',
+                data: {
+                    labels: labels.length > 0 ? labels : ['Sin datos'],
+                    datasets: [{
+                        data: valores.length > 0 ? valores : [1],
+                        backgroundColor: backgroundColors,
+                        borderWidth: 0
+                    }]
                 },
-                borderRadius: 4
-            }]
-        },
-        options: { responsive: true, plugins: { legend: { display: false } } }
-    });
-
-});</script>
-
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        } catch (error) {
+            console.error("Error al renderizar gráfica de origen:", error);
+        }
+    }
+    </script>
 </body>
 </html>

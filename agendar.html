@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <header class="navbar">
+ <header class="navbar" style="position: relative;">
         <div class="logo">
             <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="#1A5C9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s-4-2-4-8c0-3.3 2.7-6 6-6s6 2.7 6 6c0 6-4 8-4 8"></path>
@@ -21,6 +21,11 @@
                 <p>Odontología Integral y Analítica</p>
             </div>
         </div>
+        
+        <!-- Botón de cerrar agregado en la esquina superior derecha -->
+        <a href="index.html" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); background-color: #e53e3e; color: white; padding: 8px 16px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            ✕ Cerrar
+        </a>
     </header>
 
     <main class="main-agendar">
@@ -44,12 +49,19 @@
                            <label for="hora">Hora:</label>
                            <select id="hora" required class="input-medico">
                                 <option value="" disabled selected>Elige una hora</option>
-                                <option value="07:00">7:00 AM</option>
                                 <option value="08:00">8:00 AM</option>
                                 <option value="09:00">9:00 AM</option>
                                 <option value="10:00">10:00 AM</option>
                                 <option value="11:00">11:00 AM</option>
                                 <option value="12:00">12:00 PM</option>
+                                <option value="13:00">1:00 PM</option>
+                                <option value="14:00">02:00 PM</option>
+                                <option value="15:00">03:00 PM</option>
+                                <option value="16:00">04:00 PM</option>
+                                <option value="17:00">05:00 PM</option>
+                                <option value="18:00">06:00 PM</option>
+                                <option value="19:00">07:00 PM</option>
+                                <option value="20:00">08:00 PM</option>
                            </select>
                        </div>
                     </div>
@@ -75,6 +87,18 @@
                         <strong>$400</strong>
                    </div>
                     </div>
+                    <div class="grupo-input" style="margin-bottom: 15px;">
+
+                        <label for="origen">¿Cómo nos conociste?</label>
+                        <select id="origen" class="input-medico" required>
+                        <option value="" disabled selected>Selecciona una opción...</option>
+                        <option value="Facebook">Facebook</option>
+                        <option value="Instagram">Instagram</option>
+                        <option value="Recomendación">Recomendación / Conocido</option>
+                        <option value="Google / Búsqueda">Google / Búsqueda</option>
+                        <option value="Ninguna">Ninguna de las anteriores</option>
+                        </select>
+                        </div>
     
                 <div class="boton-contenedor">
                     <button type="submit" class="btn-confirmar">CONFIRMAR</button>
@@ -127,21 +151,82 @@
     const modalError = document.getElementById('modalError');
     const btnCerrarExito = document.getElementById('btnCerrarModal');
     const btnCerrarError = document.getElementById('btnCerrarError');
+    const inputFecha = document.getElementById('fecha');
+    const selectHora = document.getElementById('hora');
+
+    // Evitar que seleccionen fechas del pasado
+    const hoy = new Date().toISOString().split('T')[0];
+    inputFecha.setAttribute('min', hoy);
+
+    inputFecha.addEventListener('change', async function() {
+        const fechaElegida = this.value;
+        if (!fechaElegida) return;
+
+        // 1. Bloquear los Domingos
+        // Dividimos la fecha para evitar problemas de zona horaria en JavaScript
+        const [anio, mes, dia] = fechaElegida.split('-');
+        const fechaObj = new Date(anio, mes - 1, dia);
+        
+        // getDay() devuelve 0 para Domingo
+        if (fechaObj.getDay() === 0) {
+            alert("El consultorio permanece cerrado los domingos. Por favor, selecciona otro día.");
+            this.value = ''; // Limpiamos la fecha
+            selectHora.disabled = true;
+            return;
+        }
+
+        // 2. Consultar horas ocupadas en la Base de Datos
+        try {
+            selectHora.disabled = false; // Habilitar el select
+            const response = await fetch(`http://localhost:7000/api/citas/ocupadas?fecha=${fechaElegida}`);
+            const horasOcupadas = await response.json(); // Ejemplo de lo que recibe: ["09:00", "11:00"]
+
+            // Recorrer todas las opciones del select de horas
+            for (let i = 0; i < selectHora.options.length; i++) {
+                const opcion = selectHora.options[i];
+                
+                if (opcion.value !== "") {
+                    if (horasOcupadas.includes(opcion.value)) {
+                        opcion.disabled = true;
+                        opcion.text = `${opcion.value} - Ocupado`;
+                        opcion.style.color = "red";
+                    } else {
+                        // Si está libre, la habilitamos y la mostramos normal
+                        opcion.disabled = false;
+                        
+                        // Convertimos de 24h al formato visual que tenías (Ej. 09:00 -> 9:00 AM)
+                        const horaNum = parseInt(opcion.value.split(':')[0]);
+                        const ampm = horaNum >= 12 ? 'PM' : 'AM';
+                        let horaVisual = horaNum > 12 ? horaNum - 12 : horaNum;
+                        if(horaVisual === 0) horaVisual = 12;
+                        
+                        opcion.text = `${horaVisual}:00 ${ampm}`;
+                        opcion.style.color = "black";
+                    }
+                }
+            }
+        } catch (error) {
+            console.error("No se pudieron cargar las horas disponibles:", error);
+        }
+    });
 
     form.addEventListener('submit', async function(e) {
-        e.preventDefault(); // Esto evita que la página se recargue de golpe
+        e.preventDefault();
+
+        const selectOrigen = document.getElementById('origen');
 
         const datosCita = {
             nombre: document.getElementById('nombre').value,
             apellidos: document.getElementById('apellidos').value,
             celular: document.getElementById('celular').value,
             correo: document.getElementById('correo').value,
-            tratamiento: document.getElementById('tratamiento').value,
+            motivo: document.getElementById('tratamiento').value, 
             fecha: document.getElementById('fecha').value,
-            hora: document.getElementById('hora').value
+            hora: document.getElementById('hora').value,
+            origen: selectOrigen ? selectOrigen.value : "Recomendación", 
+            id_doctor: 1
         };
     
-        // Validación rápida del celular
         const soloNumeros = /^[0-9]+$/.test(datosCita.celular);
         if (!soloNumeros) {
             modalError.classList.add('mostrar-modal');
@@ -149,7 +234,7 @@
         }
 
         try {
-            const respuesta = await fetch('http://localhost:7070/api/agendar-completo', {
+            const respuesta = await fetch('http://localhost:7000/api/agendar-completo', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(datosCita)

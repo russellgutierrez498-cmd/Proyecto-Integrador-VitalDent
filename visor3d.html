@@ -26,28 +26,28 @@
         
         <aside class="visor-tools">
             <h3 class="tools-titulo">Controles 3D</h3>
-            
-            <div class="tool-group">
-                <label>Rotación (Eje Y)</label>
-                <input type="range" min="0" max="360" value="180" class="slider-medico">
+    
+            <div style="padding: 10px; background: #fff; margin-bottom: 10px; border-radius: 8px;">
+                <input type="file" id="inputArchivo" accept="image/*,.stl,.dcm" style="margin-bottom: 10px; width: 100%;">
+                <textarea id="inputNotas" placeholder="Notas del diagnóstico..." class="input-medico" style="margin-bottom: 10px; width: 100%;"></textarea>
+                <button onclick="subirAlServidor()" class="btn-tool" style="width: 100%;">Subir Radiografía</button>
             </div>
             
             <div class="tool-group">
-                <label>Zoom</label>
-                <input type="range" min="1" max="100" value="50" class="slider-medico">
-            </div>
+    <label>Rotación (Eje Y)</label>
+    <input type="range" id="sliderRotacion" min="0" max="360" value="180" class="slider-medico" oninput="aplicarEfectos3D()">
+</div>
 
-            <div class="tool-group">
-                <label>Contraste / Densidad</label>
-                <input type="range" min="0" max="100" value="75" class="slider-medico">
-            </div>
+<div class="tool-group">
+    <label>Zoom</label>
+    <input type="range" id="sliderZoom" min="1" max="100" value="50" class="slider-medico" oninput="aplicarEfectos3D()">
+</div>
 
-            <div class="tool-grid-botones">
-                <button class="btn-tool-cuadro activo"><br>Modelo</button>
-                <button class="btn-tool-cuadro"><br>Óseo</button>
-                <button class="btn-tool-cuadro"><br>Medir</button>
-                <button class="btn-tool-cuadro"><br>Corte</button>
-            </div>
+<div class="tool-group">
+    <label>Contraste / Densidad</label>
+    <input type="range" id="sliderContraste" min="0" max="100" value="75" class="slider-medico" oninput="aplicarEfectos3D()">
+</div>
+
         </aside>
 
         <section class="visor-pantalla-central">
@@ -63,56 +63,117 @@
                 </div>
             </div>
 
-            <div class="panel-dientes-inferior">
-                <h4 class="panel-dientes-titulo">SELECCIÓN RÁPIDA DE PIEZAS AFECTADAS</h4>
-                
-                <div class="dientes-checkbox-container">
-                    <label class="diente-check"><input type="checkbox"><span>18</span></label>
-                    <label class="diente-check"><input type="checkbox"><span>17</span></label>
-                    <label class="diente-check"><input type="checkbox"><span>16</span></label>
-                    <label class="diente-check"><input type="checkbox"><span>15</span></label>
-                    <label class="diente-check"><input type="checkbox"><span>14</span></label>
-                    <label class="diente-check"><input type="checkbox"><span>13</span></label>
-                    <label class="diente-check"><input type="checkbox"><span>12</span></label>
-                    <label class="diente-check"><input type="checkbox"><span>11</span></label>
-                    
-                    <div class="divisor-cuadrante"></div>
-                    
-                    <label class="diente-check"><input type="checkbox"><span>21</span></label>
-                    <label class="diente-check"><input type="checkbox"><span>22</span></label>
-                    <label class="diente-check"><input type="checkbox"><span>23</span></label>
-                    <label class="diente-check"><input type="checkbox"><span>24</span></label>
-                    <label class="diente-check"><input type="checkbox"><span>25</span></label>
-                    <label class="diente-check"><input type="checkbox"><span>26</span></label>
-                    <label class="diente-check"><input type="checkbox"><span>27</span></label>
-                    <label class="diente-check"><input type="checkbox"><span>28</span></label>
-                </div>
-            </div>
-
         </section>
         
     </div>
 
     <script>
-    document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     const parametros = new URLSearchParams(window.location.search);
     const nombrePaciente = parametros.get('nombre');
     const idPaciente = parametros.get('id');
 
     if (nombrePaciente) {
-        // Busca el h2 que dice "Paciente: ..." y le cambia el nombre
         const h2Nombre = document.querySelector('.paciente-nombre') || document.querySelector('.visor-info-paciente h2');
         if (h2Nombre) {
             h2Nombre.innerHTML = `Paciente: <span>${nombrePaciente}</span>`;
         }
     }
 
-    // Opcional: Arreglar el botón "Volver al Expediente" para que regrese al mismo paciente
     const btnVolver = document.querySelector('a[href="expediente.html"]');
     if (btnVolver && idPaciente) {
         btnVolver.href = `detalle_expediente.html?id=${idPaciente}`; 
     }
-});</script>
+});
+
+async function subirAlServidor() {
+    const id = new URLSearchParams(window.location.search).get('id');
+    const archivoInput = document.getElementById('inputArchivo').files[0];
+    const notas = document.getElementById('inputNotas').value;
+
+    if (!archivoInput || !id) {
+        alert("Falta seleccionar un archivo o no hay ID de paciente en la URL");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("archivo_3d", archivoInput);
+    formData.append("id_paciente", id);
+    formData.append("notas", notas);
+    formData.append("piezas", "16, 24");
+
+    try {
+        const res = await fetch('http://localhost:7000/api/radiografias', {
+            method: 'POST',
+            body: formData 
+        });
+
+        if (res.ok) {
+            alert("¡Subida exitosa!");
+            document.querySelector('.img-3d-mockup').src = URL.createObjectURL(archivoInput);
+        } else {
+            alert("Error al subir el archivo al servidor");
+        }
+    } catch (error) {
+        console.error("Error de conexión:", error);
+    }
+}
+
+function aplicarEfectos3D() {
+    const img = document.querySelector('.img-3d-mockup');
+    const sliderRotacion = document.getElementById('sliderRotacion');
+    const sliderZoom = document.getElementById('sliderZoom');
+    const sliderContraste = document.getElementById('sliderContraste');
+
+    if (!img || !sliderRotacion || !sliderZoom || !sliderContraste) return;
+
+    if (img.parentElement) {
+        img.parentElement.style.overflow = 'hidden';
+    }
+
+    const rotacion = (sliderRotacion.value - 180) / 4; // Rotación en grados
+    const zoom = sliderZoom.value / 50;                 // Zoom: 50 es tamaño normal (1x)
+    const contraste = sliderContraste.value * 2;       // Contraste en porcentaje
+
+    // Aplicar transformaciones visuales
+    img.style.transform = `scale(${zoom}) rotate(${rotacion}deg)`;
+    img.style.filter = `contrast(${contraste}%)`;
+    img.style.transition = 'transform 0.05s ease, filter 0.05s ease';
+}
+</script>
+
+<script>
+// ID del paciente (esto debería venir de la URL o sesión, por ahora lo forzamos a 1 para probar)
+const pacienteIdId = 1; 
+
+async function cargarRadiografiaDoctor() {
+    try {
+        const respuesta = await fetch('http://localhost:7000/api/radiografias', { method: 'POST', body: formData })
+        
+        if (respuesta.ok) {
+            const datos = await response.json();
+            
+            // 1. Reemplazamos la imagen de prueba por la real
+            const imagenRadiografia = document.querySelector('.img-3d-mockup');
+            if(imagenRadiografia && datos.ruta_archivo) {
+                imagenRadiografia.src = datos.ruta_archivo;
+            }
+
+            // 2. Aquí podrías llenar otros campos si quisieras (ej. mostrar las notas previas)
+            console.log("Radiografía cargada para el doctor:", datos);
+
+        } else {
+            console.log("El paciente no tiene radiografías aún.");
+            // Aquí podrías mostrar un mensaje en la pantalla indicando que no hay imágenes.
+        }
+    } catch (error) {
+        console.error("Error al cargar la radiografía:", error);
+    }
+}
+
+// Ejecutamos la función al cargar la página
+window.onload = cargarRadiografiaDoctor;
+</script>
 
 </body>
 </html>

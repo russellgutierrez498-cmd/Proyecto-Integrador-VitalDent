@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal del Paciente - Consultorio Dental Guzmán</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="CSS/stylediv.CSS">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Nunito', sans-serif; background: #F8FAFC; margin: 0; padding: 20px; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px 30px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .user-badge { display: flex; align-items: center; gap: 10px; font-weight: bold; color: #1E293B; }
+        .avatar { background: #10B981; color: white; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; font-weight: 800; }
+        .btn-logout { background: #EF4444; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; text-decoration: none; }
+        .card-recetas { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .receta-item { border-left: 4px solid #2563EB; background: #F1F5F9; padding: 15px 20px; border-radius: 0 8px 8px 0; margin-bottom: 15px; }
+        .receta-fecha { font-size: 0.85rem; color: #64748B; font-weight: bold; }
+        .receta-titulo { font-size: 1.1rem; color: #0F172A; font-weight: 800; margin: 5px 0; }
+        .med-tag { display: inline-block; background: #E0E7FF; color: #3730A3; padding: 4px 10px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; margin-top: 8px; margin-right: 5px; }
+    </style>
+</head>
+<body>
+
+      <a href="visor_paciente.html" style="background-color: #2563EB; color: white; text-decoration: none; padding: 10px 18px; border-radius: 8px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px;">
+        Ver Mis Radiografías
+      </a>
+
+    <div class="top-bar">
+        <h2>Portal del <span style="color: #2563EB;">Paciente</span></h2>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <div class="user-badge">
+                <span id="nombrePaciente">Cargando...</span>
+                <div class="avatar" id="inicialPaciente">P</div>
+            </div>
+            <button class="btn-logout" onclick="cerrarSesion()">Cerrar Sesión</button>
+        </div>
+    </div>
+
+    <div class="card-recetas">
+        <h2 style="color: #1E3A8A; margin-top: 0; display: flex; align-items: center; gap: 10px;">
+            📋 Mis Recetas Médicas Prescritas
+        </h2>
+        <hr style="border: none; border-top: 1px solid #E2E8F0; margin: 20px 0;">
+
+        <div id="contenedorRecetas">
+            <p style="color: #64748B;">Cargando tus recetas desde el sistema...</p>
+        </div>
+    </div>
+
+    <script>
+        const pacienteId = localStorage.getItem('paciente_id');
+        const pacienteNombre = localStorage.getItem('paciente_nombre');
+
+        // Verificar autenticación
+        if (!pacienteId) {
+            window.location.href = 'index.html';
+        } else {
+            document.getElementById('nombrePaciente').innerText = pacienteNombre || 'Paciente';
+            document.getElementById('inicialPaciente').innerText = (pacienteNombre || 'P').charAt(0).toUpperCase();
+            cargarRecetas();
+        }
+
+        async function cargarRecetas() {
+            const contenedor = document.getElementById('contenedorRecetas');
+            try {
+                const response = await fetch(`http://localhost:7000/api/pacientes/${pacienteId}/recetas`);
+                if (!response.ok) throw new Error('Error al obtener recetas');
+
+                const recetas = await response.json();
+
+                if (!Array.isArray(recetas) || recetas.length === 0) {
+                    contenedor.innerHTML = `
+                        <div style="text-align: center; padding: 30px; color: #64748B;">
+                            <p style="font-size: 1.1rem; font-weight: bold;">No tienes recetas registradas actualmente.</p>
+                            <p style="font-size: 0.9rem;">Tus recetas aparecerán aquí en cuanto el doctor las emita.</p>
+                        </div>`;
+                    return;
+                }
+
+                let html = '';
+                recetas.forEach(r => {
+                    let medicamentosHTML = '';
+                    if (r.medicamentos && r.medicamentos.length > 0) {
+                        r.medicamentos.forEach(m => {
+                            medicamentosHTML += `<span class="med-tag">💊 ${m.medicamento} (${m.dosis}) - ${m.via || 'Vía Oral'}</span>`;
+                        });
+                    }
+
+                    html += `
+                        <div class="receta-item">
+                            <div class="receta-fecha">📅 Fecha: ${r.fecha || 'Sin fecha'}</div>
+                            <div class="receta-titulo">Diagnóstico: ${r.diagnostico || 'Consulta General'}</div>
+                            <p style="margin: 5px 0; color: #334155;"><strong>Tratamiento:</strong> ${r.tratamiento || 'Atención dental'}</p>
+                            <div>${medicamentosHTML}</div>
+                        </div>`;
+                });
+
+                contenedor.innerHTML = html;
+
+            } catch (error) {
+                console.error("Error al cargar recetas:", error);
+                contenedor.innerHTML = `
+                    <div style="background: #FEE2E2; color: #991B1B; padding: 15px; border-radius: 8px;">
+                        ⚠️ No se pudieron cargar las recetas. Verifica que el servidor Java esté activo.
+                    </div>`;
+            }
+        }
+
+        function cerrarSesion() {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

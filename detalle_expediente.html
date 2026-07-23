@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expediente Clínico - Consultorio Dental Guzmán</title>
+    <title>Detalle de Expediente - Consultorio Dental Guzmán</title>
     <link rel="stylesheet" href="CSS/stylediv.CSS">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
@@ -21,35 +21,19 @@
         </div>
 
         <nav class="sidebar-menu">
-            <a href="dashboard.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Dashboard</span>
-            </a>
-            <a href="agenda.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Agenda de Citas</span>
-            </a>
-            <a href="expediente.html" class="menu-item activo">
-                <span class="icon"></span><span class="menu-text">Expedientes Clínicos</span>
-            </a>
-            <a href="odontograma.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Odontograma</span>
-            </a>
-            <a href="receta.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Recetas Médicas</span>
-            </a>
-            <a href="inventario.html" class="menu-item activo">
-                <span class="icon"></span><span class="menu-text">Inventario</span>
-            </a>
-            <a href="caja.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Cobros y Caja</span>
-            </a>
-            <a href="index.html" class="menu-item salir">
-                <span class="icon"></span><span class="menu-text">Cerrar Sesión</span>
-            </a>
+            <a href="dashboard.html" class="menu-item activo"><span class="menu-text">Dashboard</span></a>
+            <a href="agenda.html" class="menu-item"><span class="menu-text">Agenda de Citas</span></a>
+            <a href="expediente.html" class="menu-item"><span class="menu-text">Expedientes Clínicos</span></a>
+            <a href="odontograma.html" class="menu-item"><span class="menu-text">Odontograma</span></a>
+            <a href="receta.html" class="menu-item"><span class="menu-text">Recetas Médicas</span></a>
+            <a href="inventario.html" class="menu-item"><span class="menu-text">Inventario</span></a>
+            <a href="caja.html" class="menu-item"><span class="menu-text">Cobros y Caja</span></a>
+            <a href="index.html" class="menu-item salir"><span class="menu-text">Cerrar Sesión</span></a>
+        </nav>
         </nav>
     </aside>
 
     <div class="dashboard-layout">
-        
         <header class="navbar-dashboard">
             <div class="logo-dashboard">
                 <h1>Consultorio <span>Dental Guzmán</span></h1>
@@ -62,179 +46,202 @@
 
         <main class="dashboard-content">
             
-            <div class="paciente-header">
-                <div class="paciente-info-principal">
-                     <img src="https://via.placeholder.com/100x100.png?text=Paciente" alt="Foto Paciente" class="paciente-foto">
-                     <div>
-                         <h2 class="paciente-nombre" id="det-nombre">Cargando...</h2>
-                         <p class="paciente-id" id="det-id">Cargando...</p>
-                     </div>
-                 </div>
-                <div class="paciente-acciones">
-                    <button id="btn-editar" class="btn-tabla btn-tabla-secundario" onclick="toggleEdicion()">Editar Datos</button>
-                    <button id="btn-guardar" class="btn-tabla" style="display: none;" onclick="guardarCambios()">Guardar Cambios</button>
+            <!-- Cabecera del Paciente -->
+            <div class="tarjeta-expediente" style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <div style="width: 70px; height: 70px; background-color: #E2E8F0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #64748B; font-weight: 800;" id="avatarLetra">
+                            P
+                        </div>
+                        <div>
+                            <h2 style="font-size: 1.6rem; margin: 0; color: #1E293B;" id="nombrePaciente">Cargando paciente...</h2>
+                            <p style="margin: 5px 0 0 0; color: #64748B; font-weight: 600;" id="subtituloPaciente">ID Paciente: #--- | Edad: -- años</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <a href="expediente.html" class="btn-tabla btn-tabla-secundario" style="text-decoration: none; padding: 10px 20px;">Volver al Directorio</a>
+                        <button class="btn-tabla" style="background-color: var(--color-primario-azul); padding: 10px 20px;" onclick="guardarNotas()">Guardar Cambios</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="paciente-info-principal">
+            <!-- Grid Principal -->
+            <div class="expediente-grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                
+                <!-- Columna Izquierda: Datos y Cuestionario -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    
+                    <!-- Tarjeta 1: Datos Generales -->
+                    <div class="tarjeta-expediente">
+                        <h3 class="titulo-tarjeta" style="margin-bottom: 20px; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px;">Datos Generales</h3>
+                        
+                        <div style="display: grid; grid-template-columns: 120px 1fr; row-gap: 12px; font-size: 0.95rem;">
+                            <strong style="color: #64748B;">Teléfono:</strong>
+                            <span id="lblTelefono">...</span>
 
-    <!-- ================= COLUMNA IZQUIERDA ================= -->
-    <div class="expediente-col-izq">
-        
-        <!-- Tarjeta 1: Datos Generales -->
-        <div class="tarjeta-expediente">
-            <h3 class="titulo-tarjeta">Datos Generales</h3>
-            <div class="datos-lista">
-                <p><strong>Teléfono:</strong> <span id="gen-telefono">Cargando...</span></p>
-                <p><strong>Correo:</strong> <span id="gen-correo">Cargando...</span></p>
-                <p><strong>Dirección:</strong> <span id="gen-direccion">No registrada</span></p>
-                <p><strong>Ocupación:</strong> <span id="gen-ocupacion">No registrada</span></p>
-                <p><strong>Motivo de Consulta:</strong> <span id="gen-motivo">No registrado</span></p>
+                            <strong style="color: #64748B;">Correo:</strong>
+                            <span id="lblCorreo">...</span>
+
+                            <strong style="color: #64748B;">Dirección:</strong>
+                            <span id="lblDireccion">...</span>
+
+                            <strong style="color: #64748B;">Ocupación:</strong>
+                            <span id="lblOcupacion">...</span>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 2: Cuestionario Médico -->
+                    <div class="tarjeta-expediente">
+                        <h3 class="titulo-tarjeta" style="margin-bottom: 20px; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px;">Cuestionario Médico (Antecedentes)</h3>
+                        
+                        <div style="display: grid; grid-template-columns: 180px 1fr; row-gap: 12px; font-size: 0.95rem;">
+                            <strong style="color: #64748B;">Antecedentes / Alergias:</strong>
+                            <span id="lblAntecedentes">...</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Columna Derecha: Accesos a Visores y Notas -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    
+                    <!-- Card: Mapa Dental / Accesos -->
+                    <div class="tarjeta-expediente" style="background: linear-gradient(135deg, #1E40AF 0%, #1D4ED8 100%); color: white; text-align: center; padding: 25px;">
+                        <h3 style="font-size: 1.4rem; margin-top: 0; margin-bottom: 10px;">Mapa Dental</h3>
+                        <p style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 20px;">
+                            Visualiza y registra los tratamientos dentales del paciente de forma gráfica.
+                        </p>
+
+                        <button class="btn-tabla" style="width: 100%; background-color: #10B981; color: white; border: none; padding: 12px; margin-bottom: 12px; font-weight: 800; cursor: pointer;" onclick="abrirOdontograma()">
+                            ABRIR ODONTOGRAMA
+                        </button>
+
+                        <button class="btn-tabla" style="width: 100%; background-color: #1E293B; color: white; border: none; padding: 12px; font-weight: 800; cursor: pointer;" onclick="abrirVisor3D()">
+                            ABRIR VISOR 3D CBCT
+                        </button>
+                    </div>
+
+                    <!-- Card: Notas Clínicas / Observaciones -->
+                    <div class="tarjeta-expediente">
+                        <h3 class="titulo-tarjeta" style="margin-bottom: 15px;">Notas Clínicas / Observaciones</h3>
+                        <textarea id="txtNotasClinicas" class="textarea-notas" style="width: 100%; height: 150px; resize: vertical;" placeholder="Escribe observaciones de la sesión aquí..."></textarea>
+                    </div>
+
+                </div>
+
             </div>
-        </div>
-
-        <!-- Tarjeta 2: Cuestionario Médico -->
-        <div class="tarjeta-expediente">
-            <h3 class="titulo-tarjeta">Cuestionario Médico (Antecedentes)</h3>
-            <div class="datos-lista">
-                <p><strong>Alergias:</strong> <span id="det-alergias">Cargando...</span></p>
-                <p><strong>Enfermedades:</strong> <span id="det-enfermedades">Cargando...</span></p>
-                <p><strong>Medicamentos:</strong> <span id="det-medicamentos">Cargando...</span></p>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- ================= COLUMNA DERECHA ================= -->
-    <div class="expediente-col-der">
-        
-        <!-- Módulo: Mapa Dental (con su ID para ocultarse al editar) -->
-        <div id="modulo-mapa-dental" class="tarjeta-odontograma-acceso">
-            <h3>Mapa Dental</h3>
-            <p>Visualiza y registra los tratamientos dentales del paciente de forma gráfica.</p>
-            <a href="#" id="btn-odontograma" class="btn-abrir-odontograma">
-                <span class="icono-diente"></span> ABRIR ODONTOGRAMA
-            </a>
-            <a href="#" id="btn-visor" class="btn-abrir-odontograma" style="background-color: #1E293B; margin-top: 10px;">
-                <span class="icono-diente"></span> ABRIR VISOR 3D CBCT
-            </a>
-        </div>
-
-        <!-- Tarjeta: Notas Clínicas -->
-        <div class="tarjeta-expediente">
-            <h3 class="titulo-tarjeta">Notas Clínicas</h3>
-            <!-- Asegúrate de mantener la clase que usas para tu textarea -->
-            <textarea class="textarea-notas" placeholder="Escribe observaciones de la sesión aquí..." style="width: 100%; min-height: 150px; padding: 10px; border-radius: 8px; border: 1px solid #ccc;"></textarea>
-        </div>
-
-    </div>
-
-</div>
 
         </main>
     </div>
 
     <script>
+        const API_URL = 'http://localhost:7000/api';
+        
+        // Obtener el ID del paciente desde la URL (?id=...)
+        const urlParams = new URLSearchParams(window.location.search);
+        const idPaciente = urlParams.get('id');
+
+        // Toggle Sidebar
         const btnToggle = document.getElementById('btnToggle');
         const sidebar = document.getElementById('sidebar');
-        btnToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('colapsado');
-        });
-    </script> 
-    <script>
-    let modoEdicion = false;
-    let idActual = null;
-
-document.addEventListener("DOMContentLoaded", async () => {
-    const parametros = new URLSearchParams(window.location.search);
-    idActual = parametros.get('id');
-
-    if (!idActual) {
-        window.location.href = 'expediente.html';
-        return;
-    }
-
-    try {
-        const respuesta = await fetch(`http://localhost:7070/api/pacientes/${idActual}`);
-        if (!respuesta.ok) throw new Error("Paciente no encontrado");
-        const paciente = await respuesta.json();
-
-        document.getElementById('det-nombre').innerText = paciente.nombreCompleto;
-        document.getElementById('det-id').innerText = `ID Paciente: #${paciente.id_paciente}`;
-        
-        document.getElementById('gen-telefono').innerText = paciente.celular || 'No registrado';
-        document.getElementById('gen-correo').innerText = paciente.correo || 'No registrado';
-        document.getElementById('gen-direccion').innerText = paciente.direccion || 'No registrada';
-        document.getElementById('gen-ocupacion').innerText = paciente.ocupacion || 'No registrada';
-        document.getElementById('gen-motivo').innerText = paciente.motivo_consulta || 'No registrado';
-        
-        document.getElementById('det-alergias').innerText = paciente.alergias || 'Ninguna';
-        document.getElementById('det-enfermedades').innerText = paciente.enfermedades || 'Ninguna';
-        document.getElementById('det-medicamentos').innerText = paciente.medicamentos || 'Ninguno';
-
-        document.getElementById('btn-odontograma').href = `odontograma.html?id=${paciente.id_paciente}&nombre=${encodeURIComponent(paciente.nombreCompleto)}`;
-        document.getElementById('btn-visor').href = `visor3d.html?id=${paciente.id_paciente}&nombre=${encodeURIComponent(paciente.nombreCompleto)}`;
-
-    } catch (error) {
-        console.error("Error:", error);
-    }
-});
-
-async function toggleEdicion() {
-    const btn = document.getElementById('btn-editar');
-    const campos = ['gen-telefono', 'gen-correo', 'gen-direccion', 'gen-ocupacion', 'gen-motivo', 'det-alergias', 'det-enfermedades', 'det-medicamentos'];
-    
-    // 1. Capturamos el div del mapa dental
-    const moduloMapa = document.getElementById('modulo-mapa-dental');
-
-    if (!modoEdicion) {
-        // 2. Ocultamos el mapa dental
-        moduloMapa.style.display = 'none';
-
-        campos.forEach(id => {
-            const el = document.getElementById(id);
-            const valor = (el.innerText === 'No registrado' || el.innerText === 'Ninguna' || el.innerText === 'Ninguno' || el.innerText === 'Cargando...') ? '' : el.innerText;
-            el.innerHTML = `<input type="text" id="input-${id}" value="${valor}" class="input-medico" style="width: 100%; padding: 4px; margin-top: 4px; box-sizing: border-box;">`;
-        });
-        btn.innerText = 'Guardar Cambios';
-        btn.classList.replace('btn-tabla-secundario', 'btn-tabla'); 
-        btn.style.backgroundColor = '#10b981'; 
-        modoEdicion = true;
-    } else {
-        const datosActualizados = {
-            celular: document.getElementById('input-gen-telefono').value,
-            correo: document.getElementById('input-gen-correo').value,
-            direccion: document.getElementById('input-gen-direccion').value,
-            ocupacion: document.getElementById('input-gen-ocupacion').value,
-            motivo_consulta: document.getElementById('input-gen-motivo').value,
-            alergias: document.getElementById('input-det-alergias').value,
-            enfermedades: document.getElementById('input-det-enfermedades').value,
-            medicamentos: document.getElementById('input-det-medicamentos').value
-        };
-
-        try {
-            const respuesta = await fetch(`http://localhost:7070/api/pacientes/${idActual}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(datosActualizados)
-            });
-
-            if (respuesta.ok) {
-                Swal.fire({
-                    title: '¡Actualizado!',
-                    text: 'Los datos del expediente se guardaron.',
-                    icon: 'success',
-                    heightAuto: false
-                }).then(() => location.reload()); 
-            } else {
-                Swal.fire('Error', 'No se pudieron actualizar los datos', 'error');
-            }
-        } catch (error) {
-            console.error("Error al guardar:", error);
+        if (btnToggle) {
+            btnToggle.addEventListener('click', () => sidebar.classList.toggle('colapsado'));
         }
-    }
-}
-</script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!idPaciente) {
+                alert("No se seleccionó ningún paciente.");
+                window.location.href = "expediente.html";
+                return;
+            }
+            cargarDetallePaciente(idPaciente);
+        });
+
+        // Cargar datos del paciente desde Java
+        async function cargarDetallePaciente(id) {
+            try {
+                const respuesta = await fetch(`${API_URL}/pacientes/${id}`);
+                
+                if (!respuesta.ok) {
+                    const errorJson = await respuesta.json().catch(() => ({}));
+                    throw new Error(errorJson.mensaje || "El paciente no existe en la base de datos.");
+                }
+
+                const p = await respuesta.json();
+
+                // Nombres y Avatar
+                const nombreCompleto = `${p.nombre || ''} ${p.apellidos || ''}`.trim();
+                document.getElementById('nombrePaciente').textContent = nombreCompleto || 'Paciente sin nombre';
+                
+                const edadCalculada = calcularEdad(p.fecha_nacimiento);
+                const idFormateado = `#${String(p.id_paciente || id).padStart(6, '0')}`;
+                document.getElementById('subtituloPaciente').textContent = `ID Paciente: ${idFormateado} | Edad: ${edadCalculada} años`;
+                
+                if (p.nombre) {
+                    document.getElementById('avatarLetra').textContent = p.nombre.charAt(0).toUpperCase();
+                }
+
+                // Datos Generales
+                document.getElementById('lblTelefono').textContent = p.celular || 'Sin registro';
+                document.getElementById('lblCorreo').textContent = p.correo || 'Sin registro';
+                document.getElementById('lblDireccion').textContent = p.direccion || 'No registrada';
+                document.getElementById('lblOcupacion').textContent = p.ocupacion || 'No registrada';
+
+                // Antecedentes y Notas
+                document.getElementById('lblAntecedentes').textContent = p.antecedentes || 'Sin antecedentes reportados';
+                
+                if (document.getElementById('txtNotasClinicas')) {
+                    document.getElementById('txtNotasClinicas').value = p.notas || '';
+                }
+
+            } catch (error) {
+                console.error("Error al cargar expediente:", error);
+                alert(error.message || "Error de conexión con el servidor.");
+            }
+        }
+
+        // Función para calcular la edad exacta
+        function calcularEdad(fechaNacimiento) {
+            if (!fechaNacimiento) return '--';
+            const hoy = new Date();
+            const nac = new Date(fechaNacimiento);
+            let edad = hoy.getFullYear() - nac.getFullYear();
+            const mes = hoy.getMonth() - nac.getMonth();
+            if (mes < 0 || (mes === 0 && hoy.getDate() < nac.getDate())) {
+                edad--;
+            }
+            return isNaN(edad) ? '--' : edad;
+        }
+
+        // Redirecciones dinámicas con ID
+        function abrirOdontograma() {
+            window.location.href = `odontograma.html?id=${idPaciente}`;
+        }
+
+        function abrirVisor3D() {
+            window.location.href = `visor3d.html?id=${idPaciente}`;
+        }
+
+        // Guardar Notas
+        async function guardarNotas() {
+            const notas = document.getElementById('txtNotasClinicas').value;
+            try {
+                const respuesta = await fetch(`${API_URL}/pacientes/${idPaciente}/notas`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ notas: notas })
+                });
+
+                if (respuesta.ok) {
+                    alert("¡Cambios guardados con éxito!");
+                } else {
+                    alert("No se pudieron guardar las notas.");
+                }
+            } catch (e) {
+                alert("Error de conexión al guardar.");
+            }
+        }
+    </script>
 </body>
 </html>

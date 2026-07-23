@@ -6,33 +6,10 @@
     <title>Odontograma - Consultorio Dental Guzmán</title>
     <link rel="stylesheet" href="CSS/stylediv.CSS">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- SweetAlert2 para alertas elegantes -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <style>
-        /* Estilos visuales para los estados del Odontograma según la Leyenda */
-        .diente.diente-seleccionado {
-            background-color: #10b981 !important; /* Verde */
-            color: #ffffff !important;
-            border-color: #059669 !important;
-            font-weight: bold;
-        }
-        .diente.diente-caries {
-            background-color: #ef4444 !important; /* Rojo */
-            color: #ffffff !important;
-            border-color: #dc2626 !important;
-            font-weight: bold;
-        }
-        .diente.diente-tratado {
-            background-color: #3b82f6 !important; /* Azul */
-            color: #ffffff !important;
-            border-color: #2563eb !important;
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body class="body-dashboard">
 
+    <!-- BARRA LATERAL -->
     <aside id="sidebar" class="sidebar">
         <div class="sidebar-header">
             <div class="brand-info">
@@ -45,33 +22,18 @@
         </div>
 
         <nav class="sidebar-menu">
-            <a href="dashboard.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Dashboard</span>
-            </a>
-            <a href="agenda.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Agenda de Citas</span>
-            </a>
-            <a href="expediente.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Expedientes Clínicos</span>
-            </a>
-            <a href="odontograma.html" class="menu-item activo">
-                <span class="icon"></span><span class="menu-text">Odontograma</span>
-            </a>
-            <a href="receta.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Recetas Médicas</span>
-            </a>
-            <a href="inventario.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Inventario</span>
-            </a>
-            <a href="caja.html" class="menu-item">
-                <span class="icon"></span><span class="menu-text">Cobros y Caja</span>
-            </a>
-            <a href="index.html" class="menu-item salir">
-                <span class="icon"></span><span class="menu-text">Cerrar Sesión</span>
-            </a>
+            <a href="dashboard.html" class="menu-item activo"><span class="menu-text">Dashboard</span></a>
+            <a href="agenda.html" class="menu-item"><span class="menu-text">Agenda de Citas</span></a>
+            <a href="expediente.html" class="menu-item"><span class="menu-text">Expedientes Clínicos</span></a>
+            <a href="odontograma.html" class="menu-item"><span class="menu-text">Odontograma</span></a>
+            <a href="receta.html" class="menu-item"><span class="menu-text">Recetas Médicas</span></a>
+            <a href="inventario.html" class="menu-item"><span class="menu-text">Inventario</span></a>
+            <a href="caja.html" class="menu-item"><span class="menu-text">Cobros y Caja</span></a>
+            <a href="index.html" class="menu-item salir"><span class="menu-text">Cerrar Sesión</span></a>
         </nav>
     </aside>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <div class="dashboard-layout">
         <header class="navbar-dashboard">
             <div class="logo-dashboard">
@@ -85,192 +47,385 @@
 
         <main class="dashboard-content">
             
-            <div class="paciente-header" style="padding: 15px 30px; margin-bottom: 20px;">
-                <div class="paciente-info-principal">
-                    <div>
-                        <h2 class="paciente-nombre" style="font-size: 1.2rem; margin:0;">Paciente: Cargando...</h2>
-                    </div>
-                </div>
-                <a id="btnVolverExpediente" href="expediente.html" class="btn-tabla btn-tabla-secundario" style="text-decoration:none;">← Volver al Expediente</a>
-            </div>
-
-            <div class="expediente-grid">
+            <!-- VISTA 1: DIRECTORIO DE PACIENTES (SE MUESTRA CUANDO NO HAY ID EN LA URL) -->
+            <div id="vistaDirectorio" style="display: none;">
                 
-                <div class="tarjeta-expediente" style="margin-bottom: 0;">
-                    
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px;">
-                        <h3 class="titulo-tarjeta" style="border: none; padding: 0; margin: 0;">Mapa Dental</h3>
-                        <div>
-                            <button id="btnAdulto" class="btn-tabla" onclick="cambiarMapa('adulto')">Adulto</button>
-                            <button id="btnInfantil" class="btn-tabla btn-tabla-secundario" onclick="cambiarMapa('infantil')">Infantil</button>
-                        </div>
-                    </div>
-                    
-                    <div id="mapaAdulto" class="odontograma-visual">
-                        <div class="arco-dental">
-                            <p class="arco-titulo">Maxilar Superior (Permanente)</p>
-                            <div class="dientes-fila">
-                                <button class="diente" data-diente="18">18</button>
-                                <button class="diente" data-diente="17">17</button>
-                                <button class="diente" data-diente="16">16</button>
-                                <button class="diente" data-diente="15">15</button>
-                                <button class="diente" data-diente="14">14</button>
-                                <button class="diente" data-diente="13">13</button>
-                                <button class="diente" data-diente="12">12</button>
-                                <button class="diente" data-diente="11">11</button>
-                                <div style="width: 10px; background: #E2E8F0;"></div>
-                                <button class="diente" data-diente="21">21</button>
-                                <button class="diente" data-diente="22">22</button>
-                                <button class="diente" data-diente="23">23</button>
-                                <button class="diente" data-diente="24">24</button>
-                                <button class="diente" data-diente="25">25</button>
-                                <button class="diente" data-diente="26">26</button>
-                                <button class="diente" data-diente="27">27</button>
-                                <button class="diente" data-diente="28">28</button>
-                            </div>
-                        </div>
-                        <div style="height: 20px;"></div>
-                        <div class="arco-dental">
-                            <div class="dientes-fila">
-                                <button class="diente" data-diente="48">48</button>
-                                <button class="diente" data-diente="47">47</button>
-                                <button class="diente" data-diente="46">46</button>
-                                <button class="diente" data-diente="45">45</button>
-                                <button class="diente" data-diente="44">44</button>
-                                <button class="diente" data-diente="43">43</button>
-                                <button class="diente" data-diente="42">42</button>
-                                <button class="diente" data-diente="41">41</button>
-                                <div style="width: 10px; background: #E2E8F0;"></div>
-                                <button class="diente" data-diente="31">31</button>
-                                <button class="diente" data-diente="32">32</button>
-                                <button class="diente" data-diente="33">33</button>
-                                <button class="diente" data-diente="34">34</button>
-                                <button class="diente" data-diente="35">35</button>
-                                <button class="diente" data-diente="36">36</button>
-                                <button class="diente" data-diente="37">37</button>
-                                <button class="diente" data-diente="38">38</button>
-                            </div>
-                            <p class="arco-titulo" style="margin-top: 10px;">Mandíbula Inferior (Permanente)</p>
-                        </div>
-                    </div>
-
-                    <div id="mapaInfantil" class="odontograma-visual" style="display: none;">
-                        <div class="arco-dental">
-                            <p class="arco-titulo">Maxilar Superior (Temporal)</p>
-                            <div class="dientes-fila">
-                                <button class="diente" data-diente="55">55</button>
-                                <button class="diente" data-diente="54">54</button>
-                                <button class="diente" data-diente="53">53</button>
-                                <button class="diente" data-diente="52">52</button>
-                                <button class="diente" data-diente="51">51</button>
-                                <div style="width: 10px; background: #E2E8F0;"></div>
-                                <button class="diente" data-diente="61">61</button>
-                                <button class="diente" data-diente="62">62</button>
-                                <button class="diente" data-diente="63">63</button>
-                                <button class="diente" data-diente="64">64</button>
-                                <button class="diente" data-diente="65">65</button>
-                            </div>
-                        </div>
-                        <div style="height: 20px;"></div>
-                        <div class="arco-dental">
-                            <div class="dientes-fila">
-                                <button class="diente" data-diente="85">85</button>
-                                <button class="diente" data-diente="84">84</button>
-                                <button class="diente" data-diente="83">83</button>
-                                <button class="diente" data-diente="82">82</button>
-                                <button class="diente" data-diente="81">81</button>
-                                <div style="width: 10px; background: #E2E8F0;"></div>
-                                <button class="diente" data-diente="71">71</button>
-                                <button class="diente" data-diente="72">72</button>
-                                <button class="diente" data-diente="73">73</button>
-                                <button class="diente" data-diente="74">74</button>
-                                <button class="diente" data-diente="75">75</button>
-                            </div>
-                            <p class="arco-titulo" style="margin-top: 10px;">Mandíbula Inferior (Temporal)</p>
-                        </div>
-                    </div>
-
-                    <div class="leyenda-odontograma">
-                        <span class="leyenda-item"><div class="caja-color blanco"></div> Sano</span>
-                        <span class="leyenda-item"><div class="caja-color rojo"></div> Caries / Alerta</span>
-                        <span class="leyenda-item"><div class="caja-color azul"></div> Tratado / Resina</span>
-                        <span class="leyenda-item"><div class="caja-color verde"></div> Seleccionado</span>
-                    </div>
+                <!-- Encabezado Directorio -->
+                <div class="tarjeta-expediente" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 20px 30px;">
+                    <h2 style="margin: 0; color: #1E40AF; font-size: 1.5rem; font-weight: 800;">Directorio de Pacientes</h2>
+                    <a href="expediente.html" class="btn-tabla" style="background-color: #10B981; color: white; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 0.95rem;">
+                        + Nuevo Paciente
+                    </a>
                 </div>
 
-                <div class="tarjeta-expediente" style="margin-bottom: 0;">
-                    <h3 class="titulo-tarjeta">Registrar Tratamiento</h3>
+                <!-- Tabla de Pacientes y Buscador -->
+                <div class="tarjeta-expediente" style="padding: 25px 30px;">
                     
-                    <div class="grupo-input">
-                        <label>Diente Seleccionado:</label>
-                        <input type="text" id="dienteSeleccionado" class="input-medico" placeholder="Haz clic en un diente..." readonly style="background-color: #E2E8F0; font-weight: bold;">
-                    </div>
-                    
-                    <div class="grupo-input" style="margin-top: 15px;">
-                        <label>Diagnóstico / Procedimiento:</label>
-                        <select id="selectDiagnostico" class="input-medico">
-                            <option value="Limpieza / Profilaxis">Limpieza / Profilaxis</option>
-                            <option value="Caries detectada">Caries detectada</option>
-                            <option value="Resina Simple">Resina Simple</option>
-                            <option value="Extracción">Extracción</option>
-                            <option value="Endodoncia">Endodoncia</option>
-                            <option value="Corona">Corona</option>
-                        </select>
+                    <!-- Buscador y Botón Filtrar -->
+                    <div style="display: flex; gap: 12px; margin-bottom: 25px;">
+                        <input type="text" id="inputBuscarDirectorio" onkeyup="filtrarDirectorio()" placeholder="Buscar por nombre, ID o teléfono..." class="input-medico" style="flex-grow: 1; padding: 12px 16px; border-radius: 8px; border: 1px solid #E2E8F0; background-color: #F8FAFC; font-size: 0.95rem;">
+                        <button onclick="filtrarDirectorio()" class="btn-tabla btn-tabla-secundario" style="padding: 12px 28px; font-weight: 700; background-color: #E2E8F0; color: #334155; border: none; border-radius: 8px; cursor: pointer;">
+                            Filtrar
+                        </button>
                     </div>
 
-                    <div class="grupo-input" style="margin-top: 15px;">
-                        <label>Costo Estimado ($):</label>
-                        <input type="number" id="inputCosto" class="input-medico" placeholder="0.00" step="0.50">
+                    <!-- Tabla de Resultados -->
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                            <thead>
+                                <tr style="background-color: #F8FAFC; border-bottom: 2px solid #E2E8F0;">
+                                    <th style="padding: 14px; color: #64748B; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.5px;">ID PACIENTE</th>
+                                    <th style="padding: 14px; color: #64748B; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.5px;">NOMBRE COMPLETO</th>
+                                    <th style="padding: 14px; color: #64748B; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.5px;">TELÉFONO</th>
+                                    <th style="padding: 14px; color: #64748B; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.5px;">CORREO</th>
+                                    <th style="padding: 14px; color: #64748B; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.5px; text-align: center;">ACCIONES</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaDirectorioBody">
+                                <!-- Se llena dinámicamente desde Java -->
+                            </tbody>
+                        </table>
                     </div>
-
-                    <button type="button" onclick="guardarTratamiento()" class="btn-agendar btn-login" style="margin-top: 20px; width: 100%; border: none; cursor: pointer;">
-                        AGREGAR AL HISTORIAL
-                    </button>
                 </div>
 
             </div>
+
+
+            <!-- VISTA 2: ODONTOGRAMA DENTAL (SE MUESTRA CUANDO SÍ HAY UN PACIENTE SELECCIONADO) -->
+            <div id="vistaOdontograma" style="display: none;">
+                
+                <div class="paciente-header" style="padding: 15px 30px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h2 id="lblPacienteNombre" class="paciente-nombre" style="font-size: 1.3rem; margin:0; color: #1E40AF;">
+                            Paciente: Cargando...
+                        </h2>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button onclick="volverAlDirectorio()" class="btn-tabla" style="background-color: #1E40AF; color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 700; cursor: pointer;">
+                            ← Cambiar Paciente
+                        </button>
+                        <a href="expediente.html" class="btn-tabla btn-tabla-secundario" style="text-decoration:none; padding: 10px 18px; border-radius: 8px; font-weight: 700;">
+                            ← Volver al Expediente
+                        </a>
+                    </div>
+                </div>
+
+                <div class="expediente-grid">
+                    
+                    <!-- Mapa Dental -->
+                    <div class="tarjeta-expediente" style="margin-bottom: 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px;">
+                            <h3 class="titulo-tarjeta" style="border: none; padding: 0; margin: 0;">Mapa Dental</h3>
+                            <div>
+                                <button id="btnAdulto" class="btn-tabla" onclick="cambiarMapa('adulto')">Adulto</button>
+                                <button id="btnInfantil" class="btn-tabla btn-tabla-secundario" onclick="cambiarMapa('infantil')">Infantil</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Mapa Adulto -->
+                        <div id="mapaAdulto" class="odontograma-visual">
+                            <div class="arco-dental">
+                                <p class="arco-titulo">Maxilar Superior (Permanente)</p>
+                                <div class="dientes-fila">
+                                    <button class="diente" data-diente="18">18</button>
+                                    <button class="diente" data-diente="17">17</button>
+                                    <button class="diente" data-diente="16">16</button>
+                                    <button class="diente" data-diente="15">15</button>
+                                    <button class="diente" data-diente="14">14</button>
+                                    <button class="diente" data-diente="13">13</button>
+                                    <button class="diente" data-diente="12">12</button>
+                                    <button class="diente" data-diente="11">11</button>
+                                    <div style="width: 10px; background: #E2E8F0;"></div>
+                                    <button class="diente" data-diente="21">21</button>
+                                    <button class="diente" data-diente="22">22</button>
+                                    <button class="diente" data-diente="23">23</button>
+                                    <button class="diente" data-diente="24">24</button>
+                                    <button class="diente" data-diente="25">25</button>
+                                    <button class="diente" data-diente="26">26</button>
+                                    <button class="diente" data-diente="27">27</button>
+                                    <button class="diente" data-diente="28">28</button>
+                                </div>
+                            </div>
+                            <div style="height: 20px;"></div>
+                            <div class="arco-dental">
+                                <div class="dientes-fila">
+                                    <button class="diente" data-diente="48">48</button>
+                                    <button class="diente" data-diente="47">47</button>
+                                    <button class="diente" data-diente="46">46</button>
+                                    <button class="diente" data-diente="45">45</button>
+                                    <button class="diente" data-diente="44">44</button>
+                                    <button class="diente" data-diente="43">43</button>
+                                    <button class="diente" data-diente="42">42</button>
+                                    <button class="diente" data-diente="41">41</button>
+                                    <div style="width: 10px; background: #E2E8F0;"></div>
+                                    <button class="diente" data-diente="31">31</button>
+                                    <button class="diente" data-diente="32">32</button>
+                                    <button class="diente" data-diente="33">33</button>
+                                    <button class="diente" data-diente="34">34</button>
+                                    <button class="diente" data-diente="35">35</button>
+                                    <button class="diente" data-diente="36">36</button>
+                                    <button class="diente" data-diente="37">37</button>
+                                    <button class="diente" data-diente="38">38</button>
+                                </div>
+                                <p class="arco-titulo" style="margin-top: 10px;">Mandíbula Inferior (Permanente)</p>
+                            </div>
+                        </div>
+
+                        <!-- Mapa Infantil -->
+                        <div id="mapaInfantil" class="odontograma-visual" style="display: none;">
+                            <div class="arco-dental">
+                                <p class="arco-titulo">Maxilar Superior (Temporal)</p>
+                                <div class="dientes-fila">
+                                    <button class="diente" data-diente="55">55</button>
+                                    <button class="diente" data-diente="54">54</button>
+                                    <button class="diente" data-diente="53">53</button>
+                                    <button class="diente" data-diente="52">52</button>
+                                    <button class="diente" data-diente="51">51</button>
+                                    <div style="width: 10px; background: #E2E8F0;"></div>
+                                    <button class="diente" data-diente="61">61</button>
+                                    <button class="diente" data-diente="62">62</button>
+                                    <button class="diente" data-diente="63">63</button>
+                                    <button class="diente" data-diente="64">64</button>
+                                    <button class="diente" data-diente="65">65</button>
+                                </div>
+                            </div>
+                            <div style="height: 20px;"></div>
+                            <div class="arco-dental">
+                                <div class="dientes-fila">
+                                    <button class="diente" data-diente="85">85</button>
+                                    <button class="diente" data-diente="84">84</button>
+                                    <button class="diente" data-diente="83">83</button>
+                                    <button class="diente" data-diente="82">82</button>
+                                    <button class="diente" data-diente="81">81</button>
+                                    <div style="width: 10px; background: #E2E8F0;"></div>
+                                    <button class="diente" data-diente="71">71</button>
+                                    <button class="diente" data-diente="72">72</button>
+                                    <button class="diente" data-diente="73">73</button>
+                                    <button class="diente" data-diente="74">74</button>
+                                    <button class="diente" data-diente="75">75</button>
+                                </div>
+                                <p class="arco-titulo" style="margin-top: 10px;">Mandíbula Inferior (Temporal)</p>
+                            </div>
+                        </div>
+
+                        <div class="leyenda-odontograma" style="margin-top: 20px; display: flex; gap: 15px; justify-content: center;">
+                            <span class="leyenda-item"><div class="caja-color blanco"></div> Sano</span>
+                            <span class="leyenda-item"><div class="caja-color rojo"></div> Caries / Alerta</span>
+                            <span class="leyenda-item"><div class="caja-color azul"></div> Tratado / Resina</span>
+                            <span class="leyenda-item"><div class="caja-color verde"></div> Seleccionado</span>
+                        </div>
+                    </div>
+
+                    <!-- Formulario de Registro de Tratamiento -->
+                    <div class="tarjeta-expediente" style="margin-bottom: 0;">
+                        <h3 class="titulo-tarjeta">Registrar Tratamiento</h3>
+                        
+                        <div class="grupo-input">
+                            <label style="font-weight:700;">Diente Seleccionado:</label>
+                            <input type="text" id="dienteSeleccionado" class="input-medico" placeholder="Haz clic en un diente..." readonly style="background-color: #F1F5F9; font-weight: bold;">
+                        </div>
+                        
+                        <div class="grupo-input" style="margin-top: 15px;">
+                            <label style="font-weight:700;">Diagnóstico / Procedimiento:</label>
+                            <select id="selectDiagnostico" class="input-medico">
+                                <option value="Limpieza / Profilaxis">Limpieza / Profilaxis</option>
+                                <option value="Resina Simple">Resina Simple</option>
+                                <option value="Extracción">Extracción</option>
+                                <option value="Endodoncia">Endodoncia</option>
+                                <option value="Corona">Corona</option>
+                            </select>
+                        </div>
+
+                        <div class="grupo-input" style="margin-top: 15px;">
+                            <label style="font-weight:700;">Costo Estimado ($):</label>
+                            <input type="number" id="inputCosto" class="input-medico" placeholder="0.00" step="0.01">
+                        </div>
+
+                        <button type="button" onclick="guardarTratamiento()" class="btn-tabla" style="margin-top: 25px; width: 100%; padding: 12px; background-color: #10B981; color: white; border: none; border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer;">
+                            + AGREGAR AL HISTORIAL
+                        </button>
+                    </div>
+
+                    <!-- Historial -->
+                    <div class="tarjeta-expediente" style="grid-column: 1 / -1; margin-top: 20px;">
+                        <h3 class="titulo-tarjeta">Historial Odontológico</h3>
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                            <thead>
+                                <tr style="background-color: #F1F5F9; text-align: left; border-bottom: 2px solid #E2E8F0;">
+                                    <th style="padding: 12px; color: #475569;">Fecha</th>
+                                    <th style="padding: 12px; color: #475569;">Piezas</th>
+                                    <th style="padding: 12px; color: #475569;">Diagnóstico / Tratamiento</th>
+                                    <th style="padding: 12px; color: #475569;">Costo ($)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaHistorial">
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
         </main>
     </div>
 
     <script>
-        // Sidebar Toggle
+        const API_URL = 'http://localhost:7000/api';
+
+        // Obtener ID del paciente desde la URL (?id=X)
+        const urlParams = new URLSearchParams(window.location.search);
+        const idPaciente = urlParams.get('id');
+
+        let dientesSeleccionados = [];
+        let listaPacientesGlobal = [];
+
+        // Toggle Sidebar
         const btnToggle = document.getElementById('btnToggle');
         const sidebar = document.getElementById('sidebar');
-        btnToggle.addEventListener('click', () => sidebar.classList.toggle('colapsado'));
+        if (btnToggle) {
+            btnToggle.addEventListener('click', () => sidebar.classList.toggle('colapsado'));
+        }
 
-        // Variables Globales
-        let numeroDienteSeleccionado = null;
-        let idPaciente = null;
+        // 1. INICIALIZAR VISTAS
+        document.addEventListener('DOMContentLoaded', () => {
+            configurarEventosDientes();
 
-        document.addEventListener("DOMContentLoaded", async () => {
-            // 1. Obtener parámetros de la URL
-            const parametros = new URLSearchParams(window.location.search);
-            idPaciente = parametros.get('id');
-            const nombrePaciente = parametros.get('nombre');
-
-            // Actualizar interfaz con datos del paciente
-            const h2Nombre = document.querySelector('.paciente-nombre');
-            if (nombrePaciente && h2Nombre) {
-                h2Nombre.innerHTML = `Paciente: <span>${nombrePaciente}</span>`;
-            } else if (h2Nombre) {
-                h2Nombre.innerHTML = `Paciente: <span>Carlos Mendoza Pérez</span>`; // Fallback de prueba
-            }
-
-            const btnVolver = document.getElementById('btnVolverExpediente');
-            if (btnVolver && idPaciente) {
-                btnVolver.href = `detalle_expediente.html?id=${idPaciente}`;
-            }
-
-            // 2. Configurar eventos de clic en los dientes
-            configurarClicsDientes();
-
-            // 3. Cargar tratamientos desde la Base de Datos para pintar los dientes
-            if (idPaciente) {
-                await cargarHistorialDentario();
+            if (idPaciente && idPaciente !== 'undefined' && idPaciente !== 'null') {
+                // Mostrar vista Odontograma
+                document.getElementById('vistaDirectorio').style.display = 'none';
+                document.getElementById('vistaOdontograma').style.display = 'block';
+                
+                cargarNombrePaciente(idPaciente);
+                cargarHistorial(); 
+            } else {
+                // Mostrar vista Directorio de Pacientes
+                document.getElementById('vistaOdontograma').style.display = 'none';
+                document.getElementById('vistaDirectorio').style.display = 'block';
+                
+                cargarDirectorioPacientes();
             }
         });
 
-        // Alternar entre Mapa Adulto e Infantil
+        // 2. LÓGICA DEL DIRECTORIO DE PACIENTES
+        async function cargarDirectorioPacientes() {
+            try {
+                const res = await fetch(`${API_URL}/pacientes`);
+                if (res.ok) {
+                    listaPacientesGlobal = await res.json();
+                    renderizarTablaDirectorio(listaPacientesGlobal);
+                } else {
+                    document.getElementById('tablaDirectorioBody').innerHTML = 
+                        '<tr><td colspan="5" style="padding: 20px; text-align: center; color: #EF4444;">Error al cargar la lista de pacientes.</td></tr>';
+                }
+            } catch (error) {
+                console.error("Error conectando con Java:", error);
+                document.getElementById('tablaDirectorioBody').innerHTML = 
+                    '<tr><td colspan="5" style="padding: 20px; text-align: center; color: #EF4444;">Sin conexión con el servidor Java.</td></tr>';
+            }
+        }
+
+        function renderizarTablaDirectorio(pacientes) {
+            const tbody = document.getElementById('tablaDirectorioBody');
+            tbody.innerHTML = '';
+
+            if (pacientes.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="padding: 20px; text-align: center; color: #64748B;">No se encontraron pacientes registados.</td></tr>';
+                return;
+            }
+
+            pacientes.forEach(p => {
+                const idFormateado = `#${String(p.id_paciente).padStart(6, '0')}`;
+                const nombreCompleto = `${p.nombre || ''} ${p.apellidos || ''}`.trim();
+                const telefono = p.telefono || 'Sin teléfono';
+                const correo = p.correo || p.email || 'Sin correo';
+
+                tbody.innerHTML += `
+                    <tr style="border-bottom: 1px solid #E2E8F0;">
+                        <td style="padding: 14px; font-weight: 800; color: #0F172A;">${idFormateado}</td>
+                        <td style="padding: 14px; color: #334155; font-weight: 600;">${nombreCompleto}</td>
+                        <td style="padding: 14px; color: #475569;">${telefono}</td>
+                        <td style="padding: 14px; color: #475569;">${correo}</td>
+                        <td style="padding: 14px; text-align: center;">
+                            <button onclick="abrirOdontograma(${p.id_paciente})" class="btn-tabla" style="background-color: #1E40AF; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 700; cursor: pointer;">
+                                Ver Odontograma
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function filtrarDirectorio() {
+            const busqueda = document.getElementById('inputBuscarDirectorio').value.toLowerCase();
+            
+            const filtrados = listaPacientesGlobal.filter(p => {
+                const idFormateado = `#${String(p.id_paciente).padStart(6, '0')}`.toLowerCase();
+                const nombreCompleto = `${p.nombre || ''} ${p.apellidos || ''}`.toLowerCase();
+                const telefono = (p.telefono || '').toLowerCase();
+                const correo = (p.correo || p.email || '').toLowerCase();
+
+                return nombreCompleto.includes(busqueda) || 
+                       idFormateado.includes(busqueda) || 
+                       telefono.includes(busqueda) ||
+                       correo.includes(busqueda);
+            });
+
+            renderizarTablaDirectorio(filtrados);
+        }
+
+        function abrirOdontograma(id) {
+            window.location.href = `odontograma.html?id=${id}`;
+        }
+
+        function volverAlDirectorio() {
+            window.location.href = 'odontograma.html';
+        }
+
+        // 3. LÓGICA DEL ODONTOGRAMA Y PACIENTE
+        async function cargarNombrePaciente(id) {
+            try {
+                const res = await fetch(`${API_URL}/pacientes/${id}`);
+                if (res.ok) {
+                    const paciente = await res.json();
+                    const nombreComp = `${paciente.nombre || ''} ${paciente.apellidos || ''}`.trim();
+                    document.getElementById('lblPacienteNombre').textContent = `Paciente: ${nombreComp || 'Sin Nombre'}`;
+                } else {
+                    document.getElementById('lblPacienteNombre').textContent = "Paciente no encontrado";
+                }
+            } catch (e) {
+                console.error("Error conectando con Java:", e);
+                document.getElementById('lblPacienteNombre').textContent = "Error al conectar con el servidor";
+            }
+        }
+
+        function configurarEventosDientes() {
+            const dientes = document.querySelectorAll('.diente');
+            const inputDiente = document.getElementById('dienteSeleccionado');
+
+            dientes.forEach(diente => {
+                diente.addEventListener('click', function() {
+                    const numeroDiente = this.getAttribute('data-diente');
+                    
+                    this.classList.toggle('diente-seleccionado');
+                    
+                    if (this.classList.contains('diente-seleccionado')) {
+                        dientesSeleccionados.push(numeroDiente);
+                    } else {
+                        dientesSeleccionados = dientesSeleccionados.filter(d => d !== numeroDiente);
+                    }
+                    
+                    dientesSeleccionados.sort((a, b) => a - b);
+                    
+                    if (dientesSeleccionados.length > 0) {
+                        inputDiente.value = "Piezas: #" + dientesSeleccionados.join(', #');
+                    } else {
+                        inputDiente.value = "";
+                    }
+                });
+            });
+        }
+
         function cambiarMapa(tipo) {
             const mapaAdulto = document.getElementById('mapaAdulto');
             const mapaInfantil = document.getElementById('mapaInfantil');
@@ -278,10 +433,9 @@
             const btnInfantil = document.getElementById('btnInfantil');
             const inputDiente = document.getElementById('dienteSeleccionado');
             
-            // Limpiar selección actual
             document.querySelectorAll('.diente').forEach(d => d.classList.remove('diente-seleccionado'));
-            numeroDienteSeleccionado = null;
-            inputDiente.value = "";
+            dientesSeleccionados = [];
+            if (inputDiente) inputDiente.value = "";
             
             if(tipo === 'infantil') {
                 mapaAdulto.style.display = 'none';
@@ -296,117 +450,81 @@
             }
         }
 
-        // Registrar evento Clic en cada botón de diente
-        function configurarClicsDientes() {
-            const todosLosDientes = document.querySelectorAll('.diente');
-            const inputDiente = document.getElementById('dienteSeleccionado');
-
-            todosLosDientes.forEach(diente => {
-                diente.addEventListener('click', function(e) {
-                    e.preventDefault();
-
-                    // Quitar estilo de selección previa
-                    todosLosDientes.forEach(d => d.classList.remove('diente-seleccionado'));
-
-                    // Marcar diente actual
-                    this.classList.add('diente-seleccionado');
-                    numeroDienteSeleccionado = this.getAttribute('data-diente');
-
-                    // Mostrar número en caja de texto
-                    inputDiente.value = `Pieza: #${numeroDienteSeleccionado}`;
-                });
-            });
-        }
-
-        // Cargar tratamientos de la BD y pintar visualmente los dientes
-        async function cargarHistorialDentario() {
-            try {
-                const respuesta = await fetch(`http://localhost:7070/api/odontograma/${idPaciente}`);
-                if (!respuesta.ok) return;
-
-                const historial = await respuesta.json();
-                const todosLosDientes = document.querySelectorAll('.diente');
-
-                historial.forEach(item => {
-                    todosLosDientes.forEach(diente => {
-                        const numDiente = diente.getAttribute('data-diente');
-                        if (numDiente === item.numero_diente) {
-                            // Limpiar clases de estado previas
-                            diente.classList.remove('diente-caries', 'diente-tratado');
-                            
-                            // Aplicar clase correspondiente
-                            if (item.estado.toLowerCase() === 'caries') {
-                                diente.classList.add('diente-caries');
-                            } else {
-                                diente.classList.add('diente-tratado');
-                            }
-                        }
-                    });
-                });
-            } catch (error) {
-                console.error("Error al obtener historial del odontograma:", error);
-            }
-        }
-
-        // Enviar el tratamiento registrado al servidor Java
         async function guardarTratamiento() {
-            if (!idPaciente) {
-                Swal.fire('Atención', 'No hay un paciente seleccionado.', 'warning');
+            if (!idPaciente || idPaciente === 'undefined' || idPaciente === 'null') {
+                alert("Error: No hay un paciente activo.");
                 return;
             }
 
-            if (!numeroDienteSeleccionado) {
-                Swal.fire('Atención', 'Por favor selecciona un diente del mapa primero.', 'warning');
+            const piezas = document.getElementById('dienteSeleccionado').value;
+            const diagnostico = document.getElementById('selectDiagnostico').value;
+            const costo = document.getElementById('inputCosto').value || 0;
+
+            if (!piezas) {
+                alert("Por favor selecciona al menos una pieza dental en el odontograma.");
                 return;
             }
-
-            const selectDiag = document.getElementById('selectDiagnostico');
-            const inputCosto = document.getElementById('inputCosto');
-
-            const diagnosticoVal = selectDiag.value;
-            const costoVal = parseFloat(inputCosto.value) || 0;
-
-            // Determinar si es caries (rojo) o tratado (azul)
-            let estadoCalculado = 'tratado';
-            if (diagnosticoVal.toLowerCase().includes('caries')) {
-                estadoCalculado = 'caries';
-            }
-
-            const datosTratamiento = {
-                id_paciente: parseInt(idPaciente),
-                numero_diente: numeroDienteSeleccionado,
-                diagnostico: diagnosticoVal,
-                estado: estadoCalculado,
-                costo: costoVal
-            };
 
             try {
-                const res = await fetch('http://localhost:7070/api/odontograma', {
+                const res = await fetch(`${API_URL}/odontograma`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(datosTratamiento)
+                    body: JSON.stringify({
+                        id_paciente: parseInt(idPaciente),
+                        pieza_num: piezas,
+                        diagnostico: diagnostico,
+                        costo: parseFloat(costo)
+                    })
                 });
 
                 if (res.ok) {
-                    Swal.fire({
-                        title: '¡Registrado!',
-                        text: `El tratamiento se agregó al diente #${numeroDienteSeleccionado}`,
-                        icon: 'success',
-                        timer: 1800,
-                        showConfirmButton: false
-                    });
-
-                    // Reset de campos
-                    inputCosto.value = '';
+                    alert("¡Tratamiento registrado con éxito!");
                     
-                    // Volver a cargar para actualizar colores en pantalla
-                    await cargarHistorialDentario();
+                    dientesSeleccionados = [];
+                    document.getElementById('dienteSeleccionado').value = "";
+                    document.getElementById('inputCosto').value = "";
+                    document.querySelectorAll('.diente-seleccionado').forEach(d => d.classList.remove('diente-seleccionado'));
+
+                    cargarHistorial();
                 } else {
-                    Swal.fire('Error', 'No se pudo guardar el registro.', 'error');
+                    alert("Error en el servidor al intentar guardar.");
                 }
             } catch (error) {
-                console.error("Error al guardar tratamiento:", error);
-                Swal.fire('Error', 'Error de conexión con el servidor Java.', 'error');
+                console.error("Error al enviar petición:", error);
+                alert("No se pudo establecer conexión con el backend de Java.");
+            }
+        }
+
+        async function cargarHistorial() {
+            if (!idPaciente || idPaciente === 'undefined' || idPaciente === 'null') return;
+            
+            try {
+                const res = await fetch(`${API_URL}/odontograma/${idPaciente}`);
+                if (res.ok) {
+                    const tratamientos = await res.json();
+                    const tbody = document.getElementById('tablaHistorial');
+                    tbody.innerHTML = '';
+                    
+                    if (tratamientos.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="4" style="padding: 15px; text-align: center; color: #64748B;">No hay tratamientos registrados aún.</td></tr>';
+                        return;
+                    }
+
+                    tratamientos.forEach(t => {
+                        const fechaCorta = t.fecha ? t.fecha.substring(0, 10) : 'Sin fecha'; 
+                        
+                        tbody.innerHTML += `
+                            <tr style="border-bottom: 1px solid #E2E8F0;">
+                                <td style="padding: 12px; color: #475569;">${fechaCorta}</td>
+                                <td style="padding: 12px; font-weight: bold; color: #1E40AF;">${t.pieza_num}</td>
+                                <td style="padding: 12px; color: #475569;">${t.diagnostico}</td>
+                                <td style="padding: 12px; font-weight: 600; color: #0F172A;">$${t.costo.toFixed(2)}</td>
+                            </tr>
+                        `;
+                    });
+                }
+            } catch (error) {
+                console.error("Error al cargar historial:", error);
             }
         }
     </script>
